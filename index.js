@@ -12,26 +12,35 @@ bot.on('message', function (msg) {
     var chatId = msg.chat.id; //id
     var words = (_a = msg.text) === null || _a === void 0 ? void 0 : _a.split(" "); //разбиение на элементы массива, "пробел"
     console.log(words); //массив
-    var i;
-    //if (words != undefined){
-    // for(i = 0, i < words?.length, i++){}
-    //  }
     var a = words === null || words === void 0 ? void 0 : words.indexOf('через'); //поиск в массиве (индекс)
-    var b = words === null || words === void 0 ? void 0 : words.indexOf('напомни'); //поиск в массиве (индекс)
+    /*функция на вывод сообщения, которое напоминаем*/
     function sayHi(textMessage) {
         bot.sendMessage(chatId, textMessage);
     }
+    function selectTime(word, phrase, timePhrase) {
+        if (word == "минут" || word == "минуты" || word == "минуту") {
+            console.log(timePhrase * 60 * 1000);
+            setTimeout(sayHi, timePhrase * 60 * 1000, phrase);
+        }
+        else if (word == "час" || word == "часа" || word == "часов") {
+            console.log(timePhrase * 3600 * 10000);
+            setTimeout(sayHi, timePhrase * 3600 * 10000, phrase);
+        }
+        else if (word == "день" || word == "дня" || word == "дней") {
+            console.log(timePhrase * 86400 * 1000);
+            setTimeout(sayHi, timePhrase * 86400 * 1000, phrase);
+        }
+    }
+    /*проверка на undefined - слово, которое ищем и сам массив*/
     if (a != undefined && words != undefined) {
-        console.log(a + 1); //индекс слова в массиве
+        console.log(a); //индекс слова в массиве
         console.log(words[a + 1]); //время
-        var min = parseInt(words[a + 1]);
-        console.log(min); //время
-        console.log(min * 1000 * 60);
-        var newArray = words.slice((a + 3), words.length);
-        console.log(newArray);
-        var messageFuture = newArray.join(' ');
+        var time = parseInt(words[a + 1]);
+        console.log(time); //время
+        console.log(words[a + 2]);
+        var messageFuture = words.slice((a + 3), words.length).join(' ');
         console.log(messageFuture);
-        setTimeout(sayHi, min * 1000 * 60, messageFuture);
+        selectTime(words[a + 2], messageFuture, time);
     }
     bot.sendMessage(chatId, 'Привет');
 });
