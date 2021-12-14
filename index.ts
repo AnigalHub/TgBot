@@ -42,12 +42,39 @@ bot.on('message',(msg) =>{
             bot.sendMessage(chatId,'Ошибка! Время не указано');
         }
     }
-
-    let keywordThrough = words?.indexOf('через') //поиск в массиве (индекс)
-    let keywordIn = words?.indexOf('в') //поиск в массиве (индекс)
-
+    /*функция с временем для повтора один раз*/
+    function selectTime2(word:string,timePhrase:number):number{
+        let ms:number
+        if(word == "секунд" || word == "секунд" || word == "секунду"){
+            ms = timePhrase*1000
+        }
+        else if(word == "минут" || word == "минуты" || word == "минуту"){
+            ms = timePhrase*60*1000
+        }
+        else if(word == "час" || word == "часа" || word == "часов"){
+            ms = timePhrase*3600000
+        }
+        else if(word == "день" || word == "дня" || word == "дней"){
+            ms = timePhrase*86400000
+        }
+        else if(word == "неделю" || word == "недели" || word == "недель"){
+            ms = timePhrase*604800000
+        }
+        else if(word == "месяц" || word == "месяца" || word == "месяцев"){
+            ms = timePhrase*2592000000.0000005
+        }
+        else if(word == "год" || word == "года" || word == "лет"){
+            ms = timePhrase*31536000000.428898
+        }
+        else {
+            bot.sendMessage(chatId,'Ошибка! Время не указано');
+            ms = 0
+        }
+        return ms
+    }
     let date = new Date();
-    console.log(date.getHours())
+    console.log(date.toString())
+    console.log(Date.parse(date.toString()))
     /*проверка на undefined - слово, которое ищем и сам массив*/
     if(words!=undefined){
         for (let word of words){
@@ -60,7 +87,7 @@ bot.on('message',(msg) =>{
                 console.log(words[keywordThrough+2])
                 let messageFuture = words.slice((keywordThrough+3),words.length).join(' ')
                 console.log(messageFuture)
-                selectTime(words[keywordThrough+2],messageFuture,time)
+                setTimeout(sayHi,selectTime2(words[keywordThrough+2],time),messageFuture);
             }
             else if(word == "в"){
                 let keywordThrough = words?.indexOf(word) //поиск в массиве (индекс)
@@ -69,10 +96,34 @@ bot.on('message',(msg) =>{
                 let time = parseInt(words[keywordThrough+1])
                 console.log(time) //время
                 console.log(words[keywordThrough+2])
-                let messageFuture = words.slice((keywordThrough+3),words.length).join(' ')
-                console.log(messageFuture)
-                console.log(time-date.getHours())
-                selectTime(words[keywordThrough+2],messageFuture,(time-date.getHours()))
+
+                 console.log(selectTime2(words[keywordThrough+2],time))
+                    console.log(time)
+                    console.log(date.getHours())
+
+                    if(time > date.getHours()){
+                        let c = time - date.getHours()
+                        console.log(c)
+                        console.log(selectTime2(words[keywordThrough+2],c))
+                        let s = Date.parse(date.toString()) + selectTime2(words[keywordThrough+2],c)
+                        console.log(s)
+                        const d = new Date (s)
+                        console.log(d.toString())
+
+                        const ds = new Date (Date.parse(date.toString()))
+                        console.log(ds.toString())
+                    }
+                    else{
+                        let c = Date.parse(date.toString()) - selectTime2(words[keywordThrough+2],time)
+                        console.log(c)
+                        const d = new Date (c)
+                        console.log(d.toString())
+
+                    }
+
+                    let messageFuture = words.slice((keywordThrough+3),words.length).join(' ')
+                    console.log(messageFuture)
+
             }
         }
     }
