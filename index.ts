@@ -15,37 +15,10 @@ bot.on('message',(msg) =>{
     function sayHi(textMessage:string):void {
         bot.sendMessage(chatId,textMessage)
     }
-    /*функция с временем для повтора один раз*/
-    function selectTime(word:string,phrase:string, timePhrase:number):void {
-        if(word == "секунд" || word == "секунд" || word == "секунду"){
-            setTimeout(sayHi, timePhrase*1000,phrase); console.log(timePhrase*1000)
-        }
-        else if(word == "минут" || word == "минуты" || word == "минуту"){
-            setTimeout(sayHi, timePhrase*60*1000,phrase);   console.log(timePhrase*60*1000)
-        }
-        else if(word == "час" || word == "часа" || word == "часов"){
-            setTimeout(sayHi, timePhrase*36000000,phrase); console.log(timePhrase*36000000)
-        }
-        else if(word == "день" || word == "дня" || word == "дней"){
-            setTimeout(sayHi, timePhrase*86400000,phrase); console.log(timePhrase*86400000)
-        }
-        else if(word == "неделю" || word == "недели" || word == "недель"){
-            setTimeout(sayHi, timePhrase*604800000,phrase); console.log(timePhrase*604800000)
-        }
-        else if(word == "месяц" || word == "месяца" || word == "месяцев"){
-            setTimeout(sayHi, timePhrase*2592000000.0000005,phrase); console.log(timePhrase*2592000000.0000005)
-        }
-        else if(word == "год" || word == "года" || word == "лет"){
-            setTimeout(sayHi, timePhrase*31536000000.428898,phrase); console.log(timePhrase*31536000000.428898)
-        }
-        else {
-            bot.sendMessage(chatId,'Ошибка! Время не указано');
-        }
-    }
-    /*функция с временем для повтора один раз*/
-    function selectTime2(word:string,timePhrase:number):number{
+    /*функция перевода времени в милисекунды*/
+    function ConvertingTimeToMilliseconds(word:string,timePhrase:number):number{
         let ms:number
-        if(word == "секунд" || word == "секунд" || word == "секунду"){
+        if(word == "секунд" || word == "секунды" || word == "секунду"){
             ms = timePhrase*1000
         }
         else if(word == "минут" || word == "минуты" || word == "минуту"){
@@ -67,27 +40,37 @@ bot.on('message',(msg) =>{
             ms = timePhrase*31536000000.428898
         }
         else {
-            bot.sendMessage(chatId,'Ошибка! Время не указано');
+            bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
             ms = 0
         }
         return ms
     }
+    /*дата в данную минуту*/
     let date = new Date();
-    console.log(date.toString())
-    console.log(Date.parse(date.toString()))
+    console.log(date.toString()) // день недели | дата | время
+    console.log(Date.parse(date.toString())) //в милисекундах
+    console.log()
+
     /*проверка на undefined - слово, которое ищем и сам массив*/
+    let keywordInMessage:number //ключевое слово в сообщении
+
     if(words!=undefined){
         for (let word of words){
             if (word == "через"){
-                let keywordThrough = words?.indexOf(word) //поиск в массиве (индекс)
-                console.log(keywordThrough) //индекс слова в массиве
-                console.log(words[keywordThrough+1]) //время
-                let time = parseInt(words[keywordThrough+1])
-                console.log(time) //время
-                console.log(words[keywordThrough+2])
-                let messageFuture = words.slice((keywordThrough+3),words.length).join(' ')
-                console.log(messageFuture)
-                setTimeout(sayHi,selectTime2(words[keywordThrough+2],time),messageFuture);
+                keywordInMessage = words?.indexOf(word)//индекс ключевого слова в массиве
+                let time = parseInt(words[keywordInMessage+1])//время с типом число
+                console.log(time)
+                if(isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage+2],time) != 0){
+                        let messageFuture = words.slice((keywordInMessage+3),words.length).join(' ')
+                        console.log(messageFuture)
+                        let timeFuture = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],time)
+                        const d = new Date (timeFuture)
+                        console.log(d.toString())
+                        setTimeout(sayHi,ConvertingTimeToMilliseconds(words[keywordInMessage+2],time),messageFuture);
+                }
+                else{
+                    bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается числом. Пример: 12 минут | 1 час ');
+                }
             }
             else if(word == "в"){
                 let keywordThrough = words?.indexOf(word) //поиск в массиве (индекс)
@@ -97,24 +80,21 @@ bot.on('message',(msg) =>{
                 console.log(time) //время
                 console.log(words[keywordThrough+2])
 
-                 console.log(selectTime2(words[keywordThrough+2],time))
+                 console.log(ConvertingTimeToMilliseconds(words[keywordThrough+2],time))
                     console.log(time)
                     console.log(date.getHours())
 
                     if(time > date.getHours()){
                         let c = time - date.getHours()
                         console.log(c)
-                        console.log(selectTime2(words[keywordThrough+2],c))
-                        let s = Date.parse(date.toString()) + selectTime2(words[keywordThrough+2],c)
+                        console.log(ConvertingTimeToMilliseconds(words[keywordThrough+2],c))
+                        let s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordThrough+2],c)
                         console.log(s)
                         const d = new Date (s)
                         console.log(d.toString())
-
-                        const ds = new Date (Date.parse(date.toString()))
-                        console.log(ds.toString())
                     }
                     else{
-                        let c = Date.parse(date.toString()) - selectTime2(words[keywordThrough+2],time)
+                        let c = Date.parse(date.toString()) - ConvertingTimeToMilliseconds(words[keywordThrough+2],time)
                         console.log(c)
                         const d = new Date (c)
                         console.log(d.toString())
@@ -128,27 +108,7 @@ bot.on('message',(msg) =>{
         }
     }
 
-   /*if( keywordThrough != undefined && words!=undefined){
-        console.log(keywordThrough) //индекс слова в массиве
-        console.log(words[keywordThrough+1]) //время
-        let time = parseInt(words[keywordThrough+1])
-        console.log(time) //время
-        console.log(words[keywordThrough+2])
-        let messageFuture = words.slice((keywordThrough+3),words.length).join(' ')
-        console.log(messageFuture)
-        selectTime(words[keywordThrough+2],messageFuture,time)
-   }
-   else if(keywordIn != undefined && words!=undefined){
-        console.log(keywordIn) //индекс слова в массиве
-        console.log(words[keywordIn+1]) //время
-        let time = parseInt(words[keywordIn+1])
-        console.log(time) //время
-        console.log(words[keywordIn+2])
-        let messageFuture = words.slice((keywordIn+3),words.length).join(' ')
-        console.log(messageFuture)
-        selectTime(words[keywordIn+2],messageFuture,time)
-    }
-*/
+
     bot.sendMessage(chatId,'Привет');
 })
 
