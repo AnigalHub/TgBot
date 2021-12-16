@@ -4,43 +4,103 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var node_telegram_bot_api_1 = __importDefault(require("node-telegram-bot-api"));
-var token = '2090927002:AAGLOKpbLKvMqoveWeGzdRqI3ttDK0-Qcms';
-var bot = new node_telegram_bot_api_1.default(token, { polling: true });
+var token = '2090927002:AAH3QrKEi3mj10s2Kw2_lF00VZcXq98Y-zQ';
+var bot = new node_telegram_bot_api_1.default(token, { polling: true, baseApiUrl: "https://api.telegram.org" });
 bot;
 bot.on('message', function (msg) {
     var _a;
     var chatId = msg.chat.id; //id
     var words = (_a = msg.text) === null || _a === void 0 ? void 0 : _a.split(" "); //разбиение на элементы массива, "пробел"
     console.log(words); //массив
-    var a = words === null || words === void 0 ? void 0 : words.indexOf('через'); //поиск в массиве (индекс)
     /*функция на вывод сообщения, которое напоминаем*/
     function sayHi(textMessage) {
         bot.sendMessage(chatId, textMessage);
     }
-    function selectTime(word, phrase, timePhrase) {
-        if (word == "минут" || word == "минуты" || word == "минуту") {
-            console.log(timePhrase * 60 * 1000);
-            setTimeout(sayHi, timePhrase * 60 * 1000, phrase);
+    /*функция перевода времени в милисекунды*/
+    function ConvertingTimeToMilliseconds(word, timePhrase) {
+        var ms;
+        if (word == "секунд" || word == "секунды" || word == "секунду") {
+            ms = timePhrase * 1000;
+        }
+        else if (word == "минут" || word == "минуты" || word == "минуту") {
+            ms = timePhrase * 60 * 1000;
         }
         else if (word == "час" || word == "часа" || word == "часов") {
-            console.log(timePhrase * 3600 * 10000);
-            setTimeout(sayHi, timePhrase * 3600 * 10000, phrase);
+            ms = timePhrase * 3600000;
         }
         else if (word == "день" || word == "дня" || word == "дней") {
-            console.log(timePhrase * 86400 * 1000);
-            setTimeout(sayHi, timePhrase * 86400 * 1000, phrase);
+            ms = timePhrase * 86400000;
         }
+        else if (word == "неделю" || word == "недели" || word == "недель") {
+            ms = timePhrase * 604800000;
+        }
+        else if (word == "месяц" || word == "месяца" || word == "месяцев") {
+            ms = timePhrase * 2592000000.0000005;
+        }
+        else if (word == "год" || word == "года" || word == "лет") {
+            ms = timePhrase * 31536000000.428898;
+        }
+        else {
+            bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
+            ms = 0;
+        }
+        return ms;
     }
+    /*дата в данную минуту*/
+    var date = new Date();
+    console.log(date.toString()); // день недели | дата | время
+    console.log(Date.parse(date.toString())); //в милисекундах
+    console.log(date.toDateString()); //только дата
+    console.log();
     /*проверка на undefined - слово, которое ищем и сам массив*/
-    if (a != undefined && words != undefined) {
-        console.log(a); //индекс слова в массиве
-        console.log(words[a + 1]); //время
-        var time = parseInt(words[a + 1]);
-        console.log(time); //время
-        console.log(words[a + 2]);
-        var messageFuture = words.slice((a + 3), words.length).join(' ');
-        console.log(messageFuture);
-        selectTime(words[a + 2], messageFuture, time);
+    var keywordInMessage; //ключевое слово в сообщении
+    if (words != undefined) {
+        for (var _i = 0, words_1 = words; _i < words_1.length; _i++) {
+            var word = words_1[_i];
+            if (word == "через") {
+                keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf(word); //индекс ключевого слова в массиве
+                var time = parseInt(words[keywordInMessage + 1]); //время с типом число
+                console.log(time);
+                if (isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time) != 0) {
+                    var timeFuture = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time);
+                    var d = new Date(timeFuture);
+                    console.log(d.toString()); // точная дата ( день недели | дата | время)
+                    var messageFuture = words.slice((keywordInMessage + 3), words.length).join(' '); //фраза, которую напоминаем
+                    console.log(messageFuture);
+                    setTimeout(sayHi, ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time), messageFuture); // функция со временем - когда напомнить + фраза - что напоминаем
+                }
+                else {
+                    bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Ввод времени указывается числом. Пример: 12 минут | 1 час ');
+                }
+            }
+            else if (word == "в") {
+                keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf(word); //индекс ключевого слова в массиве
+                var time = parseInt(words[keywordInMessage + 1]); //время с типом число
+                if (isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time) != 0) {
+                    if (time > date.getHours()) {
+                        var timeDifference = time - date.getHours();
+                        console.log(timeDifference);
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference));
+                        var s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
+                        var d = new Date(s);
+                        console.log(d.toString());
+                    }
+                    else {
+                        var timeDifference = 6 * 24 - (21 - time);
+                        console.log(timeDifference);
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference));
+                        var s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
+                        var d = new Date(s);
+                        console.log(d.toString());
+                    }
+                    var messageFuture = words.slice((keywordInMessage + 3), words.length).join(' ');
+                    console.log(messageFuture);
+                }
+                else {
+                    bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Ввод времени указывается числом. Пример: 12 минут | 1 час ');
+                }
+            }
+        }
     }
     bot.sendMessage(chatId, 'Привет');
 });

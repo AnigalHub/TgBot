@@ -1,9 +1,9 @@
 
 import  TelegramBot from "node-telegram-bot-api"
 
-const token:string = '2090927002:AAGLOKpbLKvMqoveWeGzdRqI3ttDK0-Qcms'
+const token:string = '2090927002:AAH3QrKEi3mj10s2Kw2_lF00VZcXq98Y-zQ'
 
-const bot = new TelegramBot(token,{polling:true})
+const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 
 bot
 
@@ -49,6 +49,8 @@ bot.on('message',(msg) =>{
     let date = new Date();
     console.log(date.toString()) // день недели | дата | время
     console.log(Date.parse(date.toString())) //в милисекундах
+    console.log(date.toDateString()) //только дата
+
     console.log()
 
     /*проверка на undefined - слово, которое ищем и сам массив*/
@@ -61,48 +63,44 @@ bot.on('message',(msg) =>{
                 let time = parseInt(words[keywordInMessage+1])//время с типом число
                 console.log(time)
                 if(isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage+2],time) != 0){
-                        let messageFuture = words.slice((keywordInMessage+3),words.length).join(' ')
-                        console.log(messageFuture)
                         let timeFuture = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],time)
                         const d = new Date (timeFuture)
-                        console.log(d.toString())
-                        setTimeout(sayHi,ConvertingTimeToMilliseconds(words[keywordInMessage+2],time),messageFuture);
+                        console.log(d.toString()) // точная дата ( день недели | дата | время)
+                        let messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') //фраза, которую напоминаем
+                        console.log(messageFuture)
+                        setTimeout(sayHi,ConvertingTimeToMilliseconds(words[keywordInMessage+2],time),messageFuture);// функция со временем - когда напомнить + фраза - что напоминаем
                 }
                 else{
                     bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается числом. Пример: 12 минут | 1 час ');
                 }
             }
             else if(word == "в"){
-                let keywordThrough = words?.indexOf(word) //поиск в массиве (индекс)
-                console.log(keywordThrough) //индекс слова в массиве
-                console.log(words[keywordThrough+1]) //время
-                let time = parseInt(words[keywordThrough+1])
-                console.log(time) //время
-                console.log(words[keywordThrough+2])
-
-                 console.log(ConvertingTimeToMilliseconds(words[keywordThrough+2],time))
-                    console.log(time)
-                    console.log(date.getHours())
-
+                keywordInMessage = words?.indexOf(word) //индекс ключевого слова в массиве
+                let time = parseInt(words[keywordInMessage+1]) //время с типом число
+                if(isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage+2],time) != 0){
                     if(time > date.getHours()){
-                        let c = time - date.getHours()
-                        console.log(c)
-                        console.log(ConvertingTimeToMilliseconds(words[keywordThrough+2],c))
-                        let s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordThrough+2],c)
-                        console.log(s)
+                        let timeDifference = time - date.getHours()
+                        console.log(timeDifference)
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference))
+                        let s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
                         const d = new Date (s)
                         console.log(d.toString())
                     }
                     else{
-                        let c = Date.parse(date.toString()) - ConvertingTimeToMilliseconds(words[keywordThrough+2],time)
-                        console.log(c)
-                        const d = new Date (c)
+                        let timeDifference = 24 - date.getHours() + time
+                        console.log(timeDifference)
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference))
+                        let s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
+                        const d = new Date (s)
                         console.log(d.toString())
 
                     }
-
-                    let messageFuture = words.slice((keywordThrough+3),words.length).join(' ')
+                    let messageFuture = words.slice((keywordInMessage+3),words.length).join(' ')
                     console.log(messageFuture)
+                }
+                else{
+                    bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается числом. Пример: 12 минут | 1 час ');
+                }
 
             }
         }
