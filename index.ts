@@ -49,12 +49,16 @@ bot.on('message',(msg) =>{
     let date = new Date();
     console.log(date.toString()) // день недели | дата | время
     console.log(Date.parse(date.toString())) //в милисекундах
-    console.log(date.toDateString()) //только дата
 
-    console.log()
 
     /*проверка на undefined - слово, которое ищем и сам массив*/
     let keywordInMessage:number //ключевое слово в сообщении
+    let day_1 = new Date(2021, 12, 22)
+    let day_2 = new Date(2021, 12, 17);
+
+    function diffDates(day_one:any, day_two:any) {
+        return (day_one - day_two) / (60 * 60 * 24 * 1000);
+    };
 
     if(words!=undefined){
         for (let word of words){
@@ -78,7 +82,7 @@ bot.on('message',(msg) =>{
                 keywordInMessage = words?.indexOf(word) //индекс ключевого слова в массиве
                 let time = parseInt(words[keywordInMessage+1]) //время с типом число
                 if(isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage+2],time) != 0){
-                    if(time > date.getHours()){
+                    /*if(time > date.getHours()){
                         let timeDifference = time - date.getHours()
                         console.log(timeDifference)
                         console.log(ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference))
@@ -94,8 +98,47 @@ bot.on('message',(msg) =>{
                         const d = new Date (s)
                         console.log(d.toString())
 
+                    } */
+                    if(words[keywordInMessage+3] == "завтра"){
+                        let timeDifference = Math.abs(24 - date.getHours() + time)
+                        console.log(timeDifference)
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference))
+                        let s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
+                        const d = new Date (s)
+                        console.log(d.toString())
                     }
-                    let messageFuture = words.slice((keywordInMessage+3),words.length).join(' ')
+                    else if  (words[keywordInMessage+3] == "послезавтра"){
+                        let timeDifference = Math.abs(24*2 - date.getHours() + time)
+                        console.log(timeDifference)
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference))
+                        let s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
+                        const d = new Date (s)
+                        console.log(d.toString())
+                    }
+                    else if(words[keywordInMessage+3].includes('.') == true || words[keywordInMessage+3].includes('-') == true || words[keywordInMessage+3] == "послезавтра"){
+
+
+                        let r = diffDates(new Date (parseInt (words[keywordInMessage+3].substring(6,12)), parseInt (words[keywordInMessage+3].substring(3,6)),
+                            parseInt (words[keywordInMessage+3].substring(0,2))), new Date (date.getFullYear(),date.getMonth()+1,date.getDate()))
+
+                        let a:number
+                        if (date.getHours() > time){
+                            a = Date.parse(date.toString()) + ConvertingTimeToMilliseconds("дней",r) -
+                                ConvertingTimeToMilliseconds(words[keywordInMessage+2], Math.abs((date.getHours() - time)))
+                        }
+                        else{
+                            a = Date.parse(date.toString()) + ConvertingTimeToMilliseconds("дней",r) +
+                                ConvertingTimeToMilliseconds(words[keywordInMessage+2], Math.abs((date.getHours() - time)))
+                        }
+
+                        const d = new Date (a)
+                        console.log(d.toString())
+                    }
+                    else {
+
+                    }
+
+                    let messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')
                     console.log(messageFuture)
                 }
                 else{

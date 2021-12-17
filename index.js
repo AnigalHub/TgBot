@@ -50,10 +50,14 @@ bot.on('message', function (msg) {
     var date = new Date();
     console.log(date.toString()); // день недели | дата | время
     console.log(Date.parse(date.toString())); //в милисекундах
-    console.log(date.toDateString()); //только дата
-    console.log();
     /*проверка на undefined - слово, которое ищем и сам массив*/
     var keywordInMessage; //ключевое слово в сообщении
+    var day_1 = new Date(2021, 12, 22);
+    var day_2 = new Date(2021, 12, 17);
+    function diffDates(day_one, day_two) {
+        return (day_one - day_two) / (60 * 60 * 24 * 1000);
+    }
+    ;
     if (words != undefined) {
         for (var _i = 0, words_1 = words; _i < words_1.length; _i++) {
             var word = words_1[_i];
@@ -77,23 +81,56 @@ bot.on('message', function (msg) {
                 keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf(word); //индекс ключевого слова в массиве
                 var time = parseInt(words[keywordInMessage + 1]); //время с типом число
                 if (isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time) != 0) {
-                    if (time > date.getHours()) {
-                        var timeDifference = time - date.getHours();
+                    /*if(time > date.getHours()){
+                        let timeDifference = time - date.getHours()
+                        console.log(timeDifference)
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference))
+                        let s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
+                        const d = new Date (s)
+                        console.log(d.toString())
+                    }
+                    else{
+                        let timeDifference = 24 - date.getHours() + time
+                        console.log(timeDifference)
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference))
+                        let s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
+                        const d = new Date (s)
+                        console.log(d.toString())
+
+                    } */
+                    if (words[keywordInMessage + 3] == "завтра") {
+                        var timeDifference = Math.abs(24 - date.getHours() + time);
                         console.log(timeDifference);
                         console.log(ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference));
                         var s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
                         var d = new Date(s);
+                        console.log(d.toString());
+                    }
+                    else if (words[keywordInMessage + 3] == "послезавтра") {
+                        var timeDifference = Math.abs(24 * 2 - date.getHours() + time);
+                        console.log(timeDifference);
+                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference));
+                        var s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
+                        var d = new Date(s);
+                        console.log(d.toString());
+                    }
+                    else if (words[keywordInMessage + 3].includes('.') == true || words[keywordInMessage + 3].includes('-') == true || words[keywordInMessage + 3] == "послезавтра") {
+                        var r = diffDates(new Date(parseInt(words[keywordInMessage + 3].substring(6, 12)), parseInt(words[keywordInMessage + 3].substring(3, 6)), parseInt(words[keywordInMessage + 3].substring(0, 2))), new Date(date.getFullYear(), date.getMonth() + 1, date.getDate()));
+                        var a = void 0;
+                        if (date.getHours() > time) {
+                            a = Date.parse(date.toString()) + ConvertingTimeToMilliseconds("дней", r) -
+                                ConvertingTimeToMilliseconds(words[keywordInMessage + 2], Math.abs((date.getHours() - time)));
+                        }
+                        else {
+                            a = Date.parse(date.toString()) + ConvertingTimeToMilliseconds("дней", r) +
+                                ConvertingTimeToMilliseconds(words[keywordInMessage + 2], Math.abs((date.getHours() - time)));
+                        }
+                        var d = new Date(a);
                         console.log(d.toString());
                     }
                     else {
-                        var timeDifference = 6 * 24 - (21 - time);
-                        console.log(timeDifference);
-                        console.log(ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference));
-                        var s = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
-                        var d = new Date(s);
-                        console.log(d.toString());
                     }
-                    var messageFuture = words.slice((keywordInMessage + 3), words.length).join(' ');
+                    var messageFuture = words.slice((keywordInMessage + 4), words.length).join(' ');
                     console.log(messageFuture);
                 }
                 else {
