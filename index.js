@@ -55,9 +55,9 @@ bot.on('message', function (msg) {
     var day_1 = new Date(2021, 12, 22);
     var day_2 = new Date(2021, 12, 17);
     function diffDates(day_one, day_two) {
-        return (day_one - day_two) / (60 * 60 * 24 * 1000);
+        return (day_one.getTime() - day_two.getTime()) / (60 * 60 * 24 * 1000);
     }
-    ;
+    diffDates(day_1, day_2);
     if (words != undefined) {
         for (var _i = 0, words_1 = words; _i < words_1.length; _i++) {
             var word = words_1[_i];

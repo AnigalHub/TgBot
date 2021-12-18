@@ -56,9 +56,10 @@ bot.on('message',(msg) =>{
     let day_1 = new Date(2021, 12, 22)
     let day_2 = new Date(2021, 12, 17);
 
-    function diffDates(day_one:any, day_two:any) {
-        return (day_one - day_two) / (60 * 60 * 24 * 1000);
-    };
+    function diffDates(day_one:Date, day_two:Date) {
+        return (day_one.getTime() - day_two.getTime()) / (60 * 60 * 24 * 1000);
+    }
+     diffDates(day_1, day_2)
 
     if(words!=undefined){
         for (let word of words){
