@@ -112,22 +112,24 @@ bot.on('message', function (msg) {
                     }
                     else if (/[А-яЁё]/.test(words[keywordInMessage + 3]) == false && words[keywordInMessage + 3].includes('.') == true || words[keywordInMessage + 3].includes('-') == true || words[keywordInMessage + 3] == "послезавтра") {
                         var differenceInDays = diffDates(new Date(parseInt(words[keywordInMessage + 3].substring(6, 12)), parseInt(words[keywordInMessage + 3].substring(3, 6)), parseInt(words[keywordInMessage + 3].substring(0, 2))), new Date(date.getFullYear(), date.getMonth() + 1, date.getDate()));
-                        console.log();
-                        console.log(words[keywordInMessage + 3][2]);
-                        console.log();
-                        var timeFuture = void 0;
-                        timeDifference = Math.abs((date.getHours() - time));
-                        if (date.getHours() > time) {
-                            millisecondsTime = ConvertingTimeToMilliseconds("дней", differenceInDays) - ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
-                            timeFuture = Date.parse(date.toString()) + ConvertingTimeToMilliseconds("дней", differenceInDays) - ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
+                        if (words[keywordInMessage + 3][2] == words[keywordInMessage + 3][5] && (words[keywordInMessage + 3][2] == '.' || words[keywordInMessage + 3][2] == '-') && (words[keywordInMessage + 3][5] == '.' || words[keywordInMessage + 3][5] == '-')) {
+                            var timeFuture = void 0;
+                            timeDifference = Math.abs((date.getHours() - time));
+                            if (date.getHours() > time) {
+                                millisecondsTime = ConvertingTimeToMilliseconds("дней", differenceInDays) - ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
+                                timeFuture = Date.parse(date.toString()) + millisecondsTime;
+                            }
+                            else {
+                                millisecondsTime = ConvertingTimeToMilliseconds("дней", differenceInDays) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
+                                timeFuture = Date.parse(date.toString()) + millisecondsTime;
+                            }
+                            setTimeout(sayHi, millisecondsTime, messageFuture); // функция со временем - когда напомнить + фраза - что напоминаем
+                            var d = new Date(timeFuture);
+                            console.log(d.toString());
                         }
                         else {
-                            millisecondsTime = ConvertingTimeToMilliseconds("дней", differenceInDays) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
-                            timeFuture = Date.parse(date.toString()) + ConvertingTimeToMilliseconds("дней", differenceInDays) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
+                            bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате');
                         }
-                        setTimeout(sayHi, millisecondsTime, messageFuture); // функция со временем - когда напомнить + фраза - что напоминаем
-                        var d = new Date(timeFuture);
-                        console.log(d.toString());
                     }
                     else {
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.01.22 | 21-01-22');

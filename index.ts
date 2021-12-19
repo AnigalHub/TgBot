@@ -120,7 +120,7 @@ bot.on('message',(msg) =>{
                             new Date (parseInt (words[keywordInMessage+3].substring(6,12)), parseInt (words[keywordInMessage+3].substring(3,6)), parseInt (words[keywordInMessage+3].substring(0,2))),
                             new Date (date.getFullYear(),date.getMonth()+1,date.getDate())
                         )
-                        if (words[keywordInMessage+3][2] == words[keywordInMessage+3][5] && words[keywordInMessage+3][2] == '.'&& words[keywordInMessage+3][5] == '.'){
+                        if (words[keywordInMessage+3][2] == words[keywordInMessage+3][5] && (words[keywordInMessage+3][2] == '.' || words[keywordInMessage+3][2] == '-') && (words[keywordInMessage+3][5] == '.' || words[keywordInMessage+3][5] == '-')){
                             let timeFuture:number
                             timeDifference = Math.abs((date.getHours() - time))
                             if (date.getHours() > time){
