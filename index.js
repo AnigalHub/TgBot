@@ -50,16 +50,13 @@ bot.on('message', function (msg) {
     var date = new Date();
     console.log(date.toString()); // день недели | дата | время
     console.log(Date.parse(date.toString())); //в милисекундах
-    /*проверка на undefined - слово, которое ищем и сам массив*/
-    var keywordInMessage; //ключевое слово в сообщении
-    var day_1 = new Date(2021, 12, 22);
-    var day_2 = new Date(2021, 12, 17);
+    /*функция разницы в днях между двумя датами*/
     function diffDates(day_one, day_two) {
         return (day_one.getTime() - day_two.getTime()) / (60 * 60 * 24 * 1000);
     }
-    diffDates(day_1, day_2);
-    var millisecondsTime;
-    var messageFuture;
+    var keywordInMessage; //ключевое слово в сообщении
+    var millisecondsTime; //миллисекунды - через сколько надо прислать сообщение
+    var messageFuture; //сообщение, которое напоминаем
     if (words != undefined) {
         for (var _i = 0, words_1 = words; _i < words_1.length; _i++) {
             var word = words_1[_i];
@@ -68,9 +65,9 @@ bot.on('message', function (msg) {
                 var time = parseInt(words[keywordInMessage + 1]); //время с типом число
                 console.log(time);
                 if (isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time) != 0) {
-                    messageFuture = words.slice((keywordInMessage + 3), words.length).join(' '); //фраза, которую напоминаем
+                    messageFuture = words.slice((keywordInMessage + 3), words.length).join(' '); //сообщение, которое напоминаем
                     millisecondsTime = ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time);
-                    setTimeout(sayHi, millisecondsTime, messageFuture); //функция со временем - когда напомнить + фраза - что напоминаем
+                    setTimeout(sayHi, millisecondsTime, messageFuture); //функция со временем - когда напомнить + сообщение - что напоминаем
                     /**/
                     console.log(messageFuture);
                     var timeFuture = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time);
@@ -85,8 +82,7 @@ bot.on('message', function (msg) {
             else if (word == "в") {
                 keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf(word); //индекс ключевого слова в массиве
                 var time = parseInt(words[keywordInMessage + 1]); //время с типом число
-                messageFuture = words.slice((keywordInMessage + 4), words.length).join(' ');
-                console.log(messageFuture);
+                messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
                 var timeDifference = void 0;
                 if (isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage + 2], time) != 0) {
                     if (/[А-яЁё]/.test(words[keywordInMessage + 3]) == true) {
@@ -105,14 +101,16 @@ bot.on('message', function (msg) {
                             bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в слове!');
                         }
                         millisecondsTime = ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
-                        setTimeout(sayHi, millisecondsTime, messageFuture); // функция со временем - когда напомнить + фраза - что напоминаем
+                        setTimeout(sayHi, millisecondsTime, messageFuture); // функция со временем - когда напомнить + сообщение - что напоминаем
                         var timeFuture = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
                         var d = new Date(timeFuture);
                         console.log(d.toString());
                     }
-                    else if (/[А-яЁё]/.test(words[keywordInMessage + 3]) == false && words[keywordInMessage + 3].includes('.') == true || words[keywordInMessage + 3].includes('-') == true || words[keywordInMessage + 3] == "послезавтра") {
+                    else if (/[А-яЁё]/.test(words[keywordInMessage + 3]) == false && (words[keywordInMessage + 3].includes('.') == true || words[keywordInMessage + 3].includes('-') == true)) {
                         var differenceInDays = diffDates(new Date(parseInt(words[keywordInMessage + 3].substring(6, 12)), parseInt(words[keywordInMessage + 3].substring(3, 6)), parseInt(words[keywordInMessage + 3].substring(0, 2))), new Date(date.getFullYear(), date.getMonth() + 1, date.getDate()));
-                        if (words[keywordInMessage + 3][2] == words[keywordInMessage + 3][5] && (words[keywordInMessage + 3][2] == '.' || words[keywordInMessage + 3][2] == '-') && (words[keywordInMessage + 3][5] == '.' || words[keywordInMessage + 3][5] == '-')) {
+                        if (words[keywordInMessage + 3][2] == words[keywordInMessage + 3][5] &&
+                            (words[keywordInMessage + 3][2] == '.' || words[keywordInMessage + 3][2] == '-')
+                            && (words[keywordInMessage + 3][5] == '.' || words[keywordInMessage + 3][5] == '-')) {
                             var timeFuture = void 0;
                             timeDifference = Math.abs((date.getHours() - time));
                             if (date.getHours() > time) {
@@ -123,12 +121,12 @@ bot.on('message', function (msg) {
                                 millisecondsTime = ConvertingTimeToMilliseconds("дней", differenceInDays) + ConvertingTimeToMilliseconds(words[keywordInMessage + 2], timeDifference);
                                 timeFuture = Date.parse(date.toString()) + millisecondsTime;
                             }
-                            setTimeout(sayHi, millisecondsTime, messageFuture); // функция со временем - когда напомнить + фраза - что напоминаем
+                            setTimeout(sayHi, millisecondsTime, messageFuture); // функция со временем - когда напомнить + сообщение - что напоминаем
                             var d = new Date(timeFuture);
                             console.log(d.toString());
                         }
                         else {
-                            bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате');
+                            bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!');
                         }
                     }
                     else {
