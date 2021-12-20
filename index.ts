@@ -59,26 +59,44 @@ bot.on('message',(msg) =>{
     let millisecondsTime: number //миллисекунды - через сколько надо прислать сообщение
     let messageFuture: string //сообщение, которое напоминаем
 
+
     if(words!=undefined){
         for (let word of words){
             if (word == "через"){
                 keywordInMessage = words?.indexOf(word)//индекс ключевого слова в массиве
-                let time = parseInt(words[keywordInMessage+1])//время с типом число
-                console.log(time)
-                if(isNaN(time) == false && ConvertingTimeToMilliseconds(words[keywordInMessage+2],time) != 0){
+
+                if(/^[0-9]*$/.test(words[keywordInMessage+1]) == true){ // только цифры
+                    let time = parseInt(words[keywordInMessage+1])//время с типом число
+                    if(ConvertingTimeToMilliseconds(words[keywordInMessage+2],time) != 0){
                         messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') //сообщение, которое напоминаем
-                        millisecondsTime = ConvertingTimeToMilliseconds(words[keywordInMessage+2],time)
+                        millisecondsTime = ConvertingTimeToMilliseconds(words[keywordInMessage+2],time) //миллисекунды - через сколько надо прислать сообщение
                         setTimeout(sayHi,millisecondsTime,messageFuture); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    /**/
+                        /**/
                         console.log(messageFuture)
-                        let timeFuture = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],time)
+                        let timeFuture = Date.parse(date.toString()) + millisecondsTime
                         const d = new Date (timeFuture)
                         console.log(d.toString()) // точная дата ( день недели | дата | время)
+                        /**/
+                    }
+                    else{
+                      bot.sendMessage(chatId,'Ошибка! Вы указали время в 0, а это прямо сейчас!');
+                    }
+                }
+                else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
+                    messageFuture = words.slice((keywordInMessage+2),words.length).join(' ') //сообщение, которое напоминаем
+                    millisecondsTime = ConvertingTimeToMilliseconds(words[keywordInMessage+1],1)
+                    setTimeout(sayHi,millisecondsTime,messageFuture); //функция со временем - когда напомнить + сообщение - что напоминаем
+
+                    /**/
+                    let timeFuture = Date.parse(date.toString()) + millisecondsTime
+                    const d = new Date (timeFuture)
+                    console.log(d.toString()) // точная дата ( день недели | дата | время)
                     /**/
                 }
-                else{
-                    bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается числом. Пример: 12 минут | 1 час ');
+                else {
+                    bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается днем (словом) или числом. Пример: неделю/месяц | 12 минут/3 дня ');
                 }
+
             }
             else if(word == "в"){
                 keywordInMessage = words?.indexOf(word) //индекс ключевого слова в массиве
@@ -105,7 +123,7 @@ bot.on('message',(msg) =>{
                         }
                         millisecondsTime = ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
                         setTimeout(sayHi,millisecondsTime, messageFuture);// функция со временем - когда напомнить + сообщение - что напоминаем
-                        let timeFuture  = Date.parse(date.toString()) + ConvertingTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
+                        let timeFuture  = Date.parse(date.toString()) + millisecondsTime
                         const d = new Date (timeFuture)
                         console.log(d.toString())
                     }
@@ -141,9 +159,8 @@ bot.on('message',(msg) =>{
                     }
                 }
                 else{
-                    bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается числом. Пример: 12 минут | 1 час ');
+                   // bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается числом. Пример: 12 минут | 1 час ');
                 }
-
             }
 
         }
