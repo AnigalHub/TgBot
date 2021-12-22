@@ -24,6 +24,9 @@ bot.on('message',(msg) =>{
         else if(word == "минут" || word == "минуты" || word == "минуту"){
             ms = timePhrase*60*1000
         }
+        else if(word == "полчаса"){
+            ms = timePhrase*30*1000
+        }
         else if(word == "час" || word == "часа" || word == "часов"){
             ms = timePhrase*3600000
         }
@@ -57,7 +60,7 @@ bot.on('message',(msg) =>{
     function diffDates(day_one:Date, day_two:Date) {
         return (day_one.getTime() - day_two.getTime()) / (60 * 60 * 24 * 1000);
     }
-
+    /*функция поиска индекса (номера) дня недели*/
     function SearchForTheDayNumberOfTheWeek (dayOfTheWeek:string):number{
         let indexArray: number
         let array: Array<string>
@@ -76,7 +79,6 @@ bot.on('message',(msg) =>{
         indexArray = array.indexOf(dayOfTheWeek)
         return indexArray
     }
-
 
     let keywordInMessage:number //ключевое слово в сообщении
     let millisecondsTime: number //миллисекунды - через сколько надо прислать сообщение
