@@ -1,7 +1,7 @@
-
+import config from './config.json'
 import  TelegramBot from "node-telegram-bot-api"
 
-const token:string = '2090927002:AAH3QrKEi3mj10s2Kw2_lF00VZcXq98Y-zQ'
+const token:string = config.token
 
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 
