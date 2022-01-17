@@ -65,6 +65,11 @@ function SearchForTheDayNumberOfTheWeek(dayOfTheWeek) {
     indexArray = array.indexOf(dayOfTheWeek);
     return indexArray;
 }
+function CalculationOfFutureDateAndTime(time) {
+    var timeFuture = Date.parse(date.toString()) + time;
+    var d = new Date(timeFuture);
+    console.log(d.toString()); // точная дата ( день недели | дата | время)
+}
 /*дата в данную минуту*/
 var date = new Date();
 console.log(date.toString()); // день недели | дата | время
@@ -93,10 +98,7 @@ bot.on('message', function (msg) {
                         setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                         /**/
                         console.log(messageFuture);
-                        var timeFuture = Date.parse(date.toString()) + millisecondsTime;
-                        var d = new Date(timeFuture);
-                        console.log(d.toString()); // точная дата ( день недели | дата | время)
-                        /**/
+                        CalculationOfFutureDateAndTime(millisecondsTime);
                     }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage + 1]) == true) { // только буквы
@@ -105,10 +107,7 @@ bot.on('message', function (msg) {
                     millisecondsTime = ConvertingTimeToMilliseconds(chatId, words[keywordInMessage + 1], 1);
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                     /**/
-                    var timeFuture = Date.parse(date.toString()) + millisecondsTime;
-                    var d = new Date(timeFuture);
-                    console.log(d.toString()); // точная дата ( день недели | дата | время)
-                    /**/
+                    CalculationOfFutureDateAndTime(millisecondsTime);
                 }
                 else {
                     bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Ввод времени указывается днем (словом) или числом. Пример: неделю/месяц | 12 минут/3 дня ');
@@ -145,10 +144,9 @@ bot.on('message', function (msg) {
                             }
                             millisecondsTime = ConvertingTimeToMilliseconds(chatId, words[keywordInMessage + 2], timeDifference);
                             setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
+                            /**/
                             console.log(messageFuture);
-                            var timeFuture = Date.parse(date.toString()) + millisecondsTime;
-                            var d = new Date(timeFuture);
-                            console.log(d.toString());
+                            CalculationOfFutureDateAndTime(millisecondsTime);
                         }
                         else if (/[А-яЁё]/.test(words[keywordInMessage + 3]) == false && (words[keywordInMessage + 3].includes('.') == true || words[keywordInMessage + 3].includes('-') == true)) {
                             var differenceInDays = diffDates(new Date(parseInt(words[keywordInMessage + 3].substring(6, 12)), parseInt(words[keywordInMessage + 3].substring(3, 6)), parseInt(words[keywordInMessage + 3].substring(0, 2))), new Date(date.getFullYear(), date.getMonth() + 1, date.getDate()));
@@ -161,11 +159,10 @@ bot.on('message', function (msg) {
                                 else {
                                     millisecondsTime = ConvertingTimeToMilliseconds(chatId, "дней", differenceInDays) + ConvertingTimeToMilliseconds(chatId, words[keywordInMessage + 2], timeDifference);
                                 }
-                                timeFuture = Date.parse(date.toString()) + millisecondsTime;
                                 setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
+                                /**/
                                 console.log(messageFuture);
-                                var d = new Date(timeFuture);
-                                console.log(d.toString());
+                                CalculationOfFutureDateAndTime(millisecondsTime);
                             }
                             else {
                                 bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!');
@@ -202,9 +199,8 @@ bot.on('message', function (msg) {
                         else {
                             millisecondsTime_1 = ConvertingTimeToMilliseconds(chatId, "дней", time);
                         }
-                        var timeFuture = Date.parse(date.toString()) + millisecondsTime_1;
-                        var d = new Date(timeFuture);
-                        console.log(d.toString());
+                        /**/
+                        CalculationOfFutureDateAndTime(millisecondsTime_1);
                         break;
                     }
                     else {
