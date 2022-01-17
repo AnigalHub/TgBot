@@ -46,6 +46,19 @@ function ConvertingTimeToMilliseconds(chatId, word, timePhrase) {
 function diffDates(day_one, day_two) {
     return (day_one.getTime() - day_two.getTime()) / (60 * 60 * 24 * 1000);
 }
+/*функция разницы во времени между двумя датами*/
+function diffTime(chatId, timeMessage, differenceInDays, wordMessage) {
+    var millisecondsTime;
+    var timeDifference = 0;
+    timeDifference = Math.abs((date.getHours() - timeMessage));
+    if (date.getHours() > timeMessage) {
+        millisecondsTime = ConvertingTimeToMilliseconds(chatId, "дней", differenceInDays) - ConvertingTimeToMilliseconds(chatId, wordMessage, timeDifference);
+    }
+    else {
+        millisecondsTime = ConvertingTimeToMilliseconds(chatId, "дней", differenceInDays) + ConvertingTimeToMilliseconds(chatId, wordMessage, timeDifference);
+    }
+    return millisecondsTime;
+}
 /*функция поиска индекса (номера) дня недели*/
 function SearchForTheDayNumberOfTheWeek(dayOfTheWeek) {
     var indexArray;
@@ -103,10 +116,10 @@ bot.on('message', function (msg) {
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage + 1]) == true) { // только буквы
                     messageFuture = words.slice((keywordInMessage + 2), words.length).join(' '); //сообщение, которое напоминаем
-                    console.log(messageFuture);
                     millisecondsTime = ConvertingTimeToMilliseconds(chatId, words[keywordInMessage + 1], 1);
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                     /**/
+                    console.log(messageFuture);
                     CalculationOfFutureDateAndTime(millisecondsTime);
                 }
                 else {
@@ -151,14 +164,7 @@ bot.on('message', function (msg) {
                         else if (/[А-яЁё]/.test(words[keywordInMessage + 3]) == false && (words[keywordInMessage + 3].includes('.') == true || words[keywordInMessage + 3].includes('-') == true)) {
                             var differenceInDays = diffDates(new Date(parseInt(words[keywordInMessage + 3].substring(6, 12)), parseInt(words[keywordInMessage + 3].substring(3, 6)), parseInt(words[keywordInMessage + 3].substring(0, 2))), new Date(date.getFullYear(), date.getMonth() + 1, date.getDate()));
                             if (words[keywordInMessage + 3][2] == words[keywordInMessage + 3][5] && (words[keywordInMessage + 3][2] == '.' || words[keywordInMessage + 3][2] == '-') && (words[keywordInMessage + 3][5] == '.' || words[keywordInMessage + 3][5] == '-')) {
-                                var timeFuture = void 0;
-                                timeDifference = Math.abs((date.getHours() - time));
-                                if (date.getHours() > time) {
-                                    millisecondsTime = ConvertingTimeToMilliseconds(chatId, "дней", differenceInDays) - ConvertingTimeToMilliseconds(chatId, words[keywordInMessage + 2], timeDifference);
-                                }
-                                else {
-                                    millisecondsTime = ConvertingTimeToMilliseconds(chatId, "дней", differenceInDays) + ConvertingTimeToMilliseconds(chatId, words[keywordInMessage + 2], timeDifference);
-                                }
+                                millisecondsTime = diffTime(chatId, time, differenceInDays, words[keywordInMessage + 2]);
                                 setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
                                 /**/
                                 console.log(messageFuture);

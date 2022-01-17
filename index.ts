@@ -46,6 +46,22 @@ function diffDates(day_one:Date, day_two:Date) {
     return (day_one.getTime() - day_two.getTime()) / (60 * 60 * 24 * 1000);
 }
 
+/*функция разницы во времени между двумя датами (когда указано время в сообщении)*/
+function diffTime(chatId:number,timeMessage:number,differenceInDays:number, wordMessage:string ) {
+    let millisecondsTime:number
+    let timeDifference:number = 0
+    timeDifference = Math.abs((date.getHours() - timeMessage))
+    if (date.getHours() > timeMessage){
+       millisecondsTime =  ConvertingTimeToMilliseconds(chatId,"дней",differenceInDays) - ConvertingTimeToMilliseconds(chatId,wordMessage, timeDifference )
+    }
+    else{
+       millisecondsTime =  ConvertingTimeToMilliseconds(chatId,"дней",differenceInDays) + ConvertingTimeToMilliseconds(chatId,wordMessage, timeDifference )
+    }
+    return  millisecondsTime
+}
+
+
+
 /*функция поиска индекса (номера) дня недели*/
 function SearchForTheDayNumberOfTheWeek (dayOfTheWeek:string):number{
     let indexArray: number
@@ -107,11 +123,11 @@ bot.on('message',(msg) =>{
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
                     messageFuture = words.slice((keywordInMessage+2),words.length).join(' ') //сообщение, которое напоминаем
-                    console.log(messageFuture)
                     millisecondsTime = ConvertingTimeToMilliseconds(chatId,words[keywordInMessage+1],1)
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
 
                     /**/
+                    console.log(messageFuture)
                     CalculationOfFutureDateAndTime(millisecondsTime)
                 }
                 else {
@@ -160,14 +176,9 @@ bot.on('message',(msg) =>{
                                 new Date (date.getFullYear(),date.getMonth()+1,date.getDate())
                             )
                             if (words[keywordInMessage+3][2] == words[keywordInMessage+3][5] && (words[keywordInMessage+3][2] == '.' || words[keywordInMessage+3][2] == '-') && (words[keywordInMessage+3][5] == '.' || words[keywordInMessage+3][5] == '-')){
-                                let timeFuture:number
-                                timeDifference = Math.abs((date.getHours() - time))
-                                if (date.getHours() > time){
-                                    millisecondsTime =  ConvertingTimeToMilliseconds(chatId,"дней",differenceInDays) - ConvertingTimeToMilliseconds(chatId,words[keywordInMessage+2], timeDifference )
-                                }
-                                else{
-                                    millisecondsTime =  ConvertingTimeToMilliseconds(chatId,"дней",differenceInDays) + ConvertingTimeToMilliseconds(chatId,words[keywordInMessage+2], timeDifference )
-                                }
+
+
+                                millisecondsTime =  diffTime(chatId,time,differenceInDays,words[keywordInMessage+2])
                                 setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
 
                                 /**/
@@ -184,12 +195,12 @@ bot.on('message',(msg) =>{
                     }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
-                    let extraTime:number
+                    //let extraTime:number
                     let millisecondsTime:number
                     if (SearchForTheDayNumberOfTheWeek(words[keywordInMessage+1]) != -1){
-                        let time = Math.abs(date.getDay() - SearchForTheDayNumberOfTheWeek(words[keywordInMessage+1]))
-                        if (time == 0){
-                            time = 7
+                        let differenceInDays = Math.abs(date.getDay() - SearchForTheDayNumberOfTheWeek(words[keywordInMessage+1]))
+                        if (differenceInDays == 0){
+                            differenceInDays = 7
                         }
                         if(words[keywordInMessage+2] == "в"){
                             if (/^[А-яЁё]*$/.test(words[keywordInMessage+3]) == true){
@@ -197,17 +208,11 @@ bot.on('message',(msg) =>{
                                 break
                             }
                             else{
-                                extraTime =Math.abs( date.getHours()  - parseInt(words[keywordInMessage+3])) //разница во времени текущим и указанным в определенный день недели
-                                if(date.getHours() >  parseInt(words[keywordInMessage+3])){ //если текущий час больше времени указанного в день недели
-                                    millisecondsTime = ConvertingTimeToMilliseconds(chatId,"дней", time) - ConvertingTimeToMilliseconds(chatId,"часов", extraTime)
-                                }
-                                else {
-                                    millisecondsTime = ConvertingTimeToMilliseconds(chatId,"дней", time) + ConvertingTimeToMilliseconds(chatId,"часов", extraTime)
-                                }
+                                millisecondsTime =  diffTime(chatId,parseInt(words[keywordInMessage+3]),differenceInDays,"часов")
                             }
                         }
                         else{
-                            millisecondsTime = ConvertingTimeToMilliseconds(chatId,"дней", time)
+                            millisecondsTime = ConvertingTimeToMilliseconds(chatId,"дней", differenceInDays)
                         }
 
                         /**/
