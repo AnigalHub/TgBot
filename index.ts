@@ -117,8 +117,7 @@ bot.on('message',(msg) =>{
                 if(/^[0-9]*$/.test(words[keywordInMessage+1]) == true){ // только цифры
                     let time = parseInt(words[keywordInMessage+1])//время с типом число
                     millisecondsTime = ConvertingTimeToMilliseconds(chatId,words[keywordInMessage+2],time)  //миллисекунды - через сколько надо прислать сообщение
-                    if( millisecondsTime == 0) /*если такого времени нет и произошла ошибка и вернулся 0*/
-                    {
+                    if( millisecondsTime == 0) {/*если такого времени нет и произошла ошибка и вернулся 0*/
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
                     }
                     messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') //сообщение, которое напоминаем
@@ -188,13 +187,9 @@ bot.on('message',(msg) =>{
                             console.log(messageFuture)
                             CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                         }
-                        else {
-                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Опечатка в дате!');
-                        }
+                        bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Опечатка в дате!');
                     }
-                    else {
-                        bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.01.22 | 21-01-22');
-                    }
+                    bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.01.22 | 21-01-22');
 
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
