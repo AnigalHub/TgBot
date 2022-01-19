@@ -27,13 +27,13 @@ function ConvertingTimeToMilliseconds(chatId:number, word:string,timePhrase:numb
         ms = timePhrase*604800000
     }
     else if(word == "месяц" || word == "месяца" || word == "месяцев"){
-        ms = timePhrase*2592000000.0000005
+        ms = timePhrase*2592000000
     }
     else if(word == "полгода"){
-        ms = timePhrase*6*2592000000.0000005
+        ms = timePhrase*6*2592000000
     }
     else if(word == "год" || word == "года" || word == "лет"){
-        ms = timePhrase*31536000000.428898
+        ms = timePhrase*31536000000
     }
     else {
         ms = 0
