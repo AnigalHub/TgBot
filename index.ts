@@ -260,13 +260,20 @@ bot.on('message',(msg) =>{
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
-                    messageFuture = words.slice((keywordInMessage+2),words.length).join(' ') //сообщение, которое напоминаем
-                    millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+1],1)
-                    setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    
-                    /**/
-                    console.log(messageFuture)
-                    CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                    if(words[keywordInMessage+1] == "секунду" || words[keywordInMessage+1] == "минуту" || words[keywordInMessage+1] == "полчаса"
+                        || words[keywordInMessage+1] == "час" || words[keywordInMessage+1] == "день" || words[keywordInMessage+1] == "неделю"
+                        || words[keywordInMessage+1] == "месяц" || words[keywordInMessage+1] == "полгода" || words[keywordInMessage+1] == "год"){
+
+                        messageFuture = words.slice((keywordInMessage+2),words.length).join(' ') //сообщение, которое напоминаем
+                        millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+1],1)
+                        setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+
+                        /**/
+                        console.log(messageFuture)
+                        CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                    }
+
+
                 }
                 else {
                     bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается днем (словом) или числом. Пример: неделю/месяц | 12 минут/3 дня ');
