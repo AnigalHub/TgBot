@@ -341,9 +341,7 @@ bot.on('message',(msg) =>{
                         CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                         break
                     }
-                    else {
-                        bot.sendMessage(chatId,'Ошибка! Некорректное слово, может быть задан только день недели. Пример: ср | среда | среду');
-                    }
+                    bot.sendMessage(chatId,'Ошибка! Не корректное слово, может быть задан только день недели. Пример: ср | среда | среду');
                 }
             }
             else {
