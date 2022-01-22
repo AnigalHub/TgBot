@@ -240,7 +240,7 @@ bot.on('message',(msg) =>{
     console.log(words) //массив
 
     let keywordInMessage:number //ключевое слово в сообщении
-    let millisecondsTime: number //миллисекунды - через сколько надо прислать сообщение
+    let millisecondsTime: number = 0 //миллисекунды - через сколько надо прислать сообщение
     let messageFuture: string //сообщение, которое напоминаем
 
     if(words!=undefined){
@@ -265,13 +265,15 @@ bot.on('message',(msg) =>{
                         || words[keywordInMessage+1] == "месяц" || words[keywordInMessage+1] == "полгода" || words[keywordInMessage+1] == "год"){
 
                         messageFuture = words.slice((keywordInMessage+2),words.length).join(' ') //сообщение, которое напоминаем
-                        millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+1],1)
-                        setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-
-                        /**/
                         console.log(messageFuture)
-                        CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                        millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+1],1)
                     }
+
+                    setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+
+                    /**/
+
+                    CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
 
 
                 }
