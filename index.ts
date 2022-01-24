@@ -298,6 +298,7 @@ bot.on('message',(msg) =>{
                     }
                     else {
                         bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку'); //сюда не заходит
+                        break
                     }
 
 
