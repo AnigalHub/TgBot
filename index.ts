@@ -267,33 +267,34 @@ bot.on('message',(msg) =>{
                         messageFuture = words.slice((keywordInMessage+2),words.length).join(' ') //сообщение, которое напоминаем
                         millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+1],1)
                     }
-                    else if(words[keywordInMessage+2]== "секунд" || words[keywordInMessage+2]== "секунды" || words[keywordInMessage+2]== "секунду" ||
-                        words[keywordInMessage+2]== "минут" || words[keywordInMessage+2]== "минуты" || words[keywordInMessage+2]== "минуту"
-                        || words[keywordInMessage+2]== "полчаса" || words[keywordInMessage+2]== "час" || words[keywordInMessage+2]== "часа" ||
-                        words[keywordInMessage+2]== "часов" || words[keywordInMessage+2]== "день" || words[keywordInMessage+2]== "дня" ||
-                        words[keywordInMessage+2]== "дней" || words[keywordInMessage+2]== "сутки" || words[keywordInMessage+2]== "суток" ||
-                        words[keywordInMessage+2]== "неделю" || words[keywordInMessage+2]== "недели" || words[keywordInMessage+2]== "недель" ||
-                        words[keywordInMessage+2]== "месяц" || words[keywordInMessage+2]== "месяца" || words[keywordInMessage+2]== "месяцев" ||
-                        words[keywordInMessage+2]== "полгода" || words[keywordInMessage+2]== "год" || words[keywordInMessage+2]== "года" ||
-                        words[keywordInMessage+2]== "лет" || words[keywordInMessage+2] == "месяц" || words[keywordInMessage+2] == "полгода" ||
-                        words[keywordInMessage+2] == "год"){
+                    else if(words[keywordInMessage+2]  == "одну" || words[keywordInMessage+2] == "один" || words[keywordInMessage+2] == "два" || words[keywordInMessage+2] == "две"
+                        || words[keywordInMessage+2] == "три" || words[keywordInMessage+2] == "четыре" || words[keywordInMessage+2] == "пять" || words[keywordInMessage+2] == "шесть"
+                        || words[keywordInMessage+2] == "семь" || words[keywordInMessage+2] == "восемь" || words[keywordInMessage+2] == "девять" || words[keywordInMessage+2] == "десять"
+                        || words[keywordInMessage+2] == "одинадцать" || words[keywordInMessage+2] == "двенадцать" || words[keywordInMessage+2] == "тринадцать" ||
+                        words[keywordInMessage+2] == "четырнадцать" || words[keywordInMessage+2] == "пятнадцать" || words[keywordInMessage+2] == "шестнадцать" ||
+                        words[keywordInMessage+2] == "семнадцать" || words[keywordInMessage+2] == "семнадцать" || words[keywordInMessage+2] == "восемнадцать" ||
+                        words[keywordInMessage+2] == "девятнадцать" || words[keywordInMessage+2] == "девятнадцать" || words[keywordInMessage+2] == "двадцать" ||
+                        words[keywordInMessage+2] == "тридцать" || words[keywordInMessage+2] == "сорок" || words[keywordInMessage+2] == "пятьдесят"  ||
+                        words[keywordInMessage+2] == "шестьдесят" || words[keywordInMessage+2] == "семьдесят" || words[keywordInMessage+2] == "восемьдесят" ||
+                        words[keywordInMessage+2] == "девяносто" || words[keywordInMessage+2] == "сто"){
+
+                        messageFuture = words.slice((keywordInMessage+4),words.length).join(' ') //сообщение, которое напоминаем
+                        console.log(messageFuture)
+                        millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+3],ConvertLargeNumberFromStringToNumber(words[keywordInMessage+1],words[keywordInMessage+2]))
+                    }
+                    else if( words[keywordInMessage+1]  == "одну" || words[keywordInMessage+1] == "один" || words[keywordInMessage+1] == "два" || words[keywordInMessage+1] == "две"
+                        || words[keywordInMessage+1] == "три" || words[keywordInMessage+1] == "четыре" || words[keywordInMessage+1] == "пять" || words[keywordInMessage+1] == "шесть"
+                        || words[keywordInMessage+1] == "семь" || words[keywordInMessage+1] == "восемь" || words[keywordInMessage+1] == "девять" || words[keywordInMessage+1] == "десять"
+                        || words[keywordInMessage+1] == "одинадцать" || words[keywordInMessage+1] == "двенадцать" || words[keywordInMessage+1] == "тринадцать" ||
+                        words[keywordInMessage+1] == "четырнадцать" || words[keywordInMessage+1] == "пятнадцать" || words[keywordInMessage+1] == "шестнадцать" ||
+                        words[keywordInMessage+1] == "семнадцать" || words[keywordInMessage+1] == "семнадцать" || words[keywordInMessage+1] == "восемнадцать" ||
+                        words[keywordInMessage+1] == "девятнадцать" || words[keywordInMessage+1] == "девятнадцать" || words[keywordInMessage+1] == "двадцать" ||
+                        words[keywordInMessage+1] == "тридцать" || words[keywordInMessage+1] == "сорок" || words[keywordInMessage+1] == "пятьдесят"  ||
+                        words[keywordInMessage+1] == "шестьдесят" || words[keywordInMessage+1] == "семьдесят" || words[keywordInMessage+1] == "восемьдесят" ||
+                        words[keywordInMessage+1] == "девяносто" || words[keywordInMessage+1] == "сто"){
 
                         messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') //сообщение, которое напоминаем
                         millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+2],ConvertSmallNumberFromStringToNumber(words[keywordInMessage+1]))
-                    }
-                    else if(words[keywordInMessage+3]== "секунд" || words[keywordInMessage+3]== "секунды" || words[keywordInMessage+3]== "секунду" ||
-                        words[keywordInMessage+3]== "минут" || words[keywordInMessage+3]== "минуты" || words[keywordInMessage+3]== "минуту"
-                        || words[keywordInMessage+3]== "полчаса" || words[keywordInMessage+3]== "час" || words[keywordInMessage+3]== "часа" ||
-                        words[keywordInMessage+3]== "часов" || words[keywordInMessage+3]== "день" || words[keywordInMessage+3]== "дня" ||
-                        words[keywordInMessage+3]== "дней" || words[keywordInMessage+3]== "сутки" || words[keywordInMessage+3]== "суток" ||
-                        words[keywordInMessage+3]== "неделю" || words[keywordInMessage+3]== "недели" || words[keywordInMessage+3]== "недель" ||
-                        words[keywordInMessage+3]== "месяц" || words[keywordInMessage+3]== "месяца" || words[keywordInMessage+3]== "месяцев" ||
-                        words[keywordInMessage+3]== "полгода" || words[keywordInMessage+3]== "год" || words[keywordInMessage+3]== "года" ||
-                        words[keywordInMessage+3]== "лет" || words[keywordInMessage+3] == "месяц" || words[keywordInMessage+3] == "полгода" ||
-                        words[keywordInMessage+3] == "год"){
-
-                        messageFuture = words.slice((keywordInMessage+4),words.length).join(' ') //сообщение, которое напоминаем
-                        millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+3],ConvertLargeNumberFromStringToNumber(words[keywordInMessage+1],words[keywordInMessage+2]))
                     }
                     else {
                         bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку'); //сюда не заходит
