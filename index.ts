@@ -40,7 +40,7 @@ function ConvertTimeToMilliseconds(chatId:number, word:string,timePhrase:number)
     }
     return ms
 }
-
+/*функция перевода однословного времени в число*/
 function ConvertSmallNumberFromStringToNumber(number:string) {
     let numberTime:number
     if(number == "одну" || number == "один"){
@@ -138,6 +138,7 @@ function ConvertSmallNumberFromStringToNumber(number:string) {
     }
     return numberTime
 }
+/*функция перевода времени, состоящего из двух слов в число*/
 function ConvertLargeNumberFromStringToNumber(number1:string,number2:string) {
     let secondPartOfNumber:number = ConvertSmallNumberFromStringToNumber(number2)
     let numberTime:number
