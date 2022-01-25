@@ -302,14 +302,10 @@ bot.on('message',(msg) =>{
                         break
                     }
 
-
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
 
                     /**/
-
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
-
-
                 }
                 else {
                     bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается днем (словом) или числом. Пример: неделю/месяц | 12 минут/3 дня ');
@@ -365,8 +361,9 @@ bot.on('message',(msg) =>{
                         }
                         bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Опечатка в дате!');
                     }
-                    bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.01.22 | 21-01-22');
-
+                    else {
+                        bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.01.22 | 21-01-22');
+                    }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
                     if (SearchForTheDayNumberOfTheWeek(words[keywordInMessage+1]) != -1){
@@ -384,6 +381,7 @@ bot.on('message',(msg) =>{
                         CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                         break
                     }
+
                     bot.sendMessage(chatId,'Ошибка! Не корректное слово, может быть задан только день недели. Пример: ср | среда | среду');
                 }
             }
