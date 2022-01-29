@@ -183,8 +183,9 @@ function diffDates(day_one:Date, day_two:Date) {
 /*функция разницы во времени между двумя датами (когда указано время в сообщении)*/
 function diffTime(chatId:number,timeMessage:number,differenceInDays:number, wordMessage:string ) {
     let millisecondsTime:number
-    let timeDifference:number
-    timeDifference = Math.abs((date.getHours() - timeMessage))
+    console.log(date.getHours())
+    let timeDifference:number = Math.abs(date.getHours() - timeMessage)
+    console.log(timeDifference)
     if (date.getHours() > timeMessage){
        millisecondsTime =  ConvertTimeToMilliseconds(chatId,"дней",differenceInDays) - ConvertTimeToMilliseconds(chatId,wordMessage, timeDifference )
     }
@@ -199,7 +200,7 @@ function SearchForTheDayNumberOfTheWeek (dayOfTheWeek:string):number{
     let indexArray: number
     let array: Array<string>
     if (dayOfTheWeek == 'вс' || dayOfTheWeek == 'пн' || dayOfTheWeek == 'вт' || dayOfTheWeek == 'ср' || dayOfTheWeek == 'чт' || dayOfTheWeek == 'пт' || dayOfTheWeek == 'сб'){
-        array = ['вс','пн','вт','ср','чт','пт','cб']
+        array = ['вс','пн','вт','ср','чт','пт','сб']
     }
     else if (dayOfTheWeek == 'воскресенье' || dayOfTheWeek == 'понедельник' || dayOfTheWeek == 'вторник' || dayOfTheWeek == 'среда' || dayOfTheWeek == 'четверг' || dayOfTheWeek == 'пятница' || dayOfTheWeek == 'суббота'){
         array = ['воскресенье','понедельник','вторник','среда','четверг','пятница','cуббота']
@@ -216,10 +217,19 @@ function SearchForTheDayNumberOfTheWeek (dayOfTheWeek:string):number{
 
 /*функция разницы между днями недели (когда указано время в сообщении)*/
 function diffDaysOfTheWeek(dayMessage:string) {
-    let differenceDaysOfTheWeek = Math.abs(date.getDay() - SearchForTheDayNumberOfTheWeek(dayMessage))
-    if (differenceDaysOfTheWeek == 0){
+    let numberOfTheWeekDayMessage:number = SearchForTheDayNumberOfTheWeek(dayMessage)
+    let differenceDaysOfTheWeek:number
+
+    if(date.getDay() > numberOfTheWeekDayMessage){
+        differenceDaysOfTheWeek = 7 - date.getDay() + numberOfTheWeekDayMessage
+    }
+    else if (date.getDay() < numberOfTheWeekDayMessage){
+        differenceDaysOfTheWeek = numberOfTheWeekDayMessage - date.getDay()
+    }
+    else {
         differenceDaysOfTheWeek = 7
     }
+
     return differenceDaysOfTheWeek
 }
 
@@ -373,15 +383,16 @@ bot.on('message',(msg) =>{
                                 bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
                                 break
                             }
+                            console.log(words[keywordInMessage+3])
                             millisecondsTime =  diffTime(chatId,parseInt(words[keywordInMessage+3]),differenceInDays,"часов")
                         }
-                        millisecondsTime = ConvertTimeToMilliseconds(chatId,"дней", differenceInDays)
-
+                        else {
+                            millisecondsTime = ConvertTimeToMilliseconds(chatId,"дней", differenceInDays)
+                        }
                         /**/
                         CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                         break
                     }
-
                     bot.sendMessage(chatId,'Ошибка! Не корректное слово, может быть задан только день недели. Пример: ср | среда | среду');
                 }
             }
