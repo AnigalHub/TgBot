@@ -175,6 +175,55 @@ function ConvertLargeNumberFromStringToNumber(number1:string,number2:string) {
     return numberTime
 }
 
+/*функция перевода времени - в зависимости от времени (однословного или из двух и более слов)*/
+function ConvertNumberFromStringToNumber(chatId:number,array:Array<string>,parameter1:number,parameter2:number,parameter3:number,parameter4:number) {
+    let messageFuture:string
+    let millisecondsTime:number
+
+    if(array[parameter1] == "секунду" || array[parameter1] == "минуту" || array[parameter1] == "полчаса"
+        || array[parameter1] == "час" || array[parameter1] == "день" || array[parameter1] == "неделю"
+        || array[parameter1] == "месяц" || array[parameter1] == "полгода" || array[parameter1] == "год"){
+
+        messageFuture = array.slice((parameter2),array.length).join(' ') //сообщение, которое напоминаем
+        millisecondsTime = ConvertTimeToMilliseconds(chatId,array[parameter1],1)
+    }
+    else if(array[parameter2]  == "одну" || array[parameter2] == "один" || array[parameter2] == "два" || array[parameter2] == "две"
+        || array[parameter2] == "три" || array[parameter2] == "четыре" || array[parameter2] == "пять" || array[parameter2] == "шесть"
+        || array[parameter2] == "семь" || array[parameter2] == "восемь" || array[parameter2] == "девять" || array[parameter2] == "десять"
+        || array[parameter2] == "одинадцать" || array[parameter2] == "двенадцать" || array[parameter2] == "тринадцать" ||
+        array[parameter2] == "четырнадцать" || array[parameter2] == "пятнадцать" || array[parameter2] == "шестнадцать" ||
+        array[parameter2] == "семнадцать" || array[parameter2] == "семнадцать" || array[parameter2] == "восемнадцать" ||
+        array[parameter2] == "девятнадцать" || array[parameter2] == "девятнадцать" || array[parameter2] == "двадцать" ||
+        array[parameter2] == "тридцать" || array[parameter2] == "сорок" || array[parameter2] == "пятьдесят"  ||
+        array[parameter2] == "шестьдесят" || array[parameter2] == "семьдесят" || array[parameter2] == "восемьдесят" ||
+        array[parameter2] == "девяносто" || array[parameter2] == "сто"){
+
+        messageFuture = array.slice((parameter4),array.length).join(' ') //сообщение, которое напоминаем
+        millisecondsTime = ConvertTimeToMilliseconds(chatId,array[parameter3],ConvertLargeNumberFromStringToNumber(array[parameter1],array[parameter2]))
+    }
+    else if( array[parameter1]  == "одну" || array[parameter1] == "один" || array[parameter1] == "два" || array[parameter1] == "две"
+        || array[parameter1] == "три" || array[parameter1] == "четыре" || array[parameter1] == "пять" || array[parameter1] == "шесть"
+        || array[parameter1] == "семь" || array[parameter1] == "восемь" || array[parameter1] == "девять" || array[parameter1] == "десять"
+        || array[parameter1] == "одинадцать" || array[parameter1] == "двенадцать" || array[parameter1] == "тринадцать" ||
+        array[parameter1] == "четырнадцать" || array[parameter1] == "пятнадцать" || array[parameter1] == "шестнадцать" ||
+        array[parameter1] == "семнадцать" || array[parameter1] == "семнадцать" || array[parameter1] == "восемнадцать" ||
+        array[parameter1] == "девятнадцать" || array[parameter1] == "девятнадцать" || array[parameter1] == "двадцать" ||
+        array[parameter1] == "тридцать" || array[parameter1] == "сорок" || array[parameter1] == "пятьдесят"  ||
+        array[parameter1] == "шестьдесят" || array[parameter1] == "семьдесят" || array[parameter1] == "восемьдесят" ||
+        array[parameter1] == "девяносто" || array[parameter1] == "сто"){
+
+        messageFuture = array.slice((parameter3),array.length).join(' ') //сообщение, которое напоминаем
+        millisecondsTime = ConvertTimeToMilliseconds(chatId,array[parameter2],ConvertSmallNumberFromStringToNumber(array[parameter1]))
+    }
+    else {
+       // bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
+        messageFuture = ''
+        millisecondsTime = 0
+    }
+    return [messageFuture,millisecondsTime]
+
+}
+
 /*функция разницы в днях между двумя датами*/
 function diffDates(day_one:Date, day_two:Date) {
     return (day_one.getTime() - day_two.getTime()) / (60 * 60 * 24 * 1000);
@@ -229,7 +278,6 @@ function diffDaysOfTheWeek(dayMessage:string) {
     else {
         differenceDaysOfTheWeek = 7
     }
-
     return differenceDaysOfTheWeek
 }
 
@@ -271,6 +319,7 @@ bot.on('message',(msg) =>{
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
+              
                     if(words[keywordInMessage+1] == "секунду" || words[keywordInMessage+1] == "минуту" || words[keywordInMessage+1] == "полчаса"
                         || words[keywordInMessage+1] == "час" || words[keywordInMessage+1] == "день" || words[keywordInMessage+1] == "неделю"
                         || words[keywordInMessage+1] == "месяц" || words[keywordInMessage+1] == "полгода" || words[keywordInMessage+1] == "год"){
@@ -308,9 +357,12 @@ bot.on('message',(msg) =>{
                         millisecondsTime = ConvertTimeToMilliseconds(chatId,words[keywordInMessage+2],ConvertSmallNumberFromStringToNumber(words[keywordInMessage+1]))
                     }
                     else {
-                        bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку'); //сюда не заходит
+                        bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
                         break
                     }
+
+
+
 
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
 
@@ -380,10 +432,9 @@ bot.on('message',(msg) =>{
                        let  differenceInDays = diffDaysOfTheWeek(words[keywordInMessage+1])
                         if(words[keywordInMessage+2] == "в"){
                             if (/^[А-яЁё]*$/.test(words[keywordInMessage+3]) == true){
-                                bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
-                                break
+                               // bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
+                               // break
                             }
-                            console.log(words[keywordInMessage+3])
                             millisecondsTime =  diffTime(chatId,parseInt(words[keywordInMessage+3]),differenceInDays,"часов")
                         }
                         else {
