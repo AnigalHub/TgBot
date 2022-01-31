@@ -219,8 +219,7 @@ function CountMillisecondsAndMessageWhenEnteringTimeAsString(chatId:number,array
         messageFuture = ''
         millisecondsTime = 0
     }
-    return [messageFuture,millisecondsTime]
-
+    return {messageFuture,millisecondsTime}
 }
 
 /*функция разницы в днях между двумя датами*/
@@ -324,13 +323,13 @@ bot.on('message',(msg) =>{
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
 
-                    let arrayMessageAndMilliseconds:any = CountMillisecondsAndMessageWhenEnteringTimeAsString(chatId,words,keywordInMessage+1,keywordInMessage+2, keywordInMessage+3,keywordInMessage+4)
-                    if (arrayMessageAndMilliseconds == ['',0]){
+                    let objMessageAndMilliseconds = CountMillisecondsAndMessageWhenEnteringTimeAsString(chatId,words,keywordInMessage+1,keywordInMessage+2, keywordInMessage+3,keywordInMessage+4)
+                    if (objMessageAndMilliseconds.messageFuture == '' && objMessageAndMilliseconds.millisecondsTime == 0){
                         bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
                         break
                     }
-                    messageFuture = arrayMessageAndMilliseconds[0]
-                    millisecondsTime = arrayMessageAndMilliseconds[1]
+                    messageFuture = objMessageAndMilliseconds.messageFuture
+                    millisecondsTime = objMessageAndMilliseconds.millisecondsTime
 
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
 
