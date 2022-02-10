@@ -40,6 +40,7 @@ function ConvertTimeToMilliseconds(chatId:number, word:string,timePhrase:number)
     }
     return ms
 }
+
 /*функция перевода однословного времени в число*/
 function ConvertSmallNumberFromStringToNumber(number:string) {
     let numberTime:number
@@ -138,6 +139,7 @@ function ConvertSmallNumberFromStringToNumber(number:string) {
     }
     return numberTime
 }
+
 /*функция перевода времени, состоящего из двух слов в число*/
 function ConvertLargeNumberFromStringToNumber(number1:string,number2:string) {
     let secondPartOfNumber:number = ConvertSmallNumberFromStringToNumber(number2)
@@ -322,7 +324,6 @@ bot.on('message',(msg) =>{
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
-
                     let objMessageAndMilliseconds = CountMillisecondsAndMessageWhenEnteringTimeAsString(chatId,words,keywordInMessage+1,keywordInMessage+2, keywordInMessage+3,keywordInMessage+4)
                     if (objMessageAndMilliseconds.messageFuture == '' && objMessageAndMilliseconds.millisecondsTime == 0){
                         bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
@@ -400,13 +401,13 @@ bot.on('message',(msg) =>{
                        let  differenceInDays = diffDaysOfTheWeek(words[keywordInMessage+1])
                         if(words[keywordInMessage+2] == "в"){
                             if (/^[А-яЁё]*$/.test(words[keywordInMessage+3]) == true){
-                                let arrayMessageAndMilliseconds:any = CountMillisecondsAndMessageWhenEnteringTimeAsString(chatId,words,keywordInMessage+3,keywordInMessage+4, keywordInMessage+5,keywordInMessage+6)
-                                if (arrayMessageAndMilliseconds == ['',0]){
+                                let objMessageAndMilliseconds = CountMillisecondsAndMessageWhenEnteringTimeAsString(chatId,words,keywordInMessage+3,keywordInMessage+4, keywordInMessage+5,keywordInMessage+6)
+                                if (objMessageAndMilliseconds.messageFuture == '' && objMessageAndMilliseconds.millisecondsTime == 0){
                                     bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
                                     break
                                 }
-                                messageFuture = arrayMessageAndMilliseconds[0]
-                                millisecondsTime =  diffTime(chatId,arrayMessageAndMilliseconds[1],differenceInDays,"секунд")
+                                messageFuture = objMessageAndMilliseconds.messageFuture
+                                millisecondsTime =  diffTime(chatId,objMessageAndMilliseconds.millisecondsTime,differenceInDays,"секунд")
                             }
                             else {
                                 millisecondsTime =  diffTime(chatId,parseInt(words[keywordInMessage+3]),differenceInDays,"часов")
