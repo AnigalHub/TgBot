@@ -2,6 +2,8 @@ import config from './config.json'
 import  TelegramBot from "node-telegram-bot-api"
 
 
+import ConvertTime from './ConvertTime'
+import DayOfTheWeek from './DayOfTheWeek'
 
 const token:string = config.token
 
