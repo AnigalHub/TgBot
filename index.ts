@@ -90,8 +90,7 @@ function CalculationOfFutureDateAndTime (time:number){
 
 /*дата в данную минуту*/
 let date = new Date();
-console.log(date.toString()) // день недели | дата | время
-console.log(Date.parse(date.toString())) //в милисекундах
+date.toString() // день недели | дата | время
 
 bot.on('message',(msg) =>{
     const chatId = msg.chat.id //id
