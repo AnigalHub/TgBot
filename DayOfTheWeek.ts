@@ -25,7 +25,7 @@ export  default class DayOfTheWeek {
     }
 
     /*разница между днями недели (когда указано время в сообщении)*/
-    DiffDaysOfTheWeek(dayMessage:string) {
+    DiffDaysOfTheWeek() {
         let date = new Date();
         let numberOfTheWeekDayMessage:number = this.SearchForTheDayNumberOfTheWeek()
         let differenceDaysOfTheWeek:number
