@@ -27,6 +27,8 @@
   "homepage": "https://github.com/AnigalHub/TgPlanner#readme",
   "dependencies": {
     "@types/node-telegram-bot-api": "^0.53.1",
-    "node-telegram-bot-api": "^0.54.0"
+    "@types/pg": "^8.6.4",
+    "node-telegram-bot-api": "^0.54.0",
+    "pg": "^8.7.3"
   }
 }
