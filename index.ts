@@ -95,8 +95,8 @@ date.toString() // день недели | дата | время
 bot.on('message',(msg) =>{
     const chatId = msg.chat.id //id
     let text = msg.text
-    if((text == text?.toLocaleLowerCase()) == false){
-        text?.toLocaleLowerCase()
+    if(text != text?.toLocaleLowerCase()){
+        text = text?.toLocaleLowerCase()
     }
     let words = text?.split(" ") //разбиение на элементы массива, "пробел"
      console.log(words) //массив
