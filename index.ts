@@ -94,7 +94,7 @@ date.toString() // день недели | дата | время
 
 bot.on('message',(msg) =>{
     const chatId = msg.chat.id //id
-    let words = msg.text?.split(" ") //разбиение на элементы массива, "пробел"
+    let words = msg.text?.toLowerCase().split(" ") //разбиение на элементы массива, "пробел"
      console.log(words) //массив
 
     let keywordInMessage:number //ключевое слово в сообщении
@@ -114,7 +114,7 @@ bot.on('message',(msg) =>{
                     }
                     messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') //сообщение, которое напоминаем
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    /**/
+                    
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
@@ -128,7 +128,7 @@ bot.on('message',(msg) =>{
 
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
 
-                    /**/
+                    
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                 }
                 else {
@@ -145,7 +145,7 @@ bot.on('message',(msg) =>{
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
                     }
                     messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-                   // console.log(messageFuture)
+                    console.log(messageFuture)
                     if (/[А-яЁё]/.test(words[keywordInMessage+3]) == true){ // только буквы
                         if(words[keywordInMessage+3] == "сегодня"){
                             timeDifference = Math.abs(date.getHours()  - time)
@@ -166,7 +166,6 @@ bot.on('message',(msg) =>{
                         millisecondsTime = convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
                         setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
 
-                        /**/
                         CalculationOfFutureDateAndTime(millisecondsTime)
                     }
                     else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true || words[keywordInMessage+3].includes('-') == true)){
@@ -178,7 +177,6 @@ bot.on('message',(msg) =>{
                             millisecondsTime =  diffTime(time,differenceInDays,words[keywordInMessage+2])
                             setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
 
-                            /**/
                             CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                         }
                         else {
@@ -215,7 +213,7 @@ bot.on('message',(msg) =>{
 
                         setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
 
-                        /**/
+                        
                         CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                         break
                     }
