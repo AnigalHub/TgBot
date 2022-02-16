@@ -36,8 +36,30 @@ export default class ConvertTime {
         return ms
     }
 
+    /*перевод слова-указателя времени в число*/
+    ConvertWordIndicatorOfTimeToNumber(wordIndicatorMessage:string){
+        let date = new Date();
+        let day:number
+        if(wordIndicatorMessage== "сегодня"){
+            day = date.getDate()
+        }
+        else if(wordIndicatorMessage == "завтра"){
+            day = date.getDate()+1
+        }
+        else if  (wordIndicatorMessage == "послезавтра"){
+            day = date.getDate()+2
+        }
+        else if  (wordIndicatorMessage == "послепослезавтра"){
+            day = date.getDate()+3
+        }
+        else{
+            day = -1
+        }
+        return day
+    }
+
     /*перевод однословного времени в число*/
-    ConvertSmallNumberFromStringToNumber(number:string) {
+    ConvertSmallNumberFromStringToNumber(number:string):number {
         let numberTime:number
         if(number == "одну" || number == "один"){
             numberTime = 1
@@ -136,7 +158,7 @@ export default class ConvertTime {
     }
 
     /*перевод времени, состоящего из двух слов в число*/
-    ConvertLargeNumberFromStringToNumber(number1:string,number2:string) {
+    ConvertLargeNumberFromStringToNumber(number1:string,number2:string):number {
         let secondPartOfNumber:number = this.ConvertSmallNumberFromStringToNumber(number2)
         let numberTime:number
         if(number1 == "двадцать"){
