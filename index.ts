@@ -174,11 +174,11 @@ bot.on('message',(msg) =>{
                         let monthMessage = parseInt(words[keywordInMessage+3].substring(3,6)) - 1
                         let dayMessage = parseInt(words[keywordInMessage+3].substring(0,2))
                         let futureDate = new Date(yearMessage, monthMessage, dayMessage)
-                        const futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds('час',time)
+                        const futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time)
                         const futureDateAndTime = new Date(futureMs)
 
                         if (words[keywordInMessage+3][2] == words[keywordInMessage+3][5] && (words[keywordInMessage+3][2] == '.' || words[keywordInMessage+3][2] == '-') && (words[keywordInMessage+3][5] == '.' || words[keywordInMessage+3][5] == '-')){
-                            millisecondsTime =  futureDateAndTime.getTime() - date.getTime() // diffTime(time,differenceInDays,words[keywordInMessage+2])
+                            millisecondsTime =  futureDateAndTime.getTime() - date.getTime()
                             setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
 
                             CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
