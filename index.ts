@@ -10,11 +10,6 @@ const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 const convertTime = new ConvertTime()
 
-
-/*функция разницы в днях между двумя датами*/
-function diffDates(day_one:Date, day_two:Date) {
-   return (day_one.getTime() - day_two.getTime()) / (60 * 60 * 24 * 1000);
-}
 /*функция подсчета времени и сообщения при вводе времени в виде строки*/
 function CountMillisecondsAndMessageWhenEnteringTimeAsString(array:Array<string>,parameter1:number,parameter2:number,parameter3:number,parameter4:number) {
     let messageFuture:string
