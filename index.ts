@@ -57,24 +57,14 @@ bot.on('message',(msg) =>{
                         break
                     }
                     let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage+1],words[keywordInMessage+2])
-                    let futureMs:number = 0
-                    if (time == -1 && (convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+1],1) == 0)){
-                        time = convertTime.ConvertSmallNumberFromStringToNumber(words[keywordInMessage+1])
-                        futureMs = date.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time)
-                        messageFuture = words.slice((keywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
+                    if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+1],1) == 0 && convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],1) == 0 &&
+                        convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],1) == 0 && convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+4],1) == 0){
+                        bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
+                        break
                     }
-                    else if(time > 20 && time%10 !== 0){
-                        futureMs = date.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],time)
-                        messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-                    }
-                    else{
-                        time = 1
-                        futureMs = date.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+1],time)
-                        messageFuture = words.slice((keywordInMessage+2),words.length).join(' ')//сообщение, которое напоминаем
-                    }
-                    const futureDateAndTime = new Date(futureMs)
-                    millisecondsTime =  futureDateAndTime.getTime() - date.getTime()
-                    console.log(messageFuture)
+                    let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
+                    messageFuture = objTime.message
+                    millisecondsTime = objTime.millisecondsTime
 
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
@@ -100,7 +90,6 @@ bot.on('message',(msg) =>{
                         break
                     }
                     messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-                    console.log(messageFuture)
 
                     if (/[А-яЁё]/.test(words[keywordInMessage+3]) == true){ // только буквы
                         if(words[keywordInMessage+3] == 'сегодня' && (time < date.getHours())){
@@ -144,32 +133,22 @@ bot.on('message',(msg) =>{
                     let dayOfTheWeek = new DayOfTheWeek(words[keywordInMessage+1])
                     if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
                        let  differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
-                       let futureDay = date.getDate() + differenceInDays+1
+                       let futureDay = date.getDate() + differenceInDays
                         if(words[keywordInMessage+2] == "в"){
                             if (/^[А-яЁё]*$/.test(words[keywordInMessage+3]) == true){
                                 let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
-                                let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage+3],words[keywordInMessage+4])
+                                let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage+3], words[keywordInMessage+4])
                                 if (words[keywordInMessage+3] == 'ноль' || words[keywordInMessage+3] == 'нуль'){
-                                   time = 24
+                                 time = 24
                                 }
-                                let futureMs:number = 0
-                                if (time == -1 && (convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],1) == 0)){
-                                    time = convertTime.ConvertSmallNumberFromStringToNumber(words[keywordInMessage+3])
-                                    futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+4],time)
-                                    messageFuture = words.slice((keywordInMessage+5),words.length).join(' ')//сообщение, которое напоминаем
+                                if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],1) == 0 && convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+4],1) == 0 &&
+                                    convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+5],1) == 0 && convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+6],1) == 0){
+                                    bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
+                                    break
                                 }
-                                else if(time > 20 && time%10 !== 0){
-                                    futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+5],time)
-                                    messageFuture = words.slice((keywordInMessage+6),words.length).join(' ')//сообщение, которое напоминаем
-                                }
-                                else{
-                                    time = 1
-                                    futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],time)
-                                    messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-                                }
-                                const futureDateAndTime = new Date(futureMs)
-                                millisecondsTime =  futureDateAndTime.getTime() - date.getTime()
-                                console.log(messageFuture)
+                                let  objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,futureDate,words,keywordInMessage+3,keywordInMessage+4,keywordInMessage+5,keywordInMessage+6)
+                                messageFuture = objTime.message
+                                millisecondsTime = objTime.millisecondsTime
                             }
                             else {
                                 let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
@@ -191,8 +170,8 @@ bot.on('message',(msg) =>{
                             }
                         }
                         else {
-                            millisecondsTime = convertTime.ConvertTimeToMilliseconds("дней", differenceInDays)
-                            messageFuture = words.slice((keywordInMessage+2),words.length).join(' ')//сообщение, которое напоминаем
+                          //  millisecondsTime = convertTime.ConvertTimeToMilliseconds("дней", differenceInDays)
+                          //  messageFuture = words.slice((keywordInMessage+2),words.length).join(' ')//сообщение, которое напоминаем
                         }
 
                         setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
