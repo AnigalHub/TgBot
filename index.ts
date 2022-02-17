@@ -76,7 +76,7 @@ bot.on('message',(msg) =>{
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                 }
                 else {
-                    bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается днем (словом) или числом. Пример: неделю/месяц | 12 минут/3 дня ');
+                    bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
                 }
                 break
             }
@@ -86,11 +86,16 @@ bot.on('message',(msg) =>{
                     let time = parseInt(words[keywordInMessage+1]) //время с типом число
                     if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
+                        break
+                    }
+                    if (time > 24){
+                        bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
+                        break
                     }
                     messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+                    console.log(messageFuture)
 
                     if (/[А-яЁё]/.test(words[keywordInMessage+3]) == true){ // только буквы
-
                         if(words[keywordInMessage+3] == 'сегодня' && (time < date.getHours())){
                             bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
                             break
@@ -104,7 +109,7 @@ bot.on('message',(msg) =>{
                         const futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time)
                         const futureDateAndTime = new Date(futureMs)
                         millisecondsTime = futureDateAndTime.getTime() - date.getTime()
-                            //convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],timeDifference)
+
                         setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
 
                         CalculationOfFutureDateAndTime(millisecondsTime)
