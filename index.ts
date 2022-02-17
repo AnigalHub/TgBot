@@ -57,26 +57,6 @@ function CountMillisecondsAndMessageWhenEnteringTimeAsString(array:Array<string>
     }
     return {messageFuture,millisecondsTime}
 }
-/*функция разницы во времени между двумя датами (когда указано время в сообщении)*/
-function diffTime(timeMessage:number,differenceInDays:number, wordMessage:string ) {
-    let millisecondsTime:number
-    let time:number
-    let timeDifference:number
-    if (wordMessage == 'секунд'){
-        time = timeMessage/3600000
-    }
-    else {
-        time=timeMessage
-    }
-    timeDifference = Math.abs(date.getHours() - time)
-    if (date.getHours() > time){
-        millisecondsTime =  convertTime.ConvertTimeToMilliseconds("дней",differenceInDays) - convertTime.ConvertTimeToMilliseconds("час", timeDifference )
-    }
-    else{
-        millisecondsTime =  convertTime.ConvertTimeToMilliseconds("дней",differenceInDays) + convertTime.ConvertTimeToMilliseconds("час", timeDifference )
-    }
-    return  millisecondsTime
-}
 /*функция расчета будущей даты и времени*/
 function CalculationOfFutureDateAndTime (time:number){
     let timeFuture = Date.parse(date.toString()) + time
@@ -187,23 +167,49 @@ bot.on('message',(msg) =>{
                     let dayOfTheWeek = new DayOfTheWeek(words[keywordInMessage+1])
                     if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
                        let  differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
+                       let futureDay = date.getDate() + differenceInDays+1
                         if(words[keywordInMessage+2] == "в"){
                             if (/^[А-яЁё]*$/.test(words[keywordInMessage+3]) == true){
                                 let objMessageAndMilliseconds = CountMillisecondsAndMessageWhenEnteringTimeAsString(words,keywordInMessage+3,keywordInMessage+4, keywordInMessage+5,keywordInMessage+6)
+
                                 if (objMessageAndMilliseconds.messageFuture == '' && objMessageAndMilliseconds.millisecondsTime == 0){
-                                    bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
+                                    bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку fhbfgh');
                                     break
                                 }
-                                messageFuture = objMessageAndMilliseconds.messageFuture
-                                millisecondsTime =  diffTime(objMessageAndMilliseconds.millisecondsTime,differenceInDays,"секунд")
+                                let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
+                                let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage+3],words[keywordInMessage+4])
+                                let futureMs:number = 0
+                                if (time == -1 && (convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],1) == 0)){
+                                    time = convertTime.ConvertSmallNumberFromStringToNumber(words[keywordInMessage+3])
+                                    futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+4],time)
+                                    messageFuture = words.slice((keywordInMessage+5),words.length).join(' ')//сообщение, которое напоминаем
+                                }
+                                else if(time > 20 && time%10 !== 0){
+                                    futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+5],time)
+                                    messageFuture = words.slice((keywordInMessage+6),words.length).join(' ')//сообщение, которое напоминаем
+                                }
+                                else{
+                                    time = 1
+                                    futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],time)
+                                    messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+                                }
+                                const futureDateAndTime = new Date(futureMs)
+                                millisecondsTime =  futureDateAndTime.getTime() - date.getTime()
+                                console.log(messageFuture)
                             }
                             else {
-                                millisecondsTime =  diffTime(parseInt(words[keywordInMessage+3]),differenceInDays,"часов")
+                                let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
+                                let time = parseInt(words[keywordInMessage+3]) //время с типом число
+                                let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+4],time)
+                                const futureDateAndTime = new Date(futureMs)
+                                millisecondsTime = futureDateAndTime.getTime() - date.getTime()
                                 messageFuture = words.slice((keywordInMessage+5),words.length).join(' ')//сообщение, которое напоминаем
+                                console.log(messageFuture)
                             }
                         }
                         else {
                             millisecondsTime = convertTime.ConvertTimeToMilliseconds("дней", differenceInDays)
+                            console.log('попал')
                             messageFuture = words.slice((keywordInMessage+2),words.length).join(' ')//сообщение, которое напоминаем
                         }
 
