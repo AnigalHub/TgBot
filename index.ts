@@ -52,6 +52,10 @@ bot.on('message',(msg) =>{
                     CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
+                    if(words[keywordInMessage+1] == 'ноль' || words[keywordInMessage+1] == 'ноль'){
+                        bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
+                        break
+                    }
                     let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage+1],words[keywordInMessage+2])
                     let futureMs:number = 0
                     if (time == -1 && (convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+1],1) == 0)){
@@ -84,6 +88,9 @@ bot.on('message',(msg) =>{
                 keywordInMessage = words?.indexOf(word) //индекс ключевого слова в массиве
                 if(/^[0-9]*$/.test(words[keywordInMessage+1]) == true) { // только цифры
                     let time = parseInt(words[keywordInMessage+1]) //время с типом число
+                    if(time == 0){
+                        time = 24
+                    }
                     if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
                         break
@@ -142,6 +149,9 @@ bot.on('message',(msg) =>{
                             if (/^[А-яЁё]*$/.test(words[keywordInMessage+3]) == true){
                                 let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
                                 let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage+3],words[keywordInMessage+4])
+                                if (words[keywordInMessage+3] == 'ноль' || words[keywordInMessage+3] == 'нуль'){
+                                   time = 24
+                                }
                                 let futureMs:number = 0
                                 if (time == -1 && (convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],1) == 0)){
                                     time = convertTime.ConvertSmallNumberFromStringToNumber(words[keywordInMessage+3])
