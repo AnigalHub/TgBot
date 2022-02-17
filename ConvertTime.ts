@@ -1,4 +1,4 @@
-export default class ConvertTime {
+export default class Time {
 
     /*перевод времени в милисекунды*/
     ConvertTimeToMilliseconds(word:string,timePhrase:number):number{
@@ -192,6 +192,33 @@ export default class ConvertTime {
             numberTime = -1
         }
         return numberTime
+    }
+
+    /*подсчет времени в виде строки в миллисекундах и сборка сообщения*/
+    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number, futureDate:Date, array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
+        let date = new Date();
+        //let time:number =  this.ConvertLargeNumberFromStringToNumber(array[arrayElement_1],array[arrayElement_2])
+        let futureMs:number = 0
+        let millisecondsTime: number = 0
+        let message:string
+
+        if (time == -1 && (this.ConvertTimeToMilliseconds(array[arrayElement_1],1) == 0)){
+            time = this.ConvertSmallNumberFromStringToNumber(array[arrayElement_1])
+            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_2],time)
+            message = array.slice((arrayElement_3),array.length).join(' ')//сообщение, которое напоминаем
+        }
+        else if(time > 20 && time%10 !== 0){
+            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_3],time)
+            message = array.slice((arrayElement_4),array.length).join(' ')//сообщение, которое напоминаем
+        }
+        else{
+            time = 1
+            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_1],time)
+            message = array.slice((arrayElement_2),array.length).join(' ')//сообщение, которое напоминаем
+        }
+        const futureDateAndTime = new Date(futureMs)
+        millisecondsTime =  futureDateAndTime.getTime() - date.getTime()
+        return {millisecondsTime, message}
     }
 
 }
