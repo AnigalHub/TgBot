@@ -195,9 +195,7 @@ export default class Time {
     }
 
     /*подсчет времени в виде строки в миллисекундах и сборка сообщения*/
-    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number, futureDate:Date, array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
-        let date = new Date();
-        //let time:number =  this.ConvertLargeNumberFromStringToNumber(array[arrayElement_1],array[arrayElement_2])
+    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number,date:Date,futureDate:Date,array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
         let futureMs:number = 0
         let millisecondsTime: number = 0
         let message:string
