@@ -30,7 +30,7 @@ export default  class Month {
         return indexArray
     }
     /*разница между месяцами(когда указано время в сообщении)*/
-    DiffMonth() {
+     DiffMonth():number {
         let date = new Date();
         let numberOfTheMonth:number = this.SearchForTheNumberOfTheMonth()
         let differenceInMonths:number
