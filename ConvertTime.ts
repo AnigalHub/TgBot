@@ -152,14 +152,14 @@ export default class Time {
             numberTime = 100
         }
         else{
-            numberTime = -1
+            numberTime = 0
         }
         return numberTime
     }
 
     /*перевод времени, состоящего из двух слов в число*/
     ConvertLargeNumberFromStringToNumber(number1:string,number2:string):number {
-        let secondPartOfNumber:number = this.ConvertSmallNumberFromStringToNumber(number2)
+          let  secondPartOfNumber = this.ConvertSmallNumberFromStringToNumber(number2)
         let numberTime:number
         if(number1 == "двадцать"){
             numberTime = 20 + secondPartOfNumber
@@ -189,7 +189,7 @@ export default class Time {
             numberTime = 100 + secondPartOfNumber
         }
         else{
-            numberTime = -1
+            numberTime = 0
         }
         return numberTime
     }
@@ -200,16 +200,19 @@ export default class Time {
         let millisecondsTime: number = 0
         let message:string
 
-        if (time == -1 && (this.ConvertTimeToMilliseconds(array[arrayElement_1],1) == 0)){
+        if (time%10 === 0 && this.ConvertTimeToMilliseconds(array[arrayElement_1],1) != 60000){
+            console.log('тут')
             time = this.ConvertSmallNumberFromStringToNumber(array[arrayElement_1])
             futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_2],time)
             message = array.slice((arrayElement_3),array.length).join(' ')//сообщение, которое напоминаем
         }
         else if(time > 20 && time%10 !== 0){
+            console.log('2')
             futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_3],time)
             message = array.slice((arrayElement_4),array.length).join(' ')//сообщение, которое напоминаем
         }
         else{
+            console.log('3')
             time = 1
             futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_1],time)
             message = array.slice((arrayElement_2),array.length).join(' ')//сообщение, которое напоминаем
@@ -219,5 +222,9 @@ export default class Time {
         return {millisecondsTime, message}
     }
 
+    /*подсчет разницы в миллисекундах между будущей и текущей датами*/
+    CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(){
+
+    }
 }
 
