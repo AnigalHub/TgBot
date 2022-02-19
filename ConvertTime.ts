@@ -197,19 +197,16 @@ export default class Time {
         let millisecondsTime: number = 0
         let message:string
 
-        if (time%10 === 0 && this.ConvertTimeToMilliseconds(array[arrayElement_1],1) != 60000){
-            console.log('тут')
+        if (time%10 == 0 && this.ConvertTimeToMilliseconds(array[arrayElement_1],1) != 60000){
             time = this.ConvertSmallNumberFromStringToNumber(array[arrayElement_1])
             futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_2],time)
             message = array.slice((arrayElement_3),array.length).join(' ')//сообщение, которое напоминаем
         }
-        else if(time > 20 && time%10 !== 0){
-            console.log('2')
+        else if(time > 20 && time%10 != 0){
             futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_3],time)
             message = array.slice((arrayElement_4),array.length).join(' ')//сообщение, которое напоминаем
         }
         else{
-            console.log('3')
             time = 1
             futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_1],time)
             message = array.slice((arrayElement_2),array.length).join(' ')//сообщение, которое напоминаем
