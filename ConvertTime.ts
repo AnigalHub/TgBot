@@ -112,9 +112,6 @@ export default class Time {
         else if(number == "семнадцать"){
             numberTime = 17
         }
-        else if(number == "семнадцать"){
-            numberTime = 17
-        }
         else if(number == "восемнадцать"){
             numberTime = 18
         }
