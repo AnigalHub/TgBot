@@ -98,9 +98,7 @@ bot.on('message',(msg) =>{
                         }
                         else{
                             let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
-                            const futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time)
-                            const futureDateAndTime = new Date(futureMs)
-                            millisecondsTime = futureDateAndTime.getTime() - date.getTime()
+                            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
 
                             setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                             CalculationOfFutureDateAndTime(millisecondsTime)
@@ -116,9 +114,8 @@ bot.on('message',(msg) =>{
                             let monthMessage = parseInt(words[keywordInMessage+3].substring(3,6)) - 1
                             let dayMessage = parseInt(words[keywordInMessage+3].substring(0,2))
                             let futureDate = new Date(yearMessage, monthMessage, dayMessage)
-                            const futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time)
-                            const futureDateAndTime = new Date(futureMs)
-                            millisecondsTime =  futureDateAndTime.getTime() - date.getTime()
+                            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
+
                             setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                             CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                         }
