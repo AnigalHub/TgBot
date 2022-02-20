@@ -43,11 +43,16 @@ bot.on('message',(msg) =>{
                     let time = parseInt(words[keywordInMessage+1])//время с типом число
                     messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') //сообщение, которое напоминаем
                     millisecondsTime = convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time)  //миллисекунды - через сколько надо прислать сообщение
-                    if(millisecondsTime == 0) {/*если такого времени нет и произошла ошибка и вернулся 0*/
+                    if(time == 0){
+                        bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
+                    }
+                    else if(millisecondsTime == 0) {/*если такого времени нет и произошла ошибка и вернулся 0*/
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
                     }
-                    setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                    else{
+                        setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+                        CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                    }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
                     if(words[keywordInMessage+1] == 'ноль' || words[keywordInMessage+1] == 'нуль'){
