@@ -10,7 +10,7 @@ export default class Time {
             ms = timePhrase*60*1000
         }
         else if(word == "полчаса"){
-            ms = timePhrase*30*1000
+            ms = timePhrase*1800000
         }
         else if(word == "час" || word == "часа" || word == "часов"){
             ms = timePhrase*3600000
