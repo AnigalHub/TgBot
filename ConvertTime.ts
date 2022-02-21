@@ -7,7 +7,7 @@ export default class Time {
             ms = timePhrase*1000
         }
         else if(word == "минут" || word == "минуты" || word == "минуту"){
-            ms = timePhrase*60*1000
+            ms = timePhrase*60000
         }
         else if(word == "полчаса"){
             ms = timePhrase*1800000
@@ -197,7 +197,9 @@ export default class Time {
         let millisecondsTime: number = 0
         let message:string
         let seconds:number = this.ConvertTimeToMilliseconds(array[arrayElement_1],1)
-        if (time%10 == 0 && seconds != 60000 && seconds != 180000 && seconds != 3600000 && seconds != 86400000 && seconds != 604800000 && seconds != 2592000000 && seconds != 15768000000 && seconds != 31536000000){
+        if (time%10 == 0 && seconds != 60000 && seconds != 180000
+            && seconds != 3600000 && seconds != 86400000 && seconds != 604800000
+            && seconds != 2592000000 && seconds != 15768000000 && seconds != 31536000000){
             time = this.ConvertSmallNumberFromStringToNumber(array[arrayElement_1])
             futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_2],time)
             message = array.slice((arrayElement_3),array.length).join(' ')//сообщение, которое напоминаем
