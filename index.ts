@@ -4,6 +4,7 @@ import  TelegramBot from "node-telegram-bot-api"
 
 import ConvertTime from './ConvertTime'
 import DayOfTheWeek from './DayOfTheWeek'
+import db from './db/index'
 
 const token:string = config.token
 
@@ -37,7 +38,7 @@ bot.on('message',(msg) =>{
         });
     }
 
-    
+
     let keywordInMessage:number //ключевое слово в сообщении
     let millisecondsTime: number = 0 //миллисекунды - через сколько надо прислать сообщение
     let messageFuture: string //сообщение, которое напоминаем
