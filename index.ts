@@ -31,6 +31,13 @@ bot.on('message',(msg) =>{
     let words = text?.split(" ") //разбиение на элементы массива, "пробел"
      console.log(words) //массив
 
+    if(words?.includes('') == true){
+        words = words?.filter(function (el) {
+            return (el != "" );
+        });
+    }
+
+    
     let keywordInMessage:number //ключевое слово в сообщении
     let millisecondsTime: number = 0 //миллисекунды - через сколько надо прислать сообщение
     let messageFuture: string //сообщение, которое напоминаем
@@ -184,7 +191,7 @@ bot.on('message',(msg) =>{
             }
 
     }
-    bot.sendMessage(chatId,'Привет');
+   // bot.sendMessage(chatId,'Привет');
 })
 
 
