@@ -19,6 +19,7 @@ function CalculationOfFutureDateAndTime (time:number){
     console.log(d.toString())// точная дата ( день недели | дата | время)
 }
 
+
 /*дата в данную минуту*/
 let date = new Date();
 console.log(date.toString()) // день недели | дата | время
@@ -30,19 +31,19 @@ bot.on('message',(msg) =>{
         text = text?.toLocaleLowerCase()
     }
     let words = text?.split(" ") //разбиение на элементы массива, "пробел"
-     console.log(words) //массив
+    console.log(words) //массив
 
     if(words?.includes('') == true){
         words = words?.filter(function (el) {
-            return (el != "" );
+            return (el != "");
         });
+        console.log(words) //массив
     }
 
 
     let keywordInMessage:number //ключевое слово в сообщении
     let millisecondsTime: number = 0 //миллисекунды - через сколько надо прислать сообщение
     let messageFuture: string //сообщение, которое напоминаем
-
 
     if(words!=undefined){
             if (words.includes('через') == true){
@@ -188,7 +189,7 @@ bot.on('message',(msg) =>{
                 }
             }
             else {
-                bot.sendMessage(chatId,'Ошибка! Не корректно задано время или дата');
+                bot.sendMessage(chatId,'Ошибка! Не корректный ввод');
             }
 
     }
