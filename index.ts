@@ -31,17 +31,17 @@ bot.on('message',(msg) =>{
         text = text?.toLocaleLowerCase()
     }
     let words = text?.split(" ") //разбиение на элементы массива, "пробел"
-    console.log(words) //массив
 
     if(words?.includes('') == true){
         words = words?.filter(function (el) {
             return (el != "");
         });
-        console.log(words) //массив
     }
+    console.log(words) //массив
 
 
     let keywordInMessage:number //ключевое слово в сообщении
+    let secondKeywordInMessage:number //ключевое слово в сообщении
     let millisecondsTime: number = 0 //миллисекунды - через сколько надо прислать сообщение
     let messageFuture: string //сообщение, которое напоминаем
 
@@ -76,8 +76,44 @@ bot.on('message',(msg) =>{
                         let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date,date,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
                         messageFuture = objTime.message
                         millisecondsTime = objTime.millisecondsTime
-                        setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                        CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+
+                        if (words.includes('в') == true || words.includes('во') == true){
+                            if(words.includes('во') == true){
+                                words.splice(words?.indexOf('во'),1,'в')
+                            }
+                            secondKeywordInMessage = words?.indexOf('в')
+                            let timeAfterSecondKeyword = parseInt(words[secondKeywordInMessage+1]) //время с типом число
+                            if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+2],1) < 86400000){
+                              if(/^[0-9]*$/.test(words[secondKeywordInMessage+1]) == true){
+                                  if(timeAfterSecondKeyword == 0){
+                                      timeAfterSecondKeyword = 24
+                                  }
+                                  if(convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+2],timeAfterSecondKeyword) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
+                                      bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
+                                  }
+                                  else if (timeAfterSecondKeyword > 24){
+                                      bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
+                                  }
+                                  else {
+                                      messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
+                                      const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
+                                      futureDate.setHours(0,0,0,0)
+                                      millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
+                                      setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+                                      CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                                  }
+                              }
+                            }
+                            else {
+                                bot.sendMessage(chatId,'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
+                            }
+                        }
+                        else {
+                           setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+                           CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                        }
+
+
                     }
                 }
                 else {
