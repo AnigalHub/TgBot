@@ -245,6 +245,9 @@ bot.on('message',(msg) =>{
 
                 }
             }
+            else if (words.includes('сегодня') == true){
+
+            }
             else {
                 bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
             }
