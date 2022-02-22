@@ -59,8 +59,64 @@ bot.on('message',(msg) =>{
                         bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
                     }
                     else{
-                        setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                        CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                        if (words.includes('в') == true || words.includes('во') == true){
+                            if(words.includes('во') == true){
+                                words.splice(words?.indexOf('во'),1,'в')
+                            }
+                            secondKeywordInMessage = words?.indexOf('в')
+                            if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+2],1) < 86400000){
+                                const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
+                                futureDate.setHours(0,0,0,0)
+                                if(/^[0-9]*$/.test(words[secondKeywordInMessage+1]) == true){ //только цифры
+                                    let timeAfterSecondKeyword = parseInt(words[secondKeywordInMessage+1]) //время с типом число
+                                    if(timeAfterSecondKeyword == 0){
+                                        timeAfterSecondKeyword = 24
+                                    }
+                                    if(convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+2],timeAfterSecondKeyword) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
+                                        bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
+                                    }
+                                    else if (timeAfterSecondKeyword > 24){
+                                        bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
+                                    }
+                                    else {
+                                        messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
+                                        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
+                                        setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+                                        CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                                    }
+                                }
+                                else if (/^[А-яЁё]*$/.test(words[secondKeywordInMessage+1]) == true) {// только буквы
+                                    if(convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+2],1) == 0 &&
+                                        convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+3],1) == 0 &&
+                                        convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+4],1) == 0 &&
+                                        convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+5],1) == 0){
+                                        bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
+                                    }
+                                    else {
+                                        let timeAfterSecondKeyword :number =  convertTime.ConvertLargeNumberFromStringToNumber(words[secondKeywordInMessage+1], words[secondKeywordInMessage+2])
+                                        if (words[secondKeywordInMessage+1] == 'ноль' || words[secondKeywordInMessage+1] == 'нуль'){
+                                            timeAfterSecondKeyword  = 24
+                                        }
+                                        let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,date,futureDate,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
+                                        messageFuture = objTime.message
+
+                                        millisecondsTime = objTime.millisecondsTime
+                                        setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+                                        CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                                    }
+                                }
+                                else {
+                                    bot.sendMessage(chatId, 'Ошибка! Некорректно введено время');
+                                }
+                            }
+                            else {
+                                bot.sendMessage(chatId,'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
+                            }
+                        }
+                        else {
+                            setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+                            CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                        }
                     }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
@@ -104,8 +160,10 @@ bot.on('message',(msg) =>{
                                   }
                               }
                               else if (/^[А-яЁё]*$/.test(words[secondKeywordInMessage+1]) == true) {// только буквы
-                                  if(convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+2],1) == 0 && convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+3],1) == 0 &&
-                                      convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+4],1) == 0 && convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+5],1) == 0){
+                                  if(convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+2],1) == 0 &&
+                                      convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+3],1) == 0 &&
+                                      convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+4],1) == 0 &&
+                                      convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+5],1) == 0){
                                       bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
                                   }
                                   else {
@@ -244,7 +302,7 @@ bot.on('message',(msg) =>{
                 }
             }
             else {
-                bot.sendMessage(chatId,'Ошибка! Не корректный ввод');
+                bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
             }
 
     }
