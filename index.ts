@@ -29,7 +29,7 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
                 if(convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],timeAfterSecondKeyword) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
                     bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
                 }
-                else if (timeAfterSecondKeyword > 24){
+                else if (timeAfterSecondKeyword > 24 && convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],1) >= 3600000){
                     bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
                 }
                 else {
@@ -40,17 +40,14 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
                 }
             }
             else if (/^[А-яЁё]*$/.test(array[secondKeywordInMessage+1]) == true) {// только буквы
-                if(convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],1) == 0 &&
+                if( convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+1],1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],1) == 0 &&
                     convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+3],1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+4],1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+5],1) == 0){
+                    convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+4],1) == 0){
                     bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
                 }
                 else {
                     let timeAfterSecondKeyword :number =  convertTime.ConvertLargeNumberFromStringToNumber(array[secondKeywordInMessage+1], array[secondKeywordInMessage+2])
-                    if (array[secondKeywordInMessage+1] == 'ноль' || array[secondKeywordInMessage+1] == 'нуль'){
-                        timeAfterSecondKeyword  = 24
-                    }
                     let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,date,futureDate,array,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
                     messageFuture = objTime.message
 
