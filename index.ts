@@ -5,6 +5,10 @@ import  TelegramBot from "node-telegram-bot-api"
 import ConvertTime from './ConvertTime'
 import DayOfTheWeek from './DayOfTheWeek'
 import db from './db/index'
+import {rejects} from "assert";
+import {waitForDebugger} from "inspector";
+import {createEvalAwarePartialHost} from "ts-node/dist/repl";
+import {tryReadFile} from "tslint/lib/files/reading";
 
 const token:string = config.token
 
@@ -76,7 +80,6 @@ function CalculationOfFutureDateAndTime (time:number){
     const d = new Date (timeFuture)
     console.log(d.toString())// точная дата ( день недели | дата | время)
 }
-
 
 /*дата в данную минуту*/
 let date = new Date();
@@ -151,21 +154,24 @@ bot.on('message',(msg) =>{
                     if(time == 0){
                         time = 24
                     }
-                    if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-                        bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
-                    }
-                    if (time > 24){
+                    if(time > 24){
                         bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
+                    }
+                    if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
+                        bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
+                    }
+                    if(!words[keywordInMessage+3]){
+                        bot.sendMessage(chatId, 'Ошибка! Не указана дата');
                     }
                     messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
 
                     if (/[А-яЁё]/.test(words[keywordInMessage+3]) == true){ // только буквы
                         let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(words[keywordInMessage+3])
-                        if(words[keywordInMessage+3] == 'сегодня' && (time < date.getHours())){
+                        if((time < date.getHours()) && words[keywordInMessage+3] == 'сегодня'){
                             bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
                         }
                         else if(futureDay  == -1){
-                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет. ');
+                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
                         }
                         else{
                             let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
@@ -247,7 +253,6 @@ bot.on('message',(msg) =>{
             }
             else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true)
             || (words.includes('послезавтра') == true) || (words.includes('послепослезавтра') == true)){
-
             }
             else {
                 bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
