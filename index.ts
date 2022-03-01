@@ -187,10 +187,21 @@ bot.on('message',(msg) =>{
                             bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Опечатка в дате!');
                         }
                         else {
-                            let yearMessage = parseInt(words[keywordInMessage+3].substring(6,12))
+                            let yearMessage = 0
+                            if(words[keywordInMessage+3].length == 10){
+                                yearMessage = parseInt(words[keywordInMessage+3].substring(6,12))
+                            }
+                            else if(words[keywordInMessage+3].length == 8){
+                                yearMessage = parseInt('20'+words[keywordInMessage+3].substring(6,8))
+                            }
+                            else{
+                                bot.sendMessage(chatId,'Ошибка!');
+                            }
+                            //yearMessage = parseInt(words[keywordInMessage+3].substring(6,12))
                             let monthMessage = parseInt(words[keywordInMessage+3].substring(3,6)) - 1
                             let dayMessage = parseInt(words[keywordInMessage+3].substring(0,2))
                             let futureDate = new Date(yearMessage, monthMessage, dayMessage)
+                            console.log(words[keywordInMessage+3].length)
                             millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
 
                             setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
