@@ -188,15 +188,21 @@ bot.on('message',(msg) =>{
                         }
                         else {
                             let yearMessage = 0
+                            console.log(String(parseInt(String(date.getFullYear()).slice(0,2)) + 1))
+
                             if(words[keywordInMessage+3].length == 10){
                                 yearMessage = parseInt(words[keywordInMessage+3].substring(6,12))
                             }
-                            else if(words[keywordInMessage+3].length == 8){
-                                yearMessage = parseInt('20'+words[keywordInMessage+3].substring(6,8))
+                            else if((words[keywordInMessage+3].length == 8) && (String(date.getFullYear()).slice(2,4) <= words[keywordInMessage+3].substring(6,8))){
+                                yearMessage = parseInt(String(date.getFullYear()).slice(0,2) + words[keywordInMessage+3].substring(6,8))
+                            }
+                            else if((words[keywordInMessage+3].length == 8) && (String(date.getFullYear()).slice(2,4) > words[keywordInMessage+3].substring(6,8))){
+                              yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0,2)) + 1) + words[keywordInMessage+3].substring(6,8))
                             }
                             else{
                                 bot.sendMessage(chatId,'Ошибка!');
                             }
+                            console.log(yearMessage)
                             //yearMessage = parseInt(words[keywordInMessage+3].substring(6,12))
                             let monthMessage = parseInt(words[keywordInMessage+3].substring(3,6)) - 1
                             let dayMessage = parseInt(words[keywordInMessage+3].substring(0,2))
