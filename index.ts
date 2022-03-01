@@ -185,6 +185,9 @@ bot.on('message',(msg) =>{
                                 if((time < date.getHours()) && words[keywordInMessage+3] == 'сегодня'){
                                     bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
                                 }
+                                else if(convertTime.ConvertTimeToMilliseconds(words[secondKeywordInMessage+3],1) >= 3600000){
+                                    bot.sendMessage(chatId, 'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
+                                }
                                 else if(futureDay  == -1){
                                     bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
                                 }
@@ -197,7 +200,6 @@ bot.on('message',(msg) =>{
                                     CalculationOfFutureDateAndTime(millisecondsTime)
                                 }
                             }
-
                         }
                         else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true ||
                             words[keywordInMessage+3].includes('-') == true || words[keywordInMessage+3].includes('/') == true )) {
