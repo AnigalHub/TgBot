@@ -154,65 +154,67 @@ bot.on('message',(msg) =>{
                     if(time == 0){
                         time = 24
                     }
-                    if(time > 24){
+                    if(time > 24 && convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],1) >= 3600000){
                         bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
                     }
-                    if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
+                    else if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
                     }
-                    if(!words[keywordInMessage+3]){
+                    else if(!words[keywordInMessage+3]){
                         bot.sendMessage(chatId, 'Ошибка! Не указана дата');
                     }
-                    messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-
-                    if (/[А-яЁё]/.test(words[keywordInMessage+3]) == true){ // только буквы
-                        let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(words[keywordInMessage+3])
-                        if((time < date.getHours()) && words[keywordInMessage+3] == 'сегодня'){
-                            bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
-                        }
-                        else if(futureDay  == -1){
-                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
-                        }
-                        else{
-                            let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
-                            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
-
-                            setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
-                            CalculationOfFutureDateAndTime(millisecondsTime)
-                        }
-                    }
-                    else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true || words[keywordInMessage+3].includes('-') == true)) {
-                        if (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
-                            (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-') &&
-                            (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-') ||
-                            (words[keywordInMessage + 3].length > 10) ||
-                            (words[keywordInMessage + 3].length == 7) ||
-                            (words[keywordInMessage + 3].length == 9)) {
-                                bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!');
-                        }
-                        else {
-                            let yearMessage
-                            if (words[keywordInMessage + 3].length == 10) {
-                                yearMessage = parseInt(words[keywordInMessage + 3].substring(6, 12))
+                    else{
+                        if (/[А-яЁё]/.test(words[keywordInMessage+3]) == true){ // только буквы
+                            let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(words[keywordInMessage+3])
+                            if((time < date.getHours()) && words[keywordInMessage+3] == 'сегодня'){
+                                bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
                             }
-                            else if ((words[keywordInMessage + 3].length == 8) && (String(date.getFullYear()).slice(2, 4) <= words[keywordInMessage + 3].substring(6, 8))) {
-                                yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + words[keywordInMessage + 3].substring(6, 8))
+                            else if(futureDay  == -1){
+                                bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
+                            }
+                            else{
+                                let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
+                                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
+
+                                messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+                                setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
+                                CalculationOfFutureDateAndTime(millisecondsTime)
+                            }
+                        }
+                        else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true || words[keywordInMessage+3].includes('-') == true)) {
+                            if (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
+                                (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-') &&
+                                (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-') ||
+                                (words[keywordInMessage + 3].length > 10) ||
+                                (words[keywordInMessage + 3].length == 7) ||
+                                (words[keywordInMessage + 3].length == 9)) {
+                                bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!');
                             }
                             else {
-                                yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + words[keywordInMessage + 3].substring(6, 8))
-                            }
-                            let monthMessage = parseInt(words[keywordInMessage + 3].substring(3, 6)) - 1
-                            let dayMessage = parseInt(words[keywordInMessage + 3].substring(0, 2))
-                            let futureDate = new Date(yearMessage, monthMessage, dayMessage)
-                            console.log(words[keywordInMessage + 3].length)
-                            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date, futureDate, time, words, keywordInMessage + 2)
+                                let yearMessage
+                                if (words[keywordInMessage + 3].length == 10) {
+                                    yearMessage = parseInt(words[keywordInMessage + 3].substring(6, 12))
+                                }
+                                else if ((words[keywordInMessage + 3].length == 8) && (String(date.getFullYear()).slice(2, 4) <= words[keywordInMessage + 3].substring(6, 8))) {
+                                    yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + words[keywordInMessage + 3].substring(6, 8))
+                                }
+                                else {
+                                    yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + words[keywordInMessage + 3].substring(6, 8))
+                                }
+                                let monthMessage = parseInt(words[keywordInMessage + 3].substring(3, 6)) - 1
+                                let dayMessage = parseInt(words[keywordInMessage + 3].substring(0, 2))
+                                let futureDate = new Date(yearMessage, monthMessage, dayMessage)
 
-                            setTimeout(() => bot.sendMessage(chatId, messageFuture), millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
-                            CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                                messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+                                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date, futureDate, time, words, keywordInMessage + 2)
+
+                                setTimeout(() => bot.sendMessage(chatId, messageFuture), millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
+                                CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                            }
                         }
-                    }
-                    else {
-                        bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.01.22 | 21-01-22');
+                        else {
+                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.01.22 | 21-01-22');
+                        }
                     }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
