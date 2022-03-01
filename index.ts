@@ -165,21 +165,39 @@ bot.on('message',(msg) =>{
                     }
                     else{
                         if (/[А-яЁё]/.test(words[keywordInMessage+3]) == true){ // только буквы
-                            let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(words[keywordInMessage+3])
-                            if((time < date.getHours()) && words[keywordInMessage+3] == 'сегодня'){
-                                bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
-                            }
-                            else if(futureDay  == -1){
-                                bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
+                            if((words[keywordInMessage+3]) == "в" || (words[keywordInMessage+3]) == "во"){
+                                let dayOfTheWeek = new DayOfTheWeek(words[keywordInMessage+4])
+                                if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+                                    let  differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
+                                    let futureDay = date.getDate() + differenceInDays
+                                    let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
+
+                                    let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time)
+                                    const futureDateAndTime = new Date(futureMs)
+                                    millisecondsTime = futureDateAndTime.getTime() - date.getTime()
+                                    messageFuture = words.slice((keywordInMessage+5),words.length).join(' ')//сообщение, которое напоминаем
+                                    setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
+                                    CalculationOfFutureDateAndTime(millisecondsTime)
+                                }
                             }
                             else{
-                                let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
-                                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
+                                let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(words[keywordInMessage+3])
+                                if((time < date.getHours()) && words[keywordInMessage+3] == 'сегодня'){
+                                    bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
+                                }
+                                else if(futureDay  == -1){
+                                    bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
+                                }
+                                else{
+                                    let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
+                                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
 
-                                messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-                                setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
-                                CalculationOfFutureDateAndTime(millisecondsTime)
+                                    messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+                                    setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
+                                    CalculationOfFutureDateAndTime(millisecondsTime)
+                                }
                             }
+
                         }
                         else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true ||
                             words[keywordInMessage+3].includes('-') == true || words[keywordInMessage+3].includes('/') == true )) {
@@ -214,7 +232,7 @@ bot.on('message',(msg) =>{
                             }
                         }
                         else {
-                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.05.22 | 21-05-22 | 21/05/22 ');
+                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | пт | субботу | 21.05.22 | 21-05-22 | 21/05/22 ');
                         }
                     }
                 }
