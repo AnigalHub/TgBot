@@ -181,36 +181,33 @@ bot.on('message',(msg) =>{
                             CalculationOfFutureDateAndTime(millisecondsTime)
                         }
                     }
-                    else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true || words[keywordInMessage+3].includes('-') == true)){
-                        if (words[keywordInMessage+3][2] != words[keywordInMessage+3][5] && (words[keywordInMessage+3][2] != '.' ||
-                            words[keywordInMessage+3][2] != '-') && (words[keywordInMessage+3][5] != '.' || words[keywordInMessage+3][5] != '-')){
-                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Опечатка в дате!');
+                    else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true || words[keywordInMessage+3].includes('-') == true)) {
+                        if (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
+                            (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-') &&
+                            (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-') ||
+                            (words[keywordInMessage + 3].length > 10) ||
+                            (words[keywordInMessage + 3].length == 7) ||
+                            (words[keywordInMessage + 3].length == 9)) {
+                                bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!');
                         }
                         else {
-                            let yearMessage = 0
-                            console.log(String(parseInt(String(date.getFullYear()).slice(0,2)) + 1))
-
-                            if(words[keywordInMessage+3].length == 10){
-                                yearMessage = parseInt(words[keywordInMessage+3].substring(6,12))
+                            let yearMessage
+                            if (words[keywordInMessage + 3].length == 10) {
+                                yearMessage = parseInt(words[keywordInMessage + 3].substring(6, 12))
                             }
-                            else if((words[keywordInMessage+3].length == 8) && (String(date.getFullYear()).slice(2,4) <= words[keywordInMessage+3].substring(6,8))){
-                                yearMessage = parseInt(String(date.getFullYear()).slice(0,2) + words[keywordInMessage+3].substring(6,8))
+                            else if ((words[keywordInMessage + 3].length == 8) && (String(date.getFullYear()).slice(2, 4) <= words[keywordInMessage + 3].substring(6, 8))) {
+                                yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + words[keywordInMessage + 3].substring(6, 8))
                             }
-                            else if((words[keywordInMessage+3].length == 8) && (String(date.getFullYear()).slice(2,4) > words[keywordInMessage+3].substring(6,8))){
-                              yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0,2)) + 1) + words[keywordInMessage+3].substring(6,8))
+                            else {
+                                yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + words[keywordInMessage + 3].substring(6, 8))
                             }
-                            else{
-                                bot.sendMessage(chatId,'Ошибка!');
-                            }
-                            console.log(yearMessage)
-                            //yearMessage = parseInt(words[keywordInMessage+3].substring(6,12))
-                            let monthMessage = parseInt(words[keywordInMessage+3].substring(3,6)) - 1
-                            let dayMessage = parseInt(words[keywordInMessage+3].substring(0,2))
+                            let monthMessage = parseInt(words[keywordInMessage + 3].substring(3, 6)) - 1
+                            let dayMessage = parseInt(words[keywordInMessage + 3].substring(0, 2))
                             let futureDate = new Date(yearMessage, monthMessage, dayMessage)
-                            console.log(words[keywordInMessage+3].length)
-                            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
+                            console.log(words[keywordInMessage + 3].length)
+                            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date, futureDate, time, words, keywordInMessage + 2)
 
-                            setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
+                            setTimeout(() => bot.sendMessage(chatId, messageFuture), millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                             CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
                         }
                     }
