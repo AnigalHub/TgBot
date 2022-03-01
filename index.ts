@@ -181,10 +181,11 @@ bot.on('message',(msg) =>{
                                 CalculationOfFutureDateAndTime(millisecondsTime)
                             }
                         }
-                        else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true || words[keywordInMessage+3].includes('-') == true)) {
+                        else if(/[А-яЁё]/.test(words[keywordInMessage+3]) == false && (words[keywordInMessage+3].includes('.') == true ||
+                            words[keywordInMessage+3].includes('-') == true || words[keywordInMessage+3].includes('/') == true )) {
                             if (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
-                                (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-') &&
-                                (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-') ||
+                                (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-' ||  words[keywordInMessage + 3][2] != '/') &&
+                                (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-' || words[keywordInMessage + 3][5] != '/') ||
                                 (words[keywordInMessage + 3].length > 10) ||
                                 (words[keywordInMessage + 3].length == 7) ||
                                 (words[keywordInMessage + 3].length == 9)) {
@@ -213,7 +214,7 @@ bot.on('message',(msg) =>{
                             }
                         }
                         else {
-                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.01.22 | 21-01-22');
+                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | 21.05.22 | 21-05-22 | 21/05/22 ');
                         }
                     }
                 }
