@@ -13,3 +13,7 @@ SELECT * FROM test
 
 ALTER TABLE test
 ADD time text
+
+ALTER TABLE test RENAME TO MessagesAndTime
+
+SELECT * FROM MessagesAndTime
