@@ -10,3 +10,6 @@ GRANT ALL ON test TO lang_user
 INSERT INTO test (text) VALUES ('world')
 
 SELECT * FROM test
+
+ALTER TABLE test
+ADD time text
