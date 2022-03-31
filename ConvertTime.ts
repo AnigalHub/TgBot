@@ -213,7 +213,6 @@ export default class Time {
             futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_1],time)
             message = array.slice((arrayElement_2),array.length).join(' ')//сообщение, которое напоминаем
         }
-       // const futureDateAndTime = new Date(futureMs)
         millisecondsTime =  futureMs - date
         return {millisecondsTime, message}
     }
@@ -222,7 +221,6 @@ export default class Time {
     CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date:number,futureDate:number,time:number,array:Array<string>,arrayElement:number){
         let diffMilliseconds:number = 0
         const futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement],time)
-       // const futureDateAndTime = new Date(futureMs)
         diffMilliseconds = futureMs - date
         return diffMilliseconds
     }
