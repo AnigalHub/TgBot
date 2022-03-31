@@ -200,20 +200,20 @@ var Time = /** @class */ (function () {
             && seconds != 3600000 && seconds != 86400000 && seconds != 604800000
             && seconds != 2592000000 && seconds != 15768000000 && seconds != 31536000000) {
             time = this.ConvertSmallNumberFromStringToNumber(array[arrayElement_1]);
-            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_2], time);
+            futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_2], time);
             message = array.slice((arrayElement_3), array.length).join(' '); //сообщение, которое напоминаем
         }
         else if (time > 20 && time % 10 != 0) {
-            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_3], time);
+            futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_3], time);
             message = array.slice((arrayElement_4), array.length).join(' '); //сообщение, которое напоминаем
         }
         else {
             time = 1;
-            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_1], time);
+            futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_1], time);
             message = array.slice((arrayElement_2), array.length).join(' '); //сообщение, которое напоминаем
         }
-        var futureDateAndTime = new Date(futureMs);
-        millisecondsTime = futureDateAndTime.getTime() - date.getTime();
+        // const futureDateAndTime = new Date(futureMs)
+        millisecondsTime = futureMs - date;
         return { millisecondsTime: millisecondsTime, message: message };
     };
     /*подсчет разницы в миллисекундах между будущей и текущей датами*/
