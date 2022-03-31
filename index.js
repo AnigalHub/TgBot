@@ -33,7 +33,7 @@ function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecon
                 }
                 else {
                     messageFuture = array.slice((secondKeywordInMessage + 3), array.length).join(' '); //сообщение, которое напоминаем
-                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date, futureDate, timeAfterSecondKeyword, array, secondKeywordInMessage + 2);
+                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date.getHours(), futureDate.getHours(), timeAfterSecondKeyword, array, secondKeywordInMessage + 2);
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                     CalculationOfFutureDateAndTime(millisecondsTime); //дата в которую напоминаем сообщение
                 }
@@ -187,7 +187,7 @@ bot.on('message', function (msg) {
                             }
                             else {
                                 var futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay);
-                                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date, futureDate, time, words, keywordInMessage + 2);
+                                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2);
                                 messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
                                 setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
                                 CalculationOfFutureDateAndTime(millisecondsTime);
@@ -219,7 +219,7 @@ bot.on('message', function (msg) {
                             var dayMessage = parseInt(words[keywordInMessage + 3].substring(0, 2));
                             var futureDate = new Date(yearMessage, monthMessage, dayMessage);
                             messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
-                            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date, futureDate, time, words, keywordInMessage + 2);
+                            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2);
                             setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
                             CalculationOfFutureDateAndTime(millisecondsTime); /*дата в которую напоминаем сообщение*/
                         }
