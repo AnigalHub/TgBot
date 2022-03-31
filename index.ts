@@ -38,7 +38,7 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
                 }
                 else {
                     messageFuture = array.slice((secondKeywordInMessage+3),array.length).join(' ')//сообщение, которое напоминаем
-                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,timeAfterSecondKeyword,array, secondKeywordInMessage+2)
+                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date.getHours(),futureDate.getHours(),timeAfterSecondKeyword,array, secondKeywordInMessage+2)
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                     CalculationOfFutureDateAndTime(millisecondsTime) //дата в которую напоминаем сообщение
                 }
@@ -202,7 +202,7 @@ bot.on('message',(msg) =>{
                                 }
                                 else{
                                     let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
-                                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,time,words,keywordInMessage+2)
+                                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage,futureDate.getHours(),time,words,keywordInMessage+2)
 
                                     messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
                                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
@@ -236,7 +236,7 @@ bot.on('message',(msg) =>{
                                 let futureDate = new Date(yearMessage, monthMessage, dayMessage)
 
                                 messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-                                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date, futureDate, time, words, keywordInMessage + 2)
+                                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2)
 
                                 setTimeout(() => bot.sendMessage(chatId, messageFuture), millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                                 CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
