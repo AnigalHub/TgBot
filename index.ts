@@ -91,6 +91,8 @@ bot.on('message',(msg) =>{
     console.log(chatId)
     console.log(msg.date)
     const timeMessage = msg.date
+    const c = new Date(timeMessage*1000)
+    console.log('дата сообщения',c.toString())// точная дата ( день недели | дата | время)
     let text = msg.text
     if(text != text?.toLocaleLowerCase()){
         text = text?.toLocaleLowerCase()
