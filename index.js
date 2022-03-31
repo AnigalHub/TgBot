@@ -35,7 +35,7 @@ function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecon
                     messageFuture = array.slice((secondKeywordInMessage + 3), array.length).join(' '); //сообщение, которое напоминаем
                     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date, futureDate, timeAfterSecondKeyword, array, secondKeywordInMessage + 2);
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    CalculationOfFutureDateAndTime(millisecondsTime); /*дата в которую напоминаем сообщение*/
+                    CalculationOfFutureDateAndTime(millisecondsTime); //дата в которую напоминаем сообщение
                 }
             }
             else if (/^[А-яЁё]*$/.test(array[secondKeywordInMessage + 1]) == true) { // только буквы
@@ -47,11 +47,11 @@ function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecon
                 }
                 else {
                     var timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(array[secondKeywordInMessage + 1], array[secondKeywordInMessage + 2]);
-                    var objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword, date, futureDate, array, secondKeywordInMessage + 1, secondKeywordInMessage + 2, secondKeywordInMessage + 3, secondKeywordInMessage + 4);
+                    var objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword, date.getTime(), futureDate.getTime(), array, secondKeywordInMessage + 1, secondKeywordInMessage + 2, secondKeywordInMessage + 3, secondKeywordInMessage + 4);
                     messageFuture = objTime.message;
                     millisecondsTime = objTime.millisecondsTime;
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    CalculationOfFutureDateAndTime(millisecondsTime); /*дата в которую напоминаем сообщение*/
+                    CalculationOfFutureDateAndTime(millisecondsTime); //дата в которую напоминаем сообщение
                 }
             }
             else {
@@ -64,7 +64,7 @@ function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecon
     }
     else {
         setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-        CalculationOfFutureDateAndTime(millisecondsTime); /*дата в которую напоминаем сообщение*/
+        CalculationOfFutureDateAndTime(millisecondsTime); //дата в которую напоминаем сообщение
     }
 }
 /*функция расчета будущей даты и времени*/
@@ -77,7 +77,13 @@ function CalculationOfFutureDateAndTime(time) {
 var date = new Date();
 console.log(date.toString()); // день недели | дата | время
 bot.on('message', function (msg) {
+    date = new Date();
     var chatId = msg.chat.id; //id
+    console.log(chatId);
+    console.log(msg.date);
+    var timeMessage = msg.date;
+    var c = new Date(timeMessage * 1000);
+    console.log('дата сообщения', c.toString()); // точная дата ( день недели | дата | время)
     var text = msg.text;
     if (text != (text === null || text === void 0 ? void 0 : text.toLocaleLowerCase())) {
         text = text === null || text === void 0 ? void 0 : text.toLocaleLowerCase();
@@ -107,7 +113,8 @@ bot.on('message', function (msg) {
                     bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
                 }
                 else {
-                    AddTimeWhenDayIsKnown(chatId, words, secondKeywordInMessage, millisecondsTime, messageFuture);
+                    console.log(messageFuture);
+                    //  AddTimeWhenDayIsKnown(chatId,words,secondKeywordInMessage,millisecondsTime,messageFuture)
                 }
             }
             else if (/^[А-яЁё]*$/.test(words[keywordInMessage + 1]) == true) { // только буквы
@@ -120,9 +127,11 @@ bot.on('message', function (msg) {
                 }
                 else {
                     var time = convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage + 1], words[keywordInMessage + 2]);
-                    var objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, date, date, words, keywordInMessage + 1, keywordInMessage + 2, keywordInMessage + 3, keywordInMessage + 4);
+                    var objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, words, keywordInMessage + 1, keywordInMessage + 2, keywordInMessage + 3, keywordInMessage + 4);
                     messageFuture = objTime.message;
                     millisecondsTime = objTime.millisecondsTime;
+                    console.log(messageFuture);
+                    console.log(millisecondsTime);
                     AddTimeWhenDayIsKnown(chatId, words, secondKeywordInMessage, millisecondsTime, messageFuture);
                 }
             }
@@ -240,9 +249,9 @@ bot.on('message', function (msg) {
                                 if (words[keywordInMessage + 3] == 'ноль' || words[keywordInMessage + 3] == 'нуль') {
                                     time = 24;
                                 }
-                                var objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, date, futureDate, words, keywordInMessage + 3, keywordInMessage + 4, keywordInMessage + 5, keywordInMessage + 6);
-                                messageFuture = objTime.message;
-                                millisecondsTime = objTime.millisecondsTime;
+                                //   let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date,futureDate,words,keywordInMessage+3,keywordInMessage+4,keywordInMessage+5,keywordInMessage+6)
+                                //  messageFuture = objTime.message
+                                //  millisecondsTime = objTime.millisecondsTime
                             }
                         }
                         else {
