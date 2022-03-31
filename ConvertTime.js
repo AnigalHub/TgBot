@@ -219,9 +219,9 @@ var Time = /** @class */ (function () {
     /*подсчет разницы в миллисекундах между будущей и текущей датами*/
     Time.prototype.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates = function (date, futureDate, time, array, arrayElement) {
         var diffMilliseconds = 0;
-        var futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement], time);
-        var futureDateAndTime = new Date(futureMs);
-        diffMilliseconds = futureDateAndTime.getTime() - date.getTime();
+        var futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement], time);
+        // const futureDateAndTime = new Date(futureMs)
+        diffMilliseconds = futureMs - date;
         return diffMilliseconds;
     };
     return Time;
