@@ -219,11 +219,11 @@ export default class Time {
     }
 
     /*подсчет разницы в миллисекундах между будущей и текущей датами*/
-    CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date:Date,futureDate:Date,time:number,array:Array<string>,arrayElement:number){
+    CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date:number,futureDate:number,time:number,array:Array<string>,arrayElement:number){
         let diffMilliseconds:number = 0
-        const futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement],time)
-        const futureDateAndTime = new Date(futureMs)
-        diffMilliseconds = futureDateAndTime.getTime() - date.getTime()
+        const futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement],time)
+       // const futureDateAndTime = new Date(futureMs)
+        diffMilliseconds = futureMs - date
         return diffMilliseconds
     }
 }
