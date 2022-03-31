@@ -192,7 +192,7 @@ export default class Time {
     }
 
     /*подсчет времени в виде строки в миллисекундах и сборка сообщения*/
-    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number,date:Date,futureDate:Date,array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
+    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number,date:number,futureDate:number,array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
         let futureMs:number = 0
         let millisecondsTime: number = 0
         let message:string
@@ -201,20 +201,20 @@ export default class Time {
             && seconds != 3600000 && seconds != 86400000 && seconds != 604800000
             && seconds != 2592000000 && seconds != 15768000000 && seconds != 31536000000){
             time = this.ConvertSmallNumberFromStringToNumber(array[arrayElement_1])
-            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_2],time)
+            futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_2],time)
             message = array.slice((arrayElement_3),array.length).join(' ')//сообщение, которое напоминаем
         }
         else if(time > 20 && time%10 != 0){
-            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_3],time)
+            futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_3],time)
             message = array.slice((arrayElement_4),array.length).join(' ')//сообщение, которое напоминаем
         }
         else{
             time = 1
-            futureMs = futureDate.getTime() + this.ConvertTimeToMilliseconds(array[arrayElement_1],time)
+            futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_1],time)
             message = array.slice((arrayElement_2),array.length).join(' ')//сообщение, которое напоминаем
         }
-        const futureDateAndTime = new Date(futureMs)
-        millisecondsTime =  futureDateAndTime.getTime() - date.getTime()
+       // const futureDateAndTime = new Date(futureMs)
+        millisecondsTime =  futureMs - date
         return {millisecondsTime, message}
     }
 
