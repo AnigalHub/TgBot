@@ -40,7 +40,7 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
                     messageFuture = array.slice((secondKeywordInMessage+3),array.length).join(' ')//сообщение, которое напоминаем
                     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date,futureDate,timeAfterSecondKeyword,array, secondKeywordInMessage+2)
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                    CalculationOfFutureDateAndTime(millisecondsTime) //дата в которую напоминаем сообщение
                 }
             }
             else if (/^[А-яЁё]*$/.test(array[secondKeywordInMessage+1]) == true) {// только буквы
@@ -52,12 +52,12 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
                 }
                 else {
                     let timeAfterSecondKeyword :number =  convertTime.ConvertLargeNumberFromStringToNumber(array[secondKeywordInMessage+1], array[secondKeywordInMessage+2])
-                    let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,date,futureDate,array,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
+                    let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,date.getTime(),futureDate.getTime(),array,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
                     messageFuture = objTime.message
 
                     millisecondsTime = objTime.millisecondsTime
                     setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                    CalculationOfFutureDateAndTime(millisecondsTime) //дата в которую напоминаем сообщение
                 }
             }
             else {
@@ -70,7 +70,7 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
     }
     else {
         setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-        CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+        CalculationOfFutureDateAndTime(millisecondsTime) //дата в которую напоминаем сообщение
     }
 }
 
@@ -86,7 +86,11 @@ let date = new Date();
 console.log(date.toString()) // день недели | дата | время
 
 bot.on('message',(msg) =>{
+    date = new Date();
     const chatId = msg.chat.id //id
+    console.log(chatId)
+    console.log(msg.date)
+    const timeMessage = msg.date
     let text = msg.text
     if(text != text?.toLocaleLowerCase()){
         text = text?.toLocaleLowerCase()
@@ -120,7 +124,8 @@ bot.on('message',(msg) =>{
                         bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
                     }
                     else{
-                        AddTimeWhenDayIsKnown(chatId,words,secondKeywordInMessage,millisecondsTime,messageFuture)
+                        console.log(messageFuture)
+                      //  AddTimeWhenDayIsKnown(chatId,words,secondKeywordInMessage,millisecondsTime,messageFuture)
                     }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
@@ -133,9 +138,11 @@ bot.on('message',(msg) =>{
                     }
                     else{
                         let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage+1],words[keywordInMessage+2])
-                        let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date,date,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
+                        let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,timeMessage,timeMessage,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
                         messageFuture = objTime.message
                         millisecondsTime = objTime.millisecondsTime
+                        console.log( messageFuture)
+                        console.log(millisecondsTime)
 
                         AddTimeWhenDayIsKnown(chatId,words,secondKeywordInMessage,millisecondsTime,messageFuture)
                     }
@@ -258,9 +265,9 @@ bot.on('message',(msg) =>{
                                     if (words[keywordInMessage+3] == 'ноль' || words[keywordInMessage+3] == 'нуль'){
                                         time = 24
                                     }
-                                    let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date,futureDate,words,keywordInMessage+3,keywordInMessage+4,keywordInMessage+5,keywordInMessage+6)
-                                    messageFuture = objTime.message
-                                    millisecondsTime = objTime.millisecondsTime
+                                 //   let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date,futureDate,words,keywordInMessage+3,keywordInMessage+4,keywordInMessage+5,keywordInMessage+6)
+                                  //  messageFuture = objTime.message
+                                  //  millisecondsTime = objTime.millisecondsTime
                                 }
                             }
                             else {
