@@ -88,8 +88,6 @@ console.log(date.toString()) // день недели | дата | время
 bot.on('message',(msg) =>{
     date = new Date();
     const chatId = msg.chat.id //id
-    console.log(chatId)
-    console.log(msg.date)
     const timeMessage = msg.date
     const c = new Date(timeMessage*1000)
     console.log('дата сообщения',c.toString())// точная дата ( день недели | дата | время)
