@@ -273,9 +273,9 @@ bot.on('message',(msg) =>{
                                     if (words[keywordInMessage+3] == 'ноль' || words[keywordInMessage+3] == 'нуль'){
                                         time = 24
                                     }
-                                 //   let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date,futureDate,words,keywordInMessage+3,keywordInMessage+4,keywordInMessage+5,keywordInMessage+6)
-                                  //  messageFuture = objTime.message
-                                  //  millisecondsTime = objTime.millisecondsTime
+                                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date.getHours(),futureDate.getHours(),words,keywordInMessage+3,keywordInMessage+4,keywordInMessage+5,keywordInMessage+6)
+                                   messageFuture = objTime.message
+                                    millisecondsTime = objTime.millisecondsTime
                                 }
                             }
                             else {
