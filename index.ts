@@ -17,7 +17,7 @@ const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 const convertTime = new ConvertTime()
 
-/*функция добавления времени, когда известен день*/
+//функция добавления времени, когда известен день
 function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string){
     if (array.includes('в') == true || array.includes('во') == true){
         if(array.includes('во') == true){
@@ -76,16 +76,16 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
     }
 }
 
-/*дата в данную минуту*/
+//дата в данную минуту
 let date = new Date();
-console.log(date.toString()) // день недели | дата | время
+console.log(date.toString()) //день недели | дата | время
 
 bot.on('message',(msg) =>{
     date = new Date();
     const chatId = msg.chat.id //id
     const timeMessage = msg.date
     const c = new Date(timeMessage*1000)
-    console.log('дата сообщения',c.toString())// точная дата ( день недели | дата | время)
+    console.log('дата сообщения',c.toString())//точная дата ( день недели | дата | время)
     let text = msg.text
     if(text != text?.toLocaleLowerCase()){
         text = text?.toLocaleLowerCase()
@@ -115,7 +115,7 @@ bot.on('message',(msg) =>{
                     if(time == 0){
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
                     }
-                    else if(millisecondsTime == 0) {/*если такого времени нет и произошла ошибка и вернулся 0*/
+                    else if(millisecondsTime == 0) {//если такого времени нет и произошла ошибка и вернулся 0
                         bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
                     }
                     else{
