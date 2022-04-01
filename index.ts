@@ -76,13 +76,6 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
     }
 }
 
-/*функция расчета будущей даты и времени*/
-function CalculationOfFutureDateAndTime (time:number){
-    let timeFuture = Date.parse(date.toString()) + time
-    const d = new Date (timeFuture)
-    console.log(d.toString())// точная дата ( день недели | дата | время)
-}
-
 /*дата в данную минуту*/
 let date = new Date();
 console.log(date.toString()) // день недели | дата | время
