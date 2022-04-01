@@ -119,8 +119,7 @@ bot.on('message',(msg) =>{
                         bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
                     }
                     else{
-                        console.log(messageFuture)
-                      //  AddTimeWhenDayIsKnown(chatId,words,secondKeywordInMessage,millisecondsTime,messageFuture)
+                      AddTimeWhenDayIsKnown(chatId,words,secondKeywordInMessage,millisecondsTime,messageFuture)
                     }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
