@@ -7,6 +7,7 @@ var config_json_1 = __importDefault(require("./config.json"));
 var node_telegram_bot_api_1 = __importDefault(require("node-telegram-bot-api"));
 var ConvertTime_1 = __importDefault(require("./ConvertTime"));
 var DayOfTheWeek_1 = __importDefault(require("./DayOfTheWeek"));
+var DateAsString_1 = require("./helper_functions/DateAsString");
 var token = config_json_1.default.token;
 var bot = new node_telegram_bot_api_1.default(token, { polling: true, baseApiUrl: "https://api.telegram.org" });
 var convertTime = new ConvertTime_1.default();
@@ -35,7 +36,8 @@ function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecon
                     messageFuture = array.slice((secondKeywordInMessage + 3), array.length).join(' '); //сообщение, которое напоминаем
                     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date.getHours(), futureDate.getHours(), timeAfterSecondKeyword, array, secondKeywordInMessage + 2);
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    CalculationOfFutureDateAndTime(millisecondsTime); //дата в которую напоминаем сообщение
+                    // CalculationOfFutureDateAndTime(millisecondsTime) //дата в которую напоминаем сообщение
+                    (0, DateAsString_1.DateAsString)(millisecondsTime, date);
                 }
             }
             else if (/^[А-яЁё]*$/.test(array[secondKeywordInMessage + 1]) == true) { // только буквы
@@ -51,7 +53,8 @@ function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecon
                     messageFuture = objTime.message;
                     millisecondsTime = objTime.millisecondsTime;
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-                    CalculationOfFutureDateAndTime(millisecondsTime); //дата в которую напоминаем сообщение
+                    //  CalculationOfFutureDateAndTime(millisecondsTime) //дата в которую напоминаем сообщение
+                    (0, DateAsString_1.DateAsString)(millisecondsTime, date);
                 }
             }
             else {
@@ -64,7 +67,8 @@ function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecon
     }
     else {
         setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
-        CalculationOfFutureDateAndTime(millisecondsTime); //дата в которую напоминаем сообщение
+        // CalculationOfFutureDateAndTime(millisecondsTime) //дата в которую напоминаем сообщение
+        (0, DateAsString_1.DateAsString)(millisecondsTime, date);
     }
 }
 /*функция расчета будущей даты и времени*/
@@ -79,8 +83,6 @@ console.log(date.toString()); // день недели | дата | время
 bot.on('message', function (msg) {
     date = new Date();
     var chatId = msg.chat.id; //id
-    console.log(chatId);
-    console.log(msg.date);
     var timeMessage = msg.date;
     var c = new Date(timeMessage * 1000);
     console.log('дата сообщения', c.toString()); // точная дата ( день недели | дата | время)
@@ -171,7 +173,8 @@ bot.on('message', function (msg) {
                                 millisecondsTime = futureDateAndTime.getTime() - date.getTime();
                                 messageFuture = words.slice((keywordInMessage + 5), words.length).join(' '); //сообщение, которое напоминаем
                                 setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
-                                CalculationOfFutureDateAndTime(millisecondsTime);
+                                // CalculationOfFutureDateAndTime(millisecondsTime)
+                                (0, DateAsString_1.DateAsString)(millisecondsTime, date);
                             }
                         }
                         else {
@@ -190,7 +193,8 @@ bot.on('message', function (msg) {
                                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2);
                                 messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
                                 setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
-                                CalculationOfFutureDateAndTime(millisecondsTime);
+                                // CalculationOfFutureDateAndTime(millisecondsTime)
+                                (0, DateAsString_1.DateAsString)(millisecondsTime, date);
                             }
                         }
                     }
@@ -221,7 +225,8 @@ bot.on('message', function (msg) {
                             messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
                             millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2);
                             setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
-                            CalculationOfFutureDateAndTime(millisecondsTime); /*дата в которую напоминаем сообщение*/
+                            // CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                            (0, DateAsString_1.DateAsString)(millisecondsTime, date);
                         }
                     }
                     else {
@@ -273,7 +278,8 @@ bot.on('message', function (msg) {
                     else {
                     }
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
-                    CalculationOfFutureDateAndTime(millisecondsTime); /*дата в которую напоминаем сообщение*/
+                    // CalculationOfFutureDateAndTime(millisecondsTime) /*дата в которую напоминаем сообщение*/
+                    (0, DateAsString_1.DateAsString)(millisecondsTime, date);
                 }
             }
         }
