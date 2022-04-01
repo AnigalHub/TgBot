@@ -4,7 +4,7 @@ export  default class DayOfTheWeek {
     constructor(dayOfTheWeekInMessage:string) {
         this.dayOfTheWeek = dayOfTheWeekInMessage
     }
-    /*поиск индекса (номера) дня недели*/
+    //поиск индекса (номера) дня недели
     SearchForTheDayNumberOfTheWeek ():number{
         let indexArray: number
         let array: Array<string>
@@ -27,7 +27,7 @@ export  default class DayOfTheWeek {
         return indexArray
     }
 
-    /*разница между днями недели (когда указано время в сообщении)*/
+    //разница между днями недели (когда указано время в сообщении)
     DiffDaysOfTheWeek() {
         let date = new Date();
         let numberOfTheWeekDayMessage:number = this.SearchForTheDayNumberOfTheWeek()

@@ -1,6 +1,6 @@
 export default class Time {
 
-    /*перевод времени в милисекунды*/
+    //перевод времени в милисекунды
     ConvertTimeToMilliseconds(word:string,timePhrase:number):number{
         let ms:number
         if(word == "секунд" || word == "секунды" || word == "секунду"){
@@ -36,7 +36,7 @@ export default class Time {
         return ms
     }
 
-    /*перевод слова-указателя времени в число*/
+    //перевод слова-указателя времени в число
     ConvertWordIndicatorOfTimeToNumber(wordIndicatorMessage:string){
         let date = new Date();
         let day:number
@@ -58,7 +58,7 @@ export default class Time {
         return day
     }
 
-    /*перевод однословного времени в число*/
+    //перевод однословного времени в число
     ConvertSmallNumberFromStringToNumber(number:string):number {
         let numberTime:number
         if(number == "одну" || number == "один"){
@@ -154,7 +154,7 @@ export default class Time {
         return numberTime
     }
 
-    /*перевод времени, состоящего из двух слов в число*/
+    //перевод времени, состоящего из двух слов в число
     ConvertLargeNumberFromStringToNumber(number1:string,number2:string):number {
           let  secondPartOfNumber = this.ConvertSmallNumberFromStringToNumber(number2)
         let numberTime:number
@@ -191,7 +191,7 @@ export default class Time {
         return numberTime
     }
 
-    /*подсчет времени в виде строки в миллисекундах и сборка сообщения*/
+    //подсчет времени в виде строки в миллисекундах и сборка сообщения
     CountTimeAsStringInMillisecondsAndAssembleMessage(time:number,date:number,futureDate:number,array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
         let futureMs:number = 0
         let millisecondsTime: number = 0
@@ -217,7 +217,7 @@ export default class Time {
         return {millisecondsTime, message}
     }
 
-    /*подсчет разницы в миллисекундах между будущей и текущей датами*/
+    //подсчет разницы в миллисекундах между будущей и текущей датами
     CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date:number,futureDate:number,time:number,array:Array<string>,arrayElement:number){
         let diffMilliseconds:number = 0
         const futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement],time)

@@ -4,7 +4,7 @@ export default  class Month {
     constructor(monthInMessage:string) {
         this.month = monthInMessage
     }
-    /*поиск индекса (номера) месяца*/
+    //поиск индекса (номера) месяца
     SearchForTheNumberOfTheMonth():number{
         let indexArray:number
         let array: Array<string>
@@ -34,7 +34,7 @@ export default  class Month {
         indexArray = array.indexOf(this.month)
         return indexArray
     }
-    /*разница между месяцами(когда указано время в сообщении)*/
+    //разница между месяцами(когда указано время в сообщении)
      DiffMonth():number {
         let date = new Date();
         let numberOfTheMonth:number = this.SearchForTheNumberOfTheMonth()
