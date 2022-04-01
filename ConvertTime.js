@@ -212,7 +212,6 @@ var Time = /** @class */ (function () {
             futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_1], time);
             message = array.slice((arrayElement_2), array.length).join(' '); //сообщение, которое напоминаем
         }
-        // const futureDateAndTime = new Date(futureMs)
         millisecondsTime = futureMs - date;
         return { millisecondsTime: millisecondsTime, message: message };
     };
@@ -220,7 +219,6 @@ var Time = /** @class */ (function () {
     Time.prototype.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates = function (date, futureDate, time, array, arrayElement) {
         var diffMilliseconds = 0;
         var futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement], time);
-        // const futureDateAndTime = new Date(futureMs)
         diffMilliseconds = futureMs - date;
         return diffMilliseconds;
     };
