@@ -101,15 +101,15 @@ bot.on('message', function (msg) {
     var messageFuture; //сообщение, которое напоминаем
     if (words != undefined) {
         if (words.includes('через') == true) {
-            keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf('через'); //индекс ключевого слова в массиве
+            keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf('через'); // индекс ключевого слова в массиве
             if (/^[0-9]*$/.test(words[keywordInMessage + 1]) == true) { // только цифры
-                var time = parseInt(words[keywordInMessage + 1]); //время с типом число
-                messageFuture = words.slice((keywordInMessage + 3), words.length).join(' '); //сообщение, которое напоминаем
+                var time = parseInt(words[keywordInMessage + 1]); // время с типом число
+                messageFuture = words.slice((keywordInMessage + 3), words.length).join(' '); // сообщение, которое напоминаем
                 millisecondsTime = convertTime.ConvertTimeToMilliseconds(words[keywordInMessage + 2], time); //миллисекунды - через сколько надо прислать сообщение
                 if (time == 0) {
                     bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
                 }
-                else if (millisecondsTime == 0) { //если такого времени нет и произошла ошибка и вернулся 0
+                else if (millisecondsTime == 0) { // если такого времени нет и произошла ошибка и вернулся 0
                     bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
                 }
                 else {
