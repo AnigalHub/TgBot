@@ -118,10 +118,15 @@ bot.on('message',(msg) =>{
     if(words!=undefined){
             if (words.includes('через') == true){
                 keywordInMessage = words?.indexOf('через') // индекс ключевого слова в массиве
-                if(/^[0-9]*$/.test(words[keywordInMessage+1]) == true){ // только цифры
-                    let time = parseInt(words[keywordInMessage+1]) // время с типом число
+                let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
+                let arrayElementAfterKeyword2 = words[keywordInMessage+2] // элемент массива после ключевого слова - второй
+                let arrayElementAfterKeyword3 = words[keywordInMessage+3] // элемент массива после ключевого слова - третий
+                let arrayElementAfterKeyword4 = words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
+
+                if(/^[0-9]*$/.test(arrayElementAfterKeyword1) == true){ // только цифры
+                    let time = parseInt(arrayElementAfterKeyword1) // время с типом число
                     messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') // сообщение, которое напоминаем
-                    millisecondsTime = convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],time)  //миллисекунды - через сколько надо прислать сообщение
+                    millisecondsTime = convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
                     if(time == 0) { // если время указано цифрой 0
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
                     }
@@ -133,10 +138,6 @@ bot.on('message',(msg) =>{
                     }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
-                    let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
-                    let arrayElementAfterKeyword2 = words[keywordInMessage+2] // элемент массива после ключевого слова - второй
-                    let arrayElementAfterKeyword3 = words[keywordInMessage+3] // элемент массива после ключевого слова - третий
-                    let arrayElementAfterKeyword4 = words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
 
                     if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword1,1) == 0 &&
                         convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,1) == 0 &&
