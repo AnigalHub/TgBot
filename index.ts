@@ -76,16 +76,18 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
     }
 }
 
+
+
 //дата в данную минуту
 let date = new Date();
 console.log(date.toString()) //день недели | дата | время
 
 bot.on('message',(msg) =>{
-    date = new Date();
-    const chatId = msg.chat.id //id
-    const timeMessage = msg.date
+
+    const chatId = msg.chat.id //id пользователя
+    const timeMessage = msg.date //дата в сек отправки сообщения, которое напоминаем
     const c = new Date(timeMessage*1000)
-    console.log('дата сообщения',c.toString())//точная дата ( день недели | дата | время)
+    console.log('дата сообщения',c.toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
     let text = msg.text
     if(text != text?.toLocaleLowerCase()){
         text = text?.toLocaleLowerCase()
