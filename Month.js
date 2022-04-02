@@ -4,7 +4,7 @@ var Month = /** @class */ (function () {
     function Month(monthInMessage) {
         this.month = monthInMessage;
     }
-    /*поиск индекса (номера) месяца*/
+    //поиск индекса (номера) месяца
     Month.prototype.SearchForTheNumberOfTheMonth = function () {
         var indexArray;
         var array;
@@ -34,7 +34,7 @@ var Month = /** @class */ (function () {
         indexArray = array.indexOf(this.month);
         return indexArray;
     };
-    /*разница между месяцами(когда указано время в сообщении)*/
+    //разница между месяцами(когда указано время в сообщении)
     Month.prototype.DiffMonth = function () {
         var date = new Date();
         var numberOfTheMonth = this.SearchForTheNumberOfTheMonth();
