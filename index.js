@@ -10,7 +10,6 @@ var DayOfTheWeek_1 = __importDefault(require("./DayOfTheWeek"));
 var DateAsString_1 = require("./helper_functions/DateAsString");
 var token = config_json_1.default.token;
 var bot = new node_telegram_bot_api_1.default(token, { polling: true, baseApiUrl: "https://api.telegram.org" });
-console.log('type', typeof bot);
 var convertTime = new ConvertTime_1.default();
 //функция добавления времени, когда известен день
 function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecondsTime, messageFuture) {
@@ -69,15 +68,22 @@ function AddTimeWhenDayIsKnown(chatId, array, secondKeywordInMessage, millisecon
         (0, DateAsString_1.DateAsString)(millisecondsTime, date);
     }
 }
+//функция удаления пустых элементов из массива
+function RemoteEmptyElementsFromArray(array) {
+    if ((array === null || array === void 0 ? void 0 : array.includes('')) == true) {
+        array = array === null || array === void 0 ? void 0 : array.filter(function (el) {
+            return (el != "");
+        });
+    }
+}
 //дата в данную минуту
 var date = new Date();
 console.log(date.toString()); //день недели | дата | время
 bot.on('message', function (msg) {
-    date = new Date();
-    var chatId = msg.chat.id; //id
-    var timeMessage = msg.date;
+    var chatId = msg.chat.id; //id пользователя
+    var timeMessage = msg.date; //дата в сек отправки сообщения, которое напоминаем
     var c = new Date(timeMessage * 1000);
-    console.log('дата сообщения', c.toString()); //точная дата ( день недели | дата | время)
+    console.log('дата сообщения', c.toString()); //дата и время, когда отправили сообщение, которое напомнить в виде строки
     var text = msg.text;
     if (text != (text === null || text === void 0 ? void 0 : text.toLocaleLowerCase())) {
         text = text === null || text === void 0 ? void 0 : text.toLocaleLowerCase();
@@ -123,8 +129,6 @@ bot.on('message', function (msg) {
                     var objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, words, keywordInMessage + 1, keywordInMessage + 2, keywordInMessage + 3, keywordInMessage + 4);
                     messageFuture = objTime.message;
                     millisecondsTime = objTime.millisecondsTime;
-                    console.log(messageFuture);
-                    console.log(millisecondsTime);
                     AddTimeWhenDayIsKnown(chatId, words, secondKeywordInMessage, millisecondsTime, messageFuture);
                 }
             }
