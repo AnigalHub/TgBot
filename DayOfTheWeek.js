@@ -4,7 +4,7 @@ var DayOfTheWeek = /** @class */ (function () {
     function DayOfTheWeek(dayOfTheWeekInMessage) {
         this.dayOfTheWeek = dayOfTheWeekInMessage;
     }
-    /*поиск индекса (номера) дня недели*/
+    //поиск индекса (номера) дня недели
     DayOfTheWeek.prototype.SearchForTheDayNumberOfTheWeek = function () {
         var indexArray;
         var array;
@@ -26,7 +26,7 @@ var DayOfTheWeek = /** @class */ (function () {
         indexArray = array.indexOf(this.dayOfTheWeek);
         return indexArray;
     };
-    /*разница между днями недели (когда указано время в сообщении)*/
+    //разница между днями недели (когда указано время в сообщении)
     DayOfTheWeek.prototype.DiffDaysOfTheWeek = function () {
         var date = new Date();
         var numberOfTheWeekDayMessage = this.SearchForTheDayNumberOfTheWeek();
