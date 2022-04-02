@@ -76,6 +76,14 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
     }
 }
 
+//функция удаления пустых элементов из массива
+function RemoteEmptyElementsFromArray(array:Array<string>){
+    if(array?.includes('') == true){
+        array = array?.filter(function (el) {
+          return (el != "");
+        });
+    }
+}
 
 
 //дата в данную минуту
@@ -94,11 +102,15 @@ bot.on('message',(msg) =>{
     }
     let words = text?.split(" ") //разбиение на элементы массива, "пробел"
 
-    if(words?.includes('') == true){
-        words = words?.filter(function (el) {
-            return (el != "");
-        });
-    }
+   // if(words?.includes('') == true){
+      //  words = words?.filter(function (el) {
+       //     return (el != "");
+       // });
+    //}
+    console.log(words) //массив
+
+
+
     console.log(words) //массив
 
 
