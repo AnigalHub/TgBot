@@ -133,17 +133,22 @@ bot.on('message',(msg) =>{
                     }
                 }
                 else if (/^[А-яЁё]*$/.test(words[keywordInMessage+1]) == true){ // только буквы
+                    let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
+                    let arrayElementAfterKeyword2 = words[keywordInMessage+2] // элемент массива после ключевого слова - второй
+                    let arrayElementAfterKeyword3 = words[keywordInMessage+3] // элемент массива после ключевого слова - третий
+                    let arrayElementAfterKeyword4 = words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
 
-
-                    if(convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+1],1) == 0 && convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+2],1) == 0 &&
-                        convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+3],1) == 0 && convertTime.ConvertTimeToMilliseconds(words[keywordInMessage+4],1) == 0){
+                    if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword1,1) == 0 &&
+                        convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,1) == 0 &&
+                        convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3,1) == 0 &&
+                        convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4,1) == 0){
                         bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
                     }
-                    else if(words[keywordInMessage+1] == 'ноль' || words[keywordInMessage+1] == 'нуль'){ // если время указано ноль/нуль
+                    else if(arrayElementAfterKeyword1 == 'ноль' || arrayElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
                         bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
                     }
                     else{
-                        let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(words[keywordInMessage+1],words[keywordInMessage+2])
+                        let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword1,arrayElementAfterKeyword2)
                         let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,timeMessage,timeMessage,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
                         messageFuture = objTime.message
                         millisecondsTime = objTime.millisecondsTime
