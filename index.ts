@@ -102,15 +102,11 @@ bot.on('message',(msg) =>{
     }
     let words = text?.split(" ") //разбиение на элементы массива, "пробел"
 
-   // if(words?.includes('') == true){
-      //  words = words?.filter(function (el) {
-       //     return (el != "");
-       // });
-    //}
-    console.log(words) //массив
-
-
-
+    if(words?.includes('') == true){
+     words = words?.filter(function (el) {
+          return (el != "");
+        });
+    }
     console.log(words) //массив
 
 
@@ -149,9 +145,6 @@ bot.on('message',(msg) =>{
                         let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,timeMessage,timeMessage,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
                         messageFuture = objTime.message
                         millisecondsTime = objTime.millisecondsTime
-                        console.log( messageFuture)
-                        console.log(millisecondsTime)
-
                         AddTimeWhenDayIsKnown(chatId,words,secondKeywordInMessage,millisecondsTime,messageFuture)
                     }
                 }
