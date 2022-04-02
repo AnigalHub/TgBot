@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Time = /** @class */ (function () {
     function Time() {
     }
-    /*перевод времени в милисекунды*/
+    //перевод времени в милисекунды
     Time.prototype.ConvertTimeToMilliseconds = function (word, timePhrase) {
         var ms;
         if (word == "секунд" || word == "секунды" || word == "секунду") {
@@ -38,7 +38,7 @@ var Time = /** @class */ (function () {
         }
         return ms;
     };
-    /*перевод слова-указателя времени в число*/
+    //перевод слова-указателя времени в число
     Time.prototype.ConvertWordIndicatorOfTimeToNumber = function (wordIndicatorMessage) {
         var date = new Date();
         var day;
@@ -59,7 +59,7 @@ var Time = /** @class */ (function () {
         }
         return day;
     };
-    /*перевод однословного времени в число*/
+    //перевод однословного времени в число
     Time.prototype.ConvertSmallNumberFromStringToNumber = function (number) {
         var numberTime;
         if (number == "одну" || number == "один") {
@@ -154,7 +154,7 @@ var Time = /** @class */ (function () {
         }
         return numberTime;
     };
-    /*перевод времени, состоящего из двух слов в число*/
+    //перевод времени, состоящего из двух слов в число
     Time.prototype.ConvertLargeNumberFromStringToNumber = function (number1, number2) {
         var secondPartOfNumber = this.ConvertSmallNumberFromStringToNumber(number2);
         var numberTime;
@@ -190,7 +190,7 @@ var Time = /** @class */ (function () {
         }
         return numberTime;
     };
-    /*подсчет времени в виде строки в миллисекундах и сборка сообщения*/
+    //подсчет времени в виде строки в миллисекундах и сборка сообщения
     Time.prototype.CountTimeAsStringInMillisecondsAndAssembleMessage = function (time, date, futureDate, array, arrayElement_1, arrayElement_2, arrayElement_3, arrayElement_4) {
         var futureMs = 0;
         var millisecondsTime = 0;
@@ -215,7 +215,7 @@ var Time = /** @class */ (function () {
         millisecondsTime = futureMs - date;
         return { millisecondsTime: millisecondsTime, message: message };
     };
-    /*подсчет разницы в миллисекундах между будущей и текущей датами*/
+    //подсчет разницы в миллисекундах между будущей и текущей датами
     Time.prototype.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates = function (date, futureDate, time, array, arrayElement) {
         var diffMilliseconds = 0;
         var futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement], time);
