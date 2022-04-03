@@ -1,28 +1,16 @@
 import config from './config.json'
 import  TelegramBot from "node-telegram-bot-api"
-
-
 import ConvertTime from './ConvertTime'
 import DayOfTheWeek from './DayOfTheWeek'
 import {DateAsString} from './helper_functions/DateAsString'
-
 import addTime from './helper_functions/AddTimeWhenDayIsKnown'
+import RemoveEmptyElementsFromArray from './helper_functions/RemoveEmptyElementsFromArray'
 
 const token:string = config.token
-
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 const convertTime = new ConvertTime()
 
 //функция удаления пустых элементов из массива
-function RemoveEmptyElementsFromArray(array:Array<string>){
-    let output:Array<string> = array
-    if(array.includes(' ') == true){
-        output = array.filter(function (el) {
-          return (el != "");
-        });
-    }
-    return output
-}
 
 //дата в данную минуту
 let date = new Date();
