@@ -49,12 +49,17 @@ var RemoveEmptyElementsFromArray_1 = __importDefault(require("./helper_functions
 var token = config_json_1.default.token;
 var bot = new node_telegram_bot_api_1.default(token, { polling: true, baseApiUrl: "https://api.telegram.org" });
 var convertTime = new ConvertTime_1.default();
-//функция удаления пустых элементов из массива
 //дата в данную минуту
 var date = new Date();
 console.log(date.toString()); //день недели | дата | время
+function prepareMessage(message) {
+    var text = message.toLocaleLowerCase();
+    var words = text.split(" "); //разбиение на элементы массива, "пробел"
+    words = (0, RemoveEmptyElementsFromArray_1.default)(words); // избавление в массиве от пустых элементов
+    return words;
+}
 bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
-    var chatId, timeMessage, text, words, keywordInMessage, secondKeywordInMessage, millisecondsTime, messageFuture, arrayElementAfterKeyword1, arrayElementAfterKeyword2, arrayElementAfterKeyword3, arrayElementAfterKeyword4, time, time, objTime, arrayElementAfterKeyword1, arrayElementAfterKeyword2, arrayElementAfterKeyword3, arrayElementAfterKeyword4, arrayElementAfterKeyword5, arrayElementAfterKeyword6, time, dayOfTheWeek, differenceInDays, futureDay, futureDate, futureMs, futureDateAndTime, futureDay, futureDate, yearMessage, monthMessage, dayMessage, futureDate, dayOfTheWeek, differenceInDays, futureDay, futureDate, time, objTime, time, futureMs, futureDateAndTime;
+    var chatId, timeMessage, words, keywordInMessage, secondKeywordInMessage, millisecondsTime, messageFuture, arrayElementAfterKeyword1, arrayElementAfterKeyword2, arrayElementAfterKeyword3, arrayElementAfterKeyword4, time, time, objTime, arrayElementAfterKeyword1, arrayElementAfterKeyword2, arrayElementAfterKeyword3, arrayElementAfterKeyword4, arrayElementAfterKeyword5, arrayElementAfterKeyword6, time, dayOfTheWeek, differenceInDays, futureDay, futureDate, futureMs, futureDateAndTime, futureDay, futureDate, yearMessage, monthMessage, dayMessage, futureDate, dayOfTheWeek, differenceInDays, futureDay, futureDate, time, objTime, time, futureMs, futureDateAndTime;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -63,18 +68,13 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
                 timeMessage = msg.date //дата в сек отправки сообщения, которое напоминаем
                 ;
                 console.log('дата сообщения', new Date(timeMessage * 1000).toString()); //дата и время, когда отправили сообщение, которое напомнить в виде строки
-                text = msg.text // сообщение пользователя
-                ;
-                if (!!text) return [3 /*break*/, 2];
+                if (!!msg.text) return [3 /*break*/, 2];
                 return [4 /*yield*/, bot.sendMessage(chatId, "нет сообщения")];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
             case 2:
-                text = text.toLocaleLowerCase(); // изменение регистра букв - на маленькие
-                words = text.split(" ") //разбиение на элементы массива, "пробел"
-                ;
-                words = (0, RemoveEmptyElementsFromArray_1.default)(words); // избавление в массиве от пустых элементов
+                words = prepareMessage(msg.text);
                 console.log(words); //массив
                 secondKeywordInMessage = 0 //ключевое слово в сообщении
                 ;

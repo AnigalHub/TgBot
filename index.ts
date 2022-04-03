@@ -1,5 +1,5 @@
 import config from './config.json'
-import  TelegramBot from "node-telegram-bot-api"
+import TelegramBot from "node-telegram-bot-api"
 import ConvertTime from './ConvertTime'
 import DayOfTheWeek from './DayOfTheWeek'
 import {DateAsString} from './helper_functions/DateAsString'
@@ -10,28 +10,27 @@ const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 const convertTime = new ConvertTime()
 
-//функция удаления пустых элементов из массива
-
 //дата в данную минуту
 let date = new Date();
 console.log(date.toString()) //день недели | дата | время
 
-bot.on('message', async (msg) =>{
+function prepareMessage(message:string){
+    let text = message.toLocaleLowerCase()
+    let words = text.split(" ") //разбиение на элементы массива, "пробел"
+    words = RemoveEmptyElementsFromArray(words) // избавление в массиве от пустых элементов
+    return words;
+}
 
+bot.on('message', async (msg) =>{
     const chatId = msg.chat.id //id пользователя
     const timeMessage = msg.date //дата в сек отправки сообщения, которое напоминаем
     console.log('дата сообщения',new Date(timeMessage*1000).toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
-    let text = msg.text // сообщение пользователя
-    if(!text){
+    if(!msg.text){
         await bot.sendMessage( chatId,"нет сообщения")
         return
     }
-    text = text.toLocaleLowerCase() // изменение регистра букв - на маленькие
-    let words = text.split(" ") //разбиение на элементы массива, "пробел"
-
-    words = RemoveEmptyElementsFromArray(words) // избавление в массиве от пустых элементов
+    let words = prepareMessage(msg.text)
     console.log(words) //массив
-
 
     let keywordInMessage:number //ключевое слово в сообщении
     let secondKeywordInMessage:number = 0 //ключевое слово в сообщении
