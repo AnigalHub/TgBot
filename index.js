@@ -45,19 +45,11 @@ var ConvertTime_1 = __importDefault(require("./ConvertTime"));
 var DayOfTheWeek_1 = __importDefault(require("./DayOfTheWeek"));
 var DateAsString_1 = require("./helper_functions/DateAsString");
 var AddTimeWhenDayIsKnown_1 = __importDefault(require("./helper_functions/AddTimeWhenDayIsKnown"));
+var RemoveEmptyElementsFromArray_1 = __importDefault(require("./helper_functions/RemoveEmptyElementsFromArray"));
 var token = config_json_1.default.token;
 var bot = new node_telegram_bot_api_1.default(token, { polling: true, baseApiUrl: "https://api.telegram.org" });
 var convertTime = new ConvertTime_1.default();
 //функция удаления пустых элементов из массива
-function RemoveEmptyElementsFromArray(array) {
-    var output = array;
-    if (array.includes(' ') == true) {
-        output = array.filter(function (el) {
-            return (el != "");
-        });
-    }
-    return output;
-}
 //дата в данную минуту
 var date = new Date();
 console.log(date.toString()); //день недели | дата | время
@@ -82,7 +74,7 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
                 text = text.toLocaleLowerCase(); // изменение регистра букв - на маленькие
                 words = text.split(" ") //разбиение на элементы массива, "пробел"
                 ;
-                words = RemoveEmptyElementsFromArray(words); // избавление в массиве от пустых элементов
+                words = (0, RemoveEmptyElementsFromArray_1.default)(words); // избавление в массиве от пустых элементов
                 console.log(words); //массив
                 secondKeywordInMessage = 0 //ключевое слово в сообщении
                 ;
