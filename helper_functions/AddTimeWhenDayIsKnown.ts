@@ -1,4 +1,7 @@
 import {DateAsString} from '../helper_functions/DateAsString'
+import ConvertTime from '../ConvertTime'
+import TelegramBot from "node-telegram-bot-api";
+const convertTime = new ConvertTime()
 
 //функция добавления времени, когда известен день
 async function  AddTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string){
