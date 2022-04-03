@@ -87,30 +87,24 @@ function RemoveEmptyElementsFromArray(array:Array<string>){
     return output
 }
 
-
 //дата в данную минуту
 let date = new Date();
 console.log(date.toString()) //день недели | дата | время
 
-bot.on('message',(msg) =>{
+bot.on('message', async (msg) =>{
 
     const chatId = msg.chat.id //id пользователя
     const timeMessage = msg.date //дата в сек отправки сообщения, которое напоминаем
-    const c = new Date(timeMessage*1000)
-    console.log('дата сообщения',c.toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
-    let text = msg.text
+    console.log('дата сообщения',new Date(timeMessage*1000).toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
+    let text = msg.text // сообщение пользователя
     if(!text){
-        bot.sendMessage( chatId,"нет сообщения")
+        await bot.sendMessage( chatId,"нет сообщения")
         return
     }
-    if(text != text.toLocaleLowerCase()){
-        text = text.toLocaleLowerCase()
-    }
+    text = text.toLocaleLowerCase() // изменение регистра букв - на маленькие
     let words = text.split(" ") //разбиение на элементы массива, "пробел"
 
-    console.log(words) //массив
-    if(words)
-    words = RemoveEmptyElementsFromArray(words)
+    words = RemoveEmptyElementsFromArray(words) // избавление в массиве от пустых элементов
     console.log(words) //массив
 
 
