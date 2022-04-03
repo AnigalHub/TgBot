@@ -193,10 +193,10 @@ bot.on('message', async (msg) =>{
                             convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4,1) == 0 &&
                             convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword5,1) == 0 &&
                             convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword6,1) == 0){
-                            bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
+                            await bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
                         }
                         else if (millisecondsTime < -1 || millisecondsTime == 0){
-                            bot.sendMessage(chatId, 'Ошибка! Некорректно указано время');
+                            await bot.sendMessage(chatId, 'Ошибка! Некорректно указано время');
                         }
                         else {
                             let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword3, arrayElementAfterKeyword4)
