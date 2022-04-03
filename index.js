@@ -51,8 +51,8 @@ var convertTime = new ConvertTime_1.default();
 //функция удаления пустых элементов из массива
 function RemoveEmptyElementsFromArray(array) {
     var output = array;
-    if ((array === null || array === void 0 ? void 0 : array.includes(' ')) == true) {
-        output = array === null || array === void 0 ? void 0 : array.filter(function (el) {
+    if (array.includes(' ') == true) {
+        output = array.filter(function (el) {
             return (el != "");
         });
     }
@@ -89,7 +89,7 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
                 millisecondsTime = 0 //миллисекунды - через сколько надо прислать сообщение
                 ;
                 if (!(words.includes('через') == true)) return [3 /*break*/, 19];
-                keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf('через'); // индекс ключевого слова в массиве
+                keywordInMessage = words.indexOf('через'); // индекс ключевого слова в массиве
                 arrayElementAfterKeyword1 = words[keywordInMessage + 1] // элемент массива после ключевого слова - первый
                 ;
                 arrayElementAfterKeyword2 = words[keywordInMessage + 2] // элемент массива после ключевого слова - второй
@@ -153,9 +153,9 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
             case 19:
                 if (!(words.includes('в') == true || words.includes('во') == true)) return [3 /*break*/, 50];
                 if (words.includes('во') == true) {
-                    words.splice(words === null || words === void 0 ? void 0 : words.indexOf('во'), 1, 'в');
+                    words.splice(words.indexOf('во'), 1, 'в');
                 }
-                keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf('в'); //индекс ключевого слова в массиве
+                keywordInMessage = words.indexOf('в'); //индекс ключевого слова в массиве
                 arrayElementAfterKeyword1 = words[keywordInMessage + 1] // элемент массива после ключевого слова - первый
                 ;
                 arrayElementAfterKeyword2 = words[keywordInMessage + 2] // элемент массива после ключевого слова - второй

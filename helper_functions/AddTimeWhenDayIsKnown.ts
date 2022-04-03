@@ -7,9 +7,9 @@ const convertTime = new ConvertTime()
 async function  AddTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string){
     if (array.includes('в') == true || array.includes('во') == true){
         if(array.includes('во') == true){
-            array.splice(array?.indexOf('во'),1,'в')
+            array.splice(array.indexOf('во'),1,'в')
         }
-        secondKeywordInMessage = array?.indexOf('в')
+        secondKeywordInMessage = array.indexOf('в')
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],1) < 86400000){
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
             futureDate.setHours(0,0,0,0)

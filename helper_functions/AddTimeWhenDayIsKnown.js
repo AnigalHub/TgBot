@@ -51,9 +51,9 @@ function AddTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage,
                 case 0:
                     if (!(array.includes('в') == true || array.includes('во') == true)) return [3 /*break*/, 16];
                     if (array.includes('во') == true) {
-                        array.splice(array === null || array === void 0 ? void 0 : array.indexOf('во'), 1, 'в');
+                        array.splice(array.indexOf('во'), 1, 'в');
                     }
-                    secondKeywordInMessage = array === null || array === void 0 ? void 0 : array.indexOf('в');
+                    secondKeywordInMessage = array.indexOf('в');
                     if (!(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage + 2], 1) < 86400000)) return [3 /*break*/, 13];
                     futureDate = new Date(Date.parse(date.toString()) + millisecondsTime);
                     futureDate.setHours(0, 0, 0, 0);

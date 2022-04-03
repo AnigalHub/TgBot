@@ -16,8 +16,8 @@ const convertTime = new ConvertTime()
 //функция удаления пустых элементов из массива
 function RemoveEmptyElementsFromArray(array:Array<string>){
     let output:Array<string> = array
-    if(array?.includes(' ') == true){
-        output = array?.filter(function (el) {
+    if(array.includes(' ') == true){
+        output = array.filter(function (el) {
           return (el != "");
         });
     }
@@ -51,7 +51,7 @@ bot.on('message', async (msg) =>{
     let messageFuture: string //сообщение, которое напоминаем
 
     if (words.includes('через') == true){
-        keywordInMessage = words?.indexOf('через') // индекс ключевого слова в массиве
+        keywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
         let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
         let arrayElementAfterKeyword2 = words[keywordInMessage+2] // элемент массива после ключевого слова - второй
         let arrayElementAfterKeyword3 = words[keywordInMessage+3] // элемент массива после ключевого слова - третий
@@ -95,9 +95,9 @@ bot.on('message', async (msg) =>{
     }
     else if(words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
-            words.splice(words?.indexOf('во'),1,'в')
+            words.splice(words.indexOf('во'),1,'в')
         }
-        keywordInMessage = words?.indexOf('в') //индекс ключевого слова в массиве
+        keywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
         let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
         let arrayElementAfterKeyword2 = words[keywordInMessage+2] // элемент массива после ключевого слова - второй
         let arrayElementAfterKeyword3 = words[keywordInMessage+3] // элемент массива после ключевого слова - третий
