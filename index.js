@@ -88,7 +88,7 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
                 ;
                 millisecondsTime = 0 //миллисекунды - через сколько надо прислать сообщение
                 ;
-                if (!(words.includes('через') == true)) return [3 /*break*/, 18];
+                if (!(words.includes('через') == true)) return [3 /*break*/, 19];
                 keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf('через'); // индекс ключевого слова в массиве
                 arrayElementAfterKeyword1 = words[keywordInMessage + 1] // элемент массива после ключевого слова - первый
                 ;
@@ -98,7 +98,7 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
                 ;
                 arrayElementAfterKeyword4 = words[keywordInMessage + 4] // элемент массива после ключевого слова - четвертый
                 ;
-                if (!(/^[0-9]*$/.test(arrayElementAfterKeyword1) == true)) return [3 /*break*/, 9];
+                if (!/^[0-9]*$/.test(arrayElementAfterKeyword1)) return [3 /*break*/, 9];
                 time = parseInt(arrayElementAfterKeyword1) // время с типом число
                 ;
                 messageFuture = words.slice((keywordInMessage + 3), words.length).join(' '); // сообщение, которое напоминаем
@@ -118,199 +118,223 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
             case 7:
                 _a.sent(); // функция добавления времени когда день известен
                 _a.label = 8;
-            case 8: return [3 /*break*/, 17];
+            case 8: return [3 /*break*/, 18];
             case 9:
-                if (!(/^[А-яЁё]*$/.test(arrayElementAfterKeyword1) == true)) return [3 /*break*/, 15];
-                if (!(arrayElementAfterKeyword1 == 'ноль' || arrayElementAfterKeyword1 == 'нуль')) return [3 /*break*/, 10];
-                bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
-                return [3 /*break*/, 14];
+                if (!/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)) return [3 /*break*/, 16];
+                if (!(arrayElementAfterKeyword1 == 'ноль' || arrayElementAfterKeyword1 == 'нуль')) return [3 /*break*/, 11];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!')];
             case 10:
+                _a.sent();
+                return [3 /*break*/, 15];
+            case 11:
                 if (!(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword1, 1) == 0 &&
                     convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2, 1) == 0 &&
                     convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3, 1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4, 1) == 0)) return [3 /*break*/, 12];
+                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4, 1) == 0)) return [3 /*break*/, 13];
                 return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Не указана единица времени')];
-            case 11:
-                _a.sent();
-                return [3 /*break*/, 14];
             case 12:
+                _a.sent();
+                return [3 /*break*/, 15];
+            case 13:
                 time = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword1, arrayElementAfterKeyword2);
                 objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, words, keywordInMessage + 1, keywordInMessage + 2, keywordInMessage + 3, keywordInMessage + 4);
                 messageFuture = objTime.message;
                 millisecondsTime = objTime.millisecondsTime;
                 return [4 /*yield*/, (0, AddTimeWhenDayIsKnown_1.default)(bot, chatId, date, words, secondKeywordInMessage, millisecondsTime, messageFuture)];
-            case 13:
+            case 14:
                 _a.sent();
-                _a.label = 14;
-            case 14: return [3 /*break*/, 17];
-            case 15: return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ')];
-            case 16:
+                _a.label = 15;
+            case 15: return [3 /*break*/, 18];
+            case 16: return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ')];
+            case 17:
                 _a.sent();
-                _a.label = 17;
-            case 17: return [3 /*break*/, 19];
-            case 18:
-                if (words.includes('в') == true || words.includes('во') == true) {
-                    if (words.includes('во') == true) {
-                        words.splice(words === null || words === void 0 ? void 0 : words.indexOf('во'), 1, 'в');
-                    }
-                    keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf('в'); //индекс ключевого слова в массиве
-                    arrayElementAfterKeyword1 = words[keywordInMessage + 1] // элемент массива после ключевого слова - первый
-                    ;
-                    arrayElementAfterKeyword2 = words[keywordInMessage + 2] // элемент массива после ключевого слова - второй
-                    ;
-                    arrayElementAfterKeyword3 = words[keywordInMessage + 3] // элемент массива после ключевого слова - третий
-                    ;
-                    arrayElementAfterKeyword4 = words[keywordInMessage + 4] // элемент массива после ключевого слова - четвертый
-                    ;
-                    arrayElementAfterKeyword5 = words[keywordInMessage + 5] // элемент массива после ключевого слова - пятый
-                    ;
-                    arrayElementAfterKeyword6 = words[keywordInMessage + 6] // элемент массива после ключевого слова - шестой
-                    ;
-                    if (/^[0-9]*$/.test(arrayElementAfterKeyword1) == true) { // только цифры
-                        time = parseInt(arrayElementAfterKeyword1) //время с типом число
-                        ;
-                        if (time == 0) {
-                            time = 24;
-                        }
-                        if (time > 24 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2, 1) >= 3600000) {
-                            bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
-                        }
-                        else if (convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2, time) == 0) { //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-                            bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
-                        }
-                        else if (!arrayElementAfterKeyword3) {
-                            bot.sendMessage(chatId, 'Ошибка! Не указана дата');
-                        }
-                        else {
-                            if (/[А-яЁё]/.test(arrayElementAfterKeyword3) == true) { // только буквы
-                                if ((arrayElementAfterKeyword3) == "в" || (arrayElementAfterKeyword3) == "во") {
-                                    dayOfTheWeek = new DayOfTheWeek_1.default(arrayElementAfterKeyword4);
-                                    if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1) {
-                                        differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek();
-                                        futureDay = date.getDate() + differenceInDays;
-                                        futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay);
-                                        futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2, time);
-                                        futureDateAndTime = new Date(futureMs);
-                                        millisecondsTime = futureDateAndTime.getTime() - date.getTime();
-                                        messageFuture = words.slice((keywordInMessage + 5), words.length).join(' '); //сообщение, которое напоминаем
-                                        setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
-                                        (0, DateAsString_1.DateAsString)(millisecondsTime, date);
-                                    }
-                                }
-                                else {
-                                    futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(arrayElementAfterKeyword3);
-                                    if ((time < date.getHours()) && arrayElementAfterKeyword3 == 'сегодня') {
-                                        bot.sendMessage(chatId, 'Ошибка! Время указано которое уже прошло - напомнить невозможно');
-                                    }
-                                    else if (convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3, 1) >= 3600000) {
-                                        bot.sendMessage(chatId, 'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
-                                    }
-                                    else if (futureDay == -1) {
-                                        bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
-                                    }
-                                    else {
-                                        futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay);
-                                        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2);
-                                        messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
-                                        setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
-                                        (0, DateAsString_1.DateAsString)(millisecondsTime, date);
-                                    }
-                                }
-                            }
-                            else if (/[А-яЁё]/.test(arrayElementAfterKeyword3) == false && (arrayElementAfterKeyword3.includes('.') == true ||
-                                arrayElementAfterKeyword3.includes('-') == true || arrayElementAfterKeyword3.includes('/') == true)) {
-                                if (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
-                                    (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-' || words[keywordInMessage + 3][2] != '/') &&
-                                    (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-' || words[keywordInMessage + 3][5] != '/') ||
-                                    (words[keywordInMessage + 3].length > 10) ||
-                                    (words[keywordInMessage + 3].length == 7) ||
-                                    (words[keywordInMessage + 3].length == 9)) {
-                                    bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!');
-                                }
-                                else {
-                                    yearMessage = void 0;
-                                    if (words[keywordInMessage + 3].length == 10) {
-                                        yearMessage = parseInt(words[keywordInMessage + 3].substring(6, 12));
-                                    }
-                                    else if ((words[keywordInMessage + 3].length == 8) && (String(date.getFullYear()).slice(2, 4) <= words[keywordInMessage + 3].substring(6, 8))) {
-                                        yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + words[keywordInMessage + 3].substring(6, 8));
-                                    }
-                                    else {
-                                        yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + words[keywordInMessage + 3].substring(6, 8));
-                                    }
-                                    monthMessage = parseInt(words[keywordInMessage + 3].substring(3, 6)) - 1;
-                                    dayMessage = parseInt(words[keywordInMessage + 3].substring(0, 2));
-                                    futureDate = new Date(yearMessage, monthMessage, dayMessage);
-                                    messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
-                                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2);
-                                    setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
-                                    (0, DateAsString_1.DateAsString)(millisecondsTime, date);
-                                }
-                            }
-                            else {
-                                bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | пт | субботу | 21.05.22 | 21-05-22 | 21/05/22 ');
-                            }
-                        }
-                    }
-                    else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1) == true) { // только буквы
-                        dayOfTheWeek = new DayOfTheWeek_1.default(arrayElementAfterKeyword1);
-                        if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1) {
-                            differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek();
-                            futureDay = date.getDate() + differenceInDays;
-                            futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay);
-                            if (arrayElementAfterKeyword2 == "в") {
-                                if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword3) == true) {
-                                    if (convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3, 1) == 0 &&
-                                        convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4, 1) == 0 &&
-                                        convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword5, 1) == 0 &&
-                                        convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword6, 1) == 0) {
-                                        bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
-                                    }
-                                    else if (millisecondsTime < -1 || millisecondsTime == 0) {
-                                        bot.sendMessage(chatId, 'Ошибка! Некорректно указано время');
-                                    }
-                                    else {
-                                        time = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword3, arrayElementAfterKeyword4);
-                                        if (arrayElementAfterKeyword3 == 'ноль' || arrayElementAfterKeyword3 == 'нуль') {
-                                            time = 24;
-                                        }
-                                        objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, date.getHours(), futureDate.getHours(), words, keywordInMessage + 3, keywordInMessage + 4, keywordInMessage + 5, keywordInMessage + 6);
-                                        messageFuture = objTime.message;
-                                        millisecondsTime = objTime.millisecondsTime;
-                                    }
-                                }
-                                else {
-                                    time = parseInt(arrayElementAfterKeyword3) //время с типом число
-                                    ;
-                                    if (isNaN(time) == true) {
-                                        bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
-                                    }
-                                    else if (time > 24) {
-                                        bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
-                                    }
-                                    else {
-                                        futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4, time);
-                                        futureDateAndTime = new Date(futureMs);
-                                        millisecondsTime = futureDateAndTime.getTime() - date.getTime();
-                                        messageFuture = words.slice((keywordInMessage + 5), words.length).join(' '); //сообщение, которое напоминаем
-                                    }
-                                }
-                            }
-                            else {
-                            }
-                            setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
-                            (0, DateAsString_1.DateAsString)(millisecondsTime, date);
-                        }
-                    }
+                _a.label = 18;
+            case 18: return [3 /*break*/, 53];
+            case 19:
+                if (!(words.includes('в') == true || words.includes('во') == true)) return [3 /*break*/, 50];
+                if (words.includes('во') == true) {
+                    words.splice(words === null || words === void 0 ? void 0 : words.indexOf('во'), 1, 'в');
                 }
-                else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true)
-                    || (words.includes('послезавтра') == true) || (words.includes('послепослезавтра') == true)) {
+                keywordInMessage = words === null || words === void 0 ? void 0 : words.indexOf('в'); //индекс ключевого слова в массиве
+                arrayElementAfterKeyword1 = words[keywordInMessage + 1] // элемент массива после ключевого слова - первый
+                ;
+                arrayElementAfterKeyword2 = words[keywordInMessage + 2] // элемент массива после ключевого слова - второй
+                ;
+                arrayElementAfterKeyword3 = words[keywordInMessage + 3] // элемент массива после ключевого слова - третий
+                ;
+                arrayElementAfterKeyword4 = words[keywordInMessage + 4] // элемент массива после ключевого слова - четвертый
+                ;
+                arrayElementAfterKeyword5 = words[keywordInMessage + 5] // элемент массива после ключевого слова - пятый
+                ;
+                arrayElementAfterKeyword6 = words[keywordInMessage + 6] // элемент массива после ключевого слова - шестой
+                ;
+                if (!/^[0-9]*$/.test(arrayElementAfterKeyword1)) return [3 /*break*/, 41];
+                time = parseInt(arrayElementAfterKeyword1) //время с типом число
+                ;
+                if (time == 0) {
+                    time = 24;
+                }
+                if (!(time > 24 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2, 1) >= 3600000)) return [3 /*break*/, 21];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24')];
+            case 20:
+                _a.sent();
+                return [3 /*break*/, 40];
+            case 21:
+                if (!(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2, time) == 0)) return [3 /*break*/, 23];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов')];
+            case 22:
+                _a.sent();
+                return [3 /*break*/, 40];
+            case 23:
+                if (!!arrayElementAfterKeyword3) return [3 /*break*/, 25];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Не указана дата')];
+            case 24:
+                _a.sent();
+                return [3 /*break*/, 40];
+            case 25:
+                if (!/[А-яЁё]/.test(arrayElementAfterKeyword3)) return [3 /*break*/, 34];
+                if (!((arrayElementAfterKeyword3) == "в" || (arrayElementAfterKeyword3) == "во")) return [3 /*break*/, 26];
+                dayOfTheWeek = new DayOfTheWeek_1.default(arrayElementAfterKeyword4);
+                if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1) {
+                    differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek();
+                    futureDay = date.getDate() + differenceInDays;
+                    futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay);
+                    futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2, time);
+                    futureDateAndTime = new Date(futureMs);
+                    millisecondsTime = futureDateAndTime.getTime() - date.getTime();
+                    messageFuture = words.slice((keywordInMessage + 5), words.length).join(' '); //сообщение, которое напоминаем
+                    setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
+                    (0, DateAsString_1.DateAsString)(millisecondsTime, date);
+                }
+                return [3 /*break*/, 33];
+            case 26:
+                futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(arrayElementAfterKeyword3);
+                if (!((time < date.getHours()) && arrayElementAfterKeyword3 == 'сегодня')) return [3 /*break*/, 28];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Время указано которое уже прошло - напомнить невозможно')];
+            case 27:
+                _a.sent();
+                return [3 /*break*/, 33];
+            case 28:
+                if (!(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3, 1) >= 3600000)) return [3 /*break*/, 30];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать')];
+            case 29:
+                _a.sent();
+                return [3 /*break*/, 33];
+            case 30:
+                if (!(futureDay == -1)) return [3 /*break*/, 32];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Время указано, а дата нет.')];
+            case 31:
+                _a.sent();
+                return [3 /*break*/, 33];
+            case 32:
+                futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay);
+                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2);
+                messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
+                setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
+                (0, DateAsString_1.DateAsString)(millisecondsTime, date);
+                _a.label = 33;
+            case 33: return [3 /*break*/, 40];
+            case 34:
+                if (!(!/[А-яЁё]/.test(arrayElementAfterKeyword3) && (arrayElementAfterKeyword3.includes('.') == true ||
+                    arrayElementAfterKeyword3.includes('-') == true || arrayElementAfterKeyword3.includes('/') == true))) return [3 /*break*/, 38];
+                if (!(words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
+                    (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-' || words[keywordInMessage + 3][2] != '/') &&
+                    (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-' || words[keywordInMessage + 3][5] != '/') ||
+                    (words[keywordInMessage + 3].length > 10) ||
+                    (words[keywordInMessage + 3].length == 7) ||
+                    (words[keywordInMessage + 3].length == 9))) return [3 /*break*/, 36];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!')];
+            case 35:
+                _a.sent();
+                return [3 /*break*/, 37];
+            case 36:
+                yearMessage = void 0;
+                if (words[keywordInMessage + 3].length == 10) {
+                    yearMessage = parseInt(words[keywordInMessage + 3].substring(6, 12));
+                }
+                else if ((words[keywordInMessage + 3].length == 8) && (String(date.getFullYear()).slice(2, 4) <= words[keywordInMessage + 3].substring(6, 8))) {
+                    yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + words[keywordInMessage + 3].substring(6, 8));
                 }
                 else {
-                    bot.sendMessage(chatId, 'Ошибка! Не корректный ввод. Символы неизвестны!');
+                    yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + words[keywordInMessage + 3].substring(6, 8));
                 }
-                _a.label = 19;
-            case 19: return [2 /*return*/];
+                monthMessage = parseInt(words[keywordInMessage + 3].substring(3, 6)) - 1;
+                dayMessage = parseInt(words[keywordInMessage + 3].substring(0, 2));
+                futureDate = new Date(yearMessage, monthMessage, dayMessage);
+                messageFuture = words.slice((keywordInMessage + 4), words.length).join(' '); //сообщение, которое напоминаем
+                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, words, keywordInMessage + 2);
+                setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
+                (0, DateAsString_1.DateAsString)(millisecondsTime, date);
+                _a.label = 37;
+            case 37: return [3 /*break*/, 40];
+            case 38: return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | пт | субботу | 21.05.22 | 21-05-22 | 21/05/22 ')];
+            case 39:
+                _a.sent();
+                _a.label = 40;
+            case 40: return [3 /*break*/, 49];
+            case 41:
+                if (!/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)) return [3 /*break*/, 49];
+                dayOfTheWeek = new DayOfTheWeek_1.default(arrayElementAfterKeyword1);
+                if (!(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1)) return [3 /*break*/, 49];
+                differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek();
+                futureDay = date.getDate() + differenceInDays;
+                futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay);
+                if (!(arrayElementAfterKeyword2 == "в")) return [3 /*break*/, 48];
+                if (!/^[А-яЁё]*$/.test(arrayElementAfterKeyword3)) return [3 /*break*/, 42];
+                if (convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3, 1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4, 1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword5, 1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword6, 1) == 0) {
+                    bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
+                }
+                else if (millisecondsTime < -1 || millisecondsTime == 0) {
+                    bot.sendMessage(chatId, 'Ошибка! Некорректно указано время');
+                }
+                else {
+                    time = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword3, arrayElementAfterKeyword4);
+                    if (arrayElementAfterKeyword3 == 'ноль' || arrayElementAfterKeyword3 == 'нуль') {
+                        time = 24;
+                    }
+                    objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, date.getHours(), futureDate.getHours(), words, keywordInMessage + 3, keywordInMessage + 4, keywordInMessage + 5, keywordInMessage + 6);
+                    messageFuture = objTime.message;
+                    millisecondsTime = objTime.millisecondsTime;
+                }
+                return [3 /*break*/, 47];
+            case 42:
+                time = parseInt(arrayElementAfterKeyword3) //время с типом число
+                ;
+                if (!isNaN(time)) return [3 /*break*/, 44];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку')];
+            case 43:
+                _a.sent();
+                return [3 /*break*/, 47];
+            case 44:
+                if (!(time > 24)) return [3 /*break*/, 46];
+                return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24')];
+            case 45:
+                _a.sent();
+                return [3 /*break*/, 47];
+            case 46:
+                futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4, time);
+                futureDateAndTime = new Date(futureMs);
+                millisecondsTime = futureDateAndTime.getTime() - date.getTime();
+                messageFuture = words.slice((keywordInMessage + 5), words.length).join(' '); //сообщение, которое напоминаем
+                _a.label = 47;
+            case 47: return [3 /*break*/, 48];
+            case 48:
+                setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); // функция со временем - когда напомнить + сообщение - что напоминаем
+                (0, DateAsString_1.DateAsString)(millisecondsTime, date);
+                _a.label = 49;
+            case 49: return [3 /*break*/, 53];
+            case 50:
+                if (!((words.includes('сегодня') == true) || (words.includes('завтра') == true)
+                    || (words.includes('послезавтра') == true) || (words.includes('послепослезавтра') == true))) return [3 /*break*/, 51];
+                return [3 /*break*/, 53];
+            case 51: return [4 /*yield*/, bot.sendMessage(chatId, 'Ошибка! Не корректный ввод. Символы неизвестны!')];
+            case 52:
+                _a.sent();
+                _a.label = 53;
+            case 53: return [2 /*return*/];
         }
     });
 }); });

@@ -6,8 +6,6 @@ import ConvertTime from './ConvertTime'
 import DayOfTheWeek from './DayOfTheWeek'
 import {DateAsString} from './helper_functions/DateAsString'
 
-import db from './db/index'
-
 import addTime from './helper_functions/AddTimeWhenDayIsKnown'
 
 const token:string = config.token
@@ -59,7 +57,7 @@ bot.on('message', async (msg) =>{
         let arrayElementAfterKeyword3 = words[keywordInMessage+3] // элемент массива после ключевого слова - третий
         let arrayElementAfterKeyword4 = words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
 
-        if(/^[0-9]*$/.test(arrayElementAfterKeyword1) == true){ // только цифры
+        if(/^[0-9]*$/.test(arrayElementAfterKeyword1)){ // только цифры
             let time = parseInt(arrayElementAfterKeyword1) // время с типом число
             messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') // сообщение, которое напоминаем
             millisecondsTime = convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
@@ -73,7 +71,7 @@ bot.on('message', async (msg) =>{
                 await addTime(bot, chatId,date, words, secondKeywordInMessage,millisecondsTime,messageFuture) // функция добавления времени когда день известен
             }
         }
-        else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1) == true){ // только буквы
+        else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
            if(arrayElementAfterKeyword1 == 'ноль' || arrayElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
                 await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
            }
@@ -107,7 +105,7 @@ bot.on('message', async (msg) =>{
         let arrayElementAfterKeyword5 = words[keywordInMessage+5] // элемент массива после ключевого слова - пятый
         let arrayElementAfterKeyword6 = words[keywordInMessage+6] // элемент массива после ключевого слова - шестой
 
-        if(/^[0-9]*$/.test(arrayElementAfterKeyword1 ) == true) { // только цифры
+        if(/^[0-9]*$/.test(arrayElementAfterKeyword1 )) { // только цифры
             let time = parseInt(arrayElementAfterKeyword1) //время с типом число
             if(time == 0){
                 time = 24
@@ -122,7 +120,7 @@ bot.on('message', async (msg) =>{
                 await  bot.sendMessage(chatId, 'Ошибка! Не указана дата');
             }
             else{
-                if (/[А-яЁё]/.test(arrayElementAfterKeyword3) == true){ // только буквы
+                if (/[А-яЁё]/.test(arrayElementAfterKeyword3)){ // только буквы
                     if((arrayElementAfterKeyword3) == "в" || (arrayElementAfterKeyword3) == "во"){
                         let dayOfTheWeek = new DayOfTheWeek(arrayElementAfterKeyword4)
                         if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
@@ -159,7 +157,7 @@ bot.on('message', async (msg) =>{
                         }
                     }
                 }
-                else if(/[А-яЁё]/.test(arrayElementAfterKeyword3) == false && (arrayElementAfterKeyword3.includes('.') == true ||
+                else if(!/[А-яЁё]/.test(arrayElementAfterKeyword3) && (arrayElementAfterKeyword3.includes('.') == true ||
                     arrayElementAfterKeyword3.includes('-') == true || arrayElementAfterKeyword3.includes('/') == true )) {
                     if (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
                         (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-' ||  words[keywordInMessage + 3][2] != '/') &&
@@ -196,14 +194,14 @@ bot.on('message', async (msg) =>{
                 }
             }
         }
-        else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1) == true){ // только буквы
+        else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
             let dayOfTheWeek = new DayOfTheWeek(arrayElementAfterKeyword1)
             if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
                let  differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
                let futureDay = date.getDate() + differenceInDays
                let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
                 if(arrayElementAfterKeyword2 == "в"){
-                    if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword3) == true){
+                    if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword3)){
                         if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3,1) == 0 &&
                             convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4,1) == 0 &&
                             convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword5,1) == 0 &&
@@ -225,7 +223,7 @@ bot.on('message', async (msg) =>{
                     }
                     else {
                         let time:number = parseInt(arrayElementAfterKeyword3) //время с типом число
-                        if (isNaN(time) == true){
+                        if (isNaN(time)){
                             await bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
                         }
                         else if(time > 24){
