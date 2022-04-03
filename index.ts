@@ -71,12 +71,11 @@ bot.on('message', async (msg) =>{
             }
             else{
                 await addTime(bot, chatId,date, words, secondKeywordInMessage,millisecondsTime,messageFuture) // функция добавления времени когда день известен
-
             }
         }
         else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1) == true){ // только буквы
            if(arrayElementAfterKeyword1 == 'ноль' || arrayElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
-                bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
+                await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
            }
            else if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword1,1) == 0 &&
                 convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,1) == 0 &&
@@ -114,13 +113,13 @@ bot.on('message', async (msg) =>{
                 time = 24
             }
             if(time > 24 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,1) >= 3600000){
-                bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
+                await bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
             }
             else if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-                bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
+                await  bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
             }
             else if(!arrayElementAfterKeyword3){
-                bot.sendMessage(chatId, 'Ошибка! Не указана дата');
+                await  bot.sendMessage(chatId, 'Ошибка! Не указана дата');
             }
             else{
                 if (/[А-яЁё]/.test(arrayElementAfterKeyword3) == true){ // только буквы
@@ -142,13 +141,13 @@ bot.on('message', async (msg) =>{
                     else{
                         let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(arrayElementAfterKeyword3)
                         if((time < date.getHours()) && arrayElementAfterKeyword3 == 'сегодня'){
-                            bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
+                            await bot.sendMessage(chatId,'Ошибка! Время указано которое уже прошло - напомнить невозможно');
                         }
                         else if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3,1) >= 3600000){
-                            bot.sendMessage(chatId, 'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
+                            await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
                         }
                         else if(futureDay  == -1){
-                            bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
+                            await bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Время указано, а дата нет.');
                         }
                         else{
                             let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
@@ -168,7 +167,7 @@ bot.on('message', async (msg) =>{
                         (words[keywordInMessage + 3].length > 10) ||
                         (words[keywordInMessage + 3].length == 7) ||
                         (words[keywordInMessage + 3].length == 9)) {
-                        bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!');
+                        await bot.sendMessage(chatId, 'Ошибка! Некорректно введена дата. Опечатка в дате!');
                     }
                     else {
                         let yearMessage
@@ -193,7 +192,7 @@ bot.on('message', async (msg) =>{
                     }
                 }
                 else {
-                    bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | пт | субботу | 21.05.22 | 21-05-22 | 21/05/22 ');
+                    await bot.sendMessage(chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | пт | субботу | 21.05.22 | 21-05-22 | 21/05/22 ');
                 }
             }
         }
@@ -227,10 +226,10 @@ bot.on('message', async (msg) =>{
                     else {
                         let time:number = parseInt(arrayElementAfterKeyword3) //время с типом число
                         if (isNaN(time) == true){
-                            bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
+                            await bot.sendMessage(chatId, 'Ошибка! Неизвестно время - исправьте ошибку');
                         }
                         else if(time > 24){
-                            bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
+                            await bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
                         }
                         else{
                             let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4,time)
@@ -253,7 +252,7 @@ bot.on('message', async (msg) =>{
     || (words.includes('послезавтра') == true) || (words.includes('послепослезавтра') == true)){
     }
     else {
-        bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
+        await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
     }
 
    // bot.sendMessage(chatId,'Привет');
