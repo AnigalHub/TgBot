@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var DateAsString_1 = require("../helper_functions/DateAsString");
+var DateAsString_1 = require("./DateAsString");
 var ConvertTime_1 = __importDefault(require("../ConvertTime"));
 var convertTime = new ConvertTime_1.default();
 //функция добавления времени, когда известен день
@@ -57,7 +57,7 @@ function AddTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage,
                     if (!(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage + 2], 1) < 86400000)) return [3 /*break*/, 13];
                     futureDate = new Date(Date.parse(date.toString()) + millisecondsTime);
                     futureDate.setHours(0, 0, 0, 0);
-                    if (!(/^[0-9]*$/.test(array[secondKeywordInMessage + 1]) == true)) return [3 /*break*/, 6];
+                    if (!/^[0-9]*$/.test(array[secondKeywordInMessage + 1])) return [3 /*break*/, 6];
                     timeAfterSecondKeyword = parseInt(array[secondKeywordInMessage + 1]) //время с типом число
                     ;
                     if (timeAfterSecondKeyword == 0) {
@@ -82,7 +82,7 @@ function AddTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage,
                     _a.label = 5;
                 case 5: return [3 /*break*/, 12];
                 case 6:
-                    if (!(/^[А-яЁё]*$/.test(array[secondKeywordInMessage + 1]) == true)) return [3 /*break*/, 10];
+                    if (!/^[А-яЁё]*$/.test(array[secondKeywordInMessage + 1])) return [3 /*break*/, 10];
                     if (!(convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage + 1], 1) == 0 &&
                         convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage + 2], 1) == 0 &&
                         convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage + 3], 1) == 0 &&

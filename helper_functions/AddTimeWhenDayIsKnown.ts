@@ -1,4 +1,4 @@
-import {DateAsString} from '../helper_functions/DateAsString'
+import {DateAsString} from './DateAsString'
 import ConvertTime from '../ConvertTime'
 import TelegramBot from "node-telegram-bot-api";
 const convertTime = new ConvertTime()
@@ -13,7 +13,7 @@ async function  AddTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,a
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],1) < 86400000){
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
             futureDate.setHours(0,0,0,0)
-            if(/^[0-9]*$/.test(array[secondKeywordInMessage+1]) == true){ //только цифры
+            if(/^[0-9]*$/.test(array[secondKeywordInMessage + 1])){ //только цифры
                 let timeAfterSecondKeyword = parseInt(array[secondKeywordInMessage+1]) //время с типом число
                 if(timeAfterSecondKeyword == 0){
                     timeAfterSecondKeyword = 24
@@ -31,7 +31,7 @@ async function  AddTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,a
                     DateAsString(millisecondsTime,date)
                 }
             }
-            else if (/^[А-яЁё]*$/.test(array[secondKeywordInMessage+1]) == true) {// только буквы
+            else if (/^[А-яЁё]*$/.test(array[secondKeywordInMessage + 1])) {// только буквы
                 if( convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+1],1) == 0 &&
                     convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],1) == 0 &&
                     convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+3],1) == 0 &&
