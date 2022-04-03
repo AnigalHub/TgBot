@@ -77,12 +77,14 @@ function AddTimeWhenDayIsKnown(chatId:number,array:Array<string>,secondKeywordIn
 }
 
 //функция удаления пустых элементов из массива
-function RemoteEmptyElementsFromArray(array:Array<string>){
+function RemoveEmptyElementsFromArray(array:Array<string>){
+    let output:Array<string> = []
     if(array?.includes('') == true){
-        array = array?.filter(function (el) {
+        output = array?.filter(function (el) {
           return (el != "");
         });
     }
+    return output
 }
 
 
@@ -97,16 +99,18 @@ bot.on('message',(msg) =>{
     const c = new Date(timeMessage*1000)
     console.log('дата сообщения',c.toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
     let text = msg.text
-    if(text != text?.toLocaleLowerCase()){
-        text = text?.toLocaleLowerCase()
+    if(!text){
+        bot.sendMessage( chatId,"нет сообщения")
+        return
     }
-    let words = text?.split(" ") //разбиение на элементы массива, "пробел"
+    if(text != text.toLocaleLowerCase()){
+        text = text.toLocaleLowerCase()
+    }
+    let words = text.split(" ") //разбиение на элементы массива, "пробел"
 
-    if(words?.includes('') == true){
-     words = words?.filter(function (el) {
-          return (el != "");
-        });
-    }
+    console.log(words) //массив
+    if(words)
+    words = RemoveEmptyElementsFromArray(words)
     console.log(words) //массив
 
 
