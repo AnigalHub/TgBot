@@ -191,7 +191,7 @@ var Time = /** @class */ (function () {
         return numberTime;
     };
     //подсчет времени в виде строки в миллисекундах и сборка сообщения
-    Time.prototype.CountTimeAsStringInMillisecondsAndAssembleMessage = function (time, date, futureDate, array, arrayElement_1, arrayElement_2, arrayElement_3, arrayElement_4) {
+    Time.prototype.CountTimeAsStringInMillisecondsAndAssembleMessage = function (time, dateMs, futureDate, array, arrayElement_1, arrayElement_2, arrayElement_3, arrayElement_4) {
         var futureMs = 0;
         var millisecondsTime = 0;
         var message;
@@ -212,13 +212,13 @@ var Time = /** @class */ (function () {
             futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_1], time);
             message = array.slice((arrayElement_2), array.length).join(' '); //сообщение, которое напоминаем
         }
-        millisecondsTime = futureMs - date;
+        millisecondsTime = futureMs - dateMs;
         return { millisecondsTime: millisecondsTime, message: message };
     };
     //подсчет разницы в миллисекундах между будущей и текущей датами
-    Time.prototype.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates = function (date, futureDate, time, array, arrayElement) {
+    Time.prototype.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates = function (date, futureDateMs, time, array, arrayElement) {
         var diffMilliseconds = 0;
-        var futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement], time);
+        var futureMs = futureDateMs + this.ConvertTimeToMilliseconds(array[arrayElement], time);
         diffMilliseconds = futureMs - date;
         return diffMilliseconds;
     };

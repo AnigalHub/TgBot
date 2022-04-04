@@ -192,7 +192,7 @@ export default class Time {
     }
 
     //подсчет времени в виде строки в миллисекундах и сборка сообщения
-    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number,dateMs:number,futureDate:number,array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
+    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number,dateMs:number,futureDate:number,array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number){
         let futureMs:number = 0
         let millisecondsTime: number = 0
         let message:string
