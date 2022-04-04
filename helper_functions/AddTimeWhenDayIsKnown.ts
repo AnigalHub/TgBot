@@ -4,7 +4,7 @@ import TelegramBot from "node-telegram-bot-api";
 const convertTime = new ConvertTime()
 
 //функция добавления времени, когда известен день
-async function  AddTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string){
+async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string){
     if (array.includes('в') == true || array.includes('во') == true){
         if(array.includes('во') == true){
             array.splice(array.indexOf('во'),1,'в')
@@ -62,4 +62,4 @@ async function  AddTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,a
     }
 }
 
-export default  AddTimeWhenDayIsKnown
+export default addTimeWhenDayIsKnown

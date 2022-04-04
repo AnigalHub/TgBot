@@ -1,4 +1,5 @@
-export default function RemoveEmptyElementsFromArray(array:Array<string>){
+
+export default function removeEmptyElementsFromArray(array:Array<string>){
     let output:Array<string> = array
     if(array.includes(' ') == true){
         output = array.filter(function (el) {
