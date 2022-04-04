@@ -114,7 +114,7 @@ function addTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage,
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                     (0, DateAsString_1.DateAsString)(millisecondsTime, date);
                     _a.label = 17;
-                case 17: return [2 /*return*/];
+                case 17: return [2 /*return*/, { millisecondsTime: millisecondsTime, messageFuture: messageFuture }];
             }
         });
     });

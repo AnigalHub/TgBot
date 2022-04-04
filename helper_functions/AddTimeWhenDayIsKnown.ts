@@ -60,6 +60,7 @@ async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,ar
         setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
         DateAsString(millisecondsTime,date)
     }
+    return {millisecondsTime, messageFuture}
 }
 
 export default addTimeWhenDayIsKnown
