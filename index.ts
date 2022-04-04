@@ -79,7 +79,7 @@ bot.on('message', async (msg) =>{
 
     if (words.includes('через') == true){
         keywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
-       CalculationsAndHandlingErrorsOnInputThrough(chatId,words,keywordInMessage,secondKeywordInMessage, timeMessage, messageFuture,millisecondsTime)
+       await CalculationsAndHandlingErrorsOnInputThrough(chatId,words,keywordInMessage,secondKeywordInMessage, timeMessage, messageFuture,millisecondsTime)
     }
     else if(words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
