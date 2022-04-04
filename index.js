@@ -45,19 +45,13 @@ var ConvertTime_1 = __importDefault(require("./ConvertTime"));
 var DayOfTheWeek_1 = __importDefault(require("./DayOfTheWeek"));
 var DateAsString_1 = require("./helper_functions/DateAsString");
 var AddTimeWhenDayIsKnown_1 = __importDefault(require("./helper_functions/AddTimeWhenDayIsKnown"));
-var RemoveEmptyElementsFromArray_1 = __importDefault(require("./helper_functions/RemoveEmptyElementsFromArray"));
+var PrepareMessage_1 = __importDefault(require("./helper_functions/PrepareMessage"));
 var token = config_json_1.default.token;
 var bot = new node_telegram_bot_api_1.default(token, { polling: true, baseApiUrl: "https://api.telegram.org" });
 var convertTime = new ConvertTime_1.default();
 //дата в данную минуту
 var date = new Date();
 console.log(date.toString()); //день недели | дата | время
-function prepareMessage(message) {
-    var text = message.toLocaleLowerCase();
-    var words = text.split(" "); //разбиение на элементы массива, "пробел"
-    words = (0, RemoveEmptyElementsFromArray_1.default)(words); // избавление в массиве от пустых элементов
-    return words;
-}
 bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
     var chatId, timeMessage, words, keywordInMessage, secondKeywordInMessage, millisecondsTime, messageFuture, arrayElementAfterKeyword1, arrayElementAfterKeyword2, arrayElementAfterKeyword3, arrayElementAfterKeyword4, time, time, objTime, arrayElementAfterKeyword1, arrayElementAfterKeyword2, arrayElementAfterKeyword3, arrayElementAfterKeyword4, arrayElementAfterKeyword5, arrayElementAfterKeyword6, time, dayOfTheWeek, differenceInDays, futureDay, futureDate, futureMs, futureDateAndTime, futureDay, futureDate, yearMessage, monthMessage, dayMessage, futureDate, dayOfTheWeek, differenceInDays, futureDay, futureDate, time, objTime, time, futureMs, futureDateAndTime;
     return __generator(this, function (_a) {
@@ -65,16 +59,16 @@ bot.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, func
             case 0:
                 chatId = msg.chat.id //id пользователя
                 ;
-                timeMessage = msg.date //дата в сек отправки сообщения, которое напоминаем
+                timeMessage = msg.date * 1000 //дата в сек отправки сообщения, которое напоминаем
                 ;
-                console.log('дата сообщения', new Date(timeMessage * 1000).toString()); //дата и время, когда отправили сообщение, которое напомнить в виде строки
+                console.log('дата сообщения', new Date(timeMessage).toString()); //дата и время, когда отправили сообщение, которое напомнить в виде строки
                 if (!!msg.text) return [3 /*break*/, 2];
                 return [4 /*yield*/, bot.sendMessage(chatId, "нет сообщения")];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
             case 2:
-                words = prepareMessage(msg.text);
+                words = (0, PrepareMessage_1.default)(msg.text);
                 console.log(words); //массив
                 secondKeywordInMessage = 0 //ключевое слово в сообщении
                 ;

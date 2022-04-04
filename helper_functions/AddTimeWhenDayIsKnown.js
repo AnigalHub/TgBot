@@ -43,7 +43,7 @@ var DateAsString_1 = require("./DateAsString");
 var ConvertTime_1 = __importDefault(require("../ConvertTime"));
 var convertTime = new ConvertTime_1.default();
 //функция добавления времени, когда известен день
-function AddTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage, millisecondsTime, messageFuture) {
+function addTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage, millisecondsTime, messageFuture) {
     return __awaiter(this, void 0, void 0, function () {
         var futureDate, timeAfterSecondKeyword, timeAfterSecondKeyword, objTime;
         return __generator(this, function (_a) {
@@ -119,5 +119,5 @@ function AddTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage,
         });
     });
 }
-exports.default = AddTimeWhenDayIsKnown;
+exports.default = addTimeWhenDayIsKnown;
 //# sourceMappingURL=AddTimeWhenDayIsKnown.js.map

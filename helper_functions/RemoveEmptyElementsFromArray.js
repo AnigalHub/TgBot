@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function RemoveEmptyElementsFromArray(array) {
+function removeEmptyElementsFromArray(array) {
     var output = array;
     if (array.includes(' ') == true) {
         output = array.filter(function (el) {
@@ -9,5 +9,5 @@ function RemoveEmptyElementsFromArray(array) {
     }
     return output;
 }
-exports.default = RemoveEmptyElementsFromArray;
+exports.default = removeEmptyElementsFromArray;
 //# sourceMappingURL=RemoveEmptyElementsFromArray.js.map
