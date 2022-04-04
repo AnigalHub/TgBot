@@ -4,7 +4,7 @@ import ConvertTime from './ConvertTime'
 import DayOfTheWeek from './DayOfTheWeek'
 import {DateAsString} from './helper_functions/DateAsString'
 import addTime from './helper_functions/AddTimeWhenDayIsKnown'
-import RemoveEmptyElementsFromArray from './helper_functions/RemoveEmptyElementsFromArray'
+import prepareMessage from "./helper_functions/PrepareMessage";
 
 const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
@@ -14,12 +14,7 @@ const convertTime = new ConvertTime()
 let date = new Date();
 console.log(date.toString()) //день недели | дата | время
 
-function prepareMessage(message:string){
-    let text = message.toLocaleLowerCase()
-    let words = text.split(" ") //разбиение на элементы массива, "пробел"
-    words = RemoveEmptyElementsFromArray(words) // избавление в массиве от пустых элементов
-    return words;
-}
+
 
 bot.on('message', async (msg) =>{
     const chatId = msg.chat.id //id пользователя
