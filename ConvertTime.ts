@@ -192,7 +192,7 @@ export default class Time {
     }
 
     //подсчет времени в виде строки в миллисекундах и сборка сообщения
-    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number,date:number,futureDate:number,array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
+    CountTimeAsStringInMillisecondsAndAssembleMessage(time:number,dateMs:number,futureDate:number,array:Array<string>,arrayElement_1:number,arrayElement_2:number,arrayElement_3:number,arrayElement_4:number,){
         let futureMs:number = 0
         let millisecondsTime: number = 0
         let message:string
@@ -213,14 +213,14 @@ export default class Time {
             futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_1],time)
             message = array.slice((arrayElement_2),array.length).join(' ')//сообщение, которое напоминаем
         }
-        millisecondsTime =  futureMs - date
+        millisecondsTime =  futureMs - dateMs
         return {millisecondsTime, message}
     }
 
     //подсчет разницы в миллисекундах между будущей и текущей датами
-    CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date:number,futureDate:number,time:number,array:Array<string>,arrayElement:number){
+    CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date:number,futureDateMs:number,time:number,array:Array<string>,arrayElement:number){
         let diffMilliseconds:number = 0
-        const futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement],time)
+        const futureMs = futureDateMs + this.ConvertTimeToMilliseconds(array[arrayElement],time)
         diffMilliseconds = futureMs - date
         return diffMilliseconds
     }
