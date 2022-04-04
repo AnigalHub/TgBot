@@ -35,7 +35,7 @@ async function CalculationsAndHandlingErrorsOnInputThrough(chatId:number,words:A
             await bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
         }
         else{ // функция добавления времени когда день известен
-            await addTime(bot, chatId, date, words, secondKeywordInMessage, millisecondsTime, messageFuture)
+           return  await addTime(bot, chatId, date, words, secondKeywordInMessage, millisecondsTime, messageFuture)
         }
     }
     else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
@@ -49,11 +49,11 @@ async function CalculationsAndHandlingErrorsOnInputThrough(chatId:number,words:A
             await bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
         }
         else{
-            let time:number = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword1,arrayElementAfterKeyword2)
-            let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,timeMessage,timeMessage,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
+            let time:number = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword1, arrayElementAfterKeyword2)
+            let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
             messageFuture = objTime.message
             millisecondsTime = objTime.millisecondsTime
-            await addTime(bot, chatId,date, words,secondKeywordInMessage,millisecondsTime,messageFuture)
+           return  await addTime(bot, chatId,date, words,secondKeywordInMessage,millisecondsTime,messageFuture)
         }
     }
     else {
@@ -79,7 +79,10 @@ bot.on('message', async (msg) =>{
 
     if (words.includes('через') == true){
         keywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
-       await CalculationsAndHandlingErrorsOnInputThrough(chatId,words,keywordInMessage,secondKeywordInMessage, timeMessage, messageFuture,millisecondsTime)
+    //   await CalculationsAndHandlingErrorsOnInputThrough(chatId, words, keywordInMessage, secondKeywordInMessage, timeMessage, messageFuture,millisecondsTime)
+        let through = await CalculationsAndHandlingErrorsOnInputThrough(chatId, words, keywordInMessage, secondKeywordInMessage, timeMessage, messageFuture,millisecondsTime)
+        if(through != undefined)
+        console.log(through)
     }
     else if(words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
