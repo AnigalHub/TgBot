@@ -6,6 +6,7 @@ import {DateAsString} from './helper_functions/DateAsString'
 import addTime from './helper_functions/AddTimeWhenDayIsKnown'
 import prepareMessage from "./helper_functions/PrepareMessage";
 
+
 const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 const convertTime = new ConvertTime()
@@ -14,7 +15,51 @@ const convertTime = new ConvertTime()
 let date = new Date();
 console.log(date.toString()) //день недели | дата | время
 
+//функция подготовки сообщения
+async function CalculationsAndHandlingErrorsOnInputThrough(chatId:number,words:Array<string>,keywordInMessage:number,secondKeywordInMessage:number,
+                                                           timeMessage:number, messageFuture:string, millisecondsTime:number){
 
+    let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
+    let arrayElementAfterKeyword2 = words[keywordInMessage+2] // элемент массива после ключевого слова - второй
+    let arrayElementAfterKeyword3 = words[keywordInMessage+3] // элемент массива после ключевого слова - третий
+    let arrayElementAfterKeyword4 = words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
+
+    if(/^[0-9]*$/.test(arrayElementAfterKeyword1)){ // только цифры
+        let time = parseInt(arrayElementAfterKeyword1) // время с типом число
+        messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') // сообщение, которое напоминаем
+        millisecondsTime = convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
+        if(time == 0) { // если время указано цифрой 0
+            await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
+        }
+        else if(millisecondsTime == 0) { // если такого времени нет и произошла ошибка и вернулся 0
+            await bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
+        }
+        else{ // функция добавления времени когда день известен
+            await addTime(bot, chatId, date, words, secondKeywordInMessage, millisecondsTime, messageFuture)
+        }
+    }
+    else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
+        if(arrayElementAfterKeyword1 == 'ноль' || arrayElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
+            await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
+        }
+        else if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword1,1) == 0 &&
+            convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,1) == 0 &&
+            convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3,1) == 0 &&
+            convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4,1) == 0){
+            await bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
+        }
+        else{
+            let time:number = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword1,arrayElementAfterKeyword2)
+            let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,timeMessage,timeMessage,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
+            messageFuture = objTime.message
+            millisecondsTime = objTime.millisecondsTime
+            await addTime(bot, chatId,date, words,secondKeywordInMessage,millisecondsTime,messageFuture)
+        }
+    }
+    else {
+        await bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
+    }
+}
 
 bot.on('message', async (msg) =>{
     const chatId = msg.chat.id //id пользователя
@@ -30,50 +75,11 @@ bot.on('message', async (msg) =>{
     let keywordInMessage:number //ключевое слово в сообщении
     let secondKeywordInMessage:number = 0 //ключевое слово в сообщении
     let millisecondsTime: number = 0 //миллисекунды - через сколько надо прислать сообщение
-    let messageFuture: string //сообщение, которое напоминаем
+    let messageFuture: string = ''//сообщение, которое напоминаем
 
     if (words.includes('через') == true){
         keywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
-        let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
-        let arrayElementAfterKeyword2 = words[keywordInMessage+2] // элемент массива после ключевого слова - второй
-        let arrayElementAfterKeyword3 = words[keywordInMessage+3] // элемент массива после ключевого слова - третий
-        let arrayElementAfterKeyword4 = words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
-
-        if(/^[0-9]*$/.test(arrayElementAfterKeyword1)){ // только цифры
-            let time = parseInt(arrayElementAfterKeyword1) // время с типом число
-            messageFuture = words.slice((keywordInMessage+3),words.length).join(' ') // сообщение, которое напоминаем
-            millisecondsTime = convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
-            if(time == 0) { // если время указано цифрой 0
-              await  bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
-            }
-            else if(millisecondsTime == 0) { // если такого времени нет и произошла ошибка и вернулся 0
-               await bot.sendMessage(chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
-            }
-            else{
-                await addTime(bot, chatId,date, words, secondKeywordInMessage,millisecondsTime,messageFuture) // функция добавления времени когда день известен
-            }
-        }
-        else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
-           if(arrayElementAfterKeyword1 == 'ноль' || arrayElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
-                await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
-           }
-           else if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword1,1) == 0 &&
-                convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,1) == 0 &&
-                convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3,1) == 0 &&
-                convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4,1) == 0){
-                await bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
-           }
-           else{
-                let time:number =  convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword1,arrayElementAfterKeyword2)
-                let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,timeMessage,timeMessage,words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
-                messageFuture = objTime.message
-                millisecondsTime = objTime.millisecondsTime
-                await addTime(bot, chatId,date, words,secondKeywordInMessage,millisecondsTime,messageFuture)
-           }
-        }
-        else {
-           await bot.sendMessage(chatId,'Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
-        }
+       CalculationsAndHandlingErrorsOnInputThrough(chatId,words,keywordInMessage,secondKeywordInMessage, timeMessage, messageFuture,millisecondsTime)
     }
     else if(words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
