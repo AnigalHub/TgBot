@@ -18,8 +18,8 @@ console.log(date.toString()) //день недели | дата | время
 
 bot.on('message', async (msg) =>{
     const chatId = msg.chat.id //id пользователя
-    const timeMessage = msg.date //дата в сек отправки сообщения, которое напоминаем
-    console.log('дата сообщения',new Date(timeMessage*1000).toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
+    const timeMessage = msg.date*1000 //дата в сек отправки сообщения, которое напоминаем
+    console.log('дата сообщения',new Date(timeMessage).toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
     if(!msg.text){
         await bot.sendMessage( chatId,"нет сообщения")
         return
