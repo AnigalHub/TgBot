@@ -30,7 +30,7 @@ class FutureTimeAndMessage{
         this.messageFuture = ''
     }
 
-    async CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage:number, secondKeywordInMessage:number, timeMessage:number): Promise<MessageToSend>{
+    CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage:number, secondKeywordInMessage:number, timeMessage:number): MessageToSend{
 
         let arrayElementAfterKeyword1 = this.array[keywordInMessage+1] // элемент массива после ключевого слова - первый
         let arrayElementAfterKeyword2 = this.array[keywordInMessage+2] // элемент массива после ключевого слова - второй
@@ -48,7 +48,7 @@ class FutureTimeAndMessage{
                 throw new Error('Ошибка! Отсутствует или некорректно указана единица времени')
             }
             else{ // функция добавления времени когда день известен
-                return await addTime(bot, this.chatId, this.dateMessage, this.array, secondKeywordInMessage, this.millisecondsTime, this.messageFuture)
+                return addTime(bot, this.chatId, this.dateMessage, this.array, secondKeywordInMessage, this.millisecondsTime, this.messageFuture)
             }
         }
         else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
@@ -66,7 +66,7 @@ class FutureTimeAndMessage{
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.array,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
                 this.messageFuture = objTime.message
                 this.millisecondsTime = objTime.millisecondsTime
-                return await addTime(bot, this.chatId, this.dateMessage, this.array, secondKeywordInMessage,this.millisecondsTime,this.messageFuture)
+                return addTime(bot, this.chatId, this.dateMessage, this.array, secondKeywordInMessage,this.millisecondsTime,this.messageFuture)
             }
         }
         else {
