@@ -5,7 +5,7 @@ const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
 
 //функция добавления времени, когда известен день
-async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string) : Promise<MessageToSend> {
+function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string) : MessageToSend {
     if (array.includes('в') == true || array.includes('во') == true){
         if(array.includes('во') == true){
             array.splice(array.indexOf('во'),1,'в')
