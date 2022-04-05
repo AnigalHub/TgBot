@@ -263,15 +263,12 @@ bot.on('message', async (msg) =>{
 
     if (words.includes('через') == true){
         keywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
-
         try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage, secondKeywordInMessage, timeMessage)
+            millisecondsAndMessage = futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage, secondKeywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
         } catch (e:any) {
            await bot.sendMessage(chatId,e.message)
         }
-
-
 
     }
     else if(words.includes('в') == true || words.includes('во') == true){
