@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var DateAsString_1 = require("./DateAsString");
 var ConvertTime_1 = __importDefault(require("../ConvertTime"));
 var convertTime = new ConvertTime_1.default();
+var MessageToSend_1 = __importDefault(require("../MessageToSend"));
 //функция добавления времени, когда известен день
 function addTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage, millisecondsTime, messageFuture) {
     return __awaiter(this, void 0, void 0, function () {
@@ -114,7 +115,7 @@ function addTimeWhenDayIsKnown(bot, chatId, date, array, secondKeywordInMessage,
                     setTimeout(function () { return bot.sendMessage(chatId, messageFuture); }, millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                     (0, DateAsString_1.DateAsString)(millisecondsTime, date);
                     _a.label = 17;
-                case 17: return [2 /*return*/, { millisecondsTime: millisecondsTime, messageFuture: messageFuture }];
+                case 17: return [2 /*return*/, new MessageToSend_1.default(millisecondsTime, messageFuture)];
             }
         });
     });
