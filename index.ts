@@ -73,7 +73,7 @@ class FutureTimeAndMessage{
             throw new Error('Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
         }
     }
-    async CalculationsAndHandlingErrorsOnInputTo( keywordInMessage:number, timeMessage:number): Promise<MessageToSend>{
+    CalculationsAndHandlingErrorsOnInputTo( keywordInMessage:number, timeMessage:number): MessageToSend{
         let arrayElementAfterKeyword1 = this.array[keywordInMessage+1] // элемент массива после ключевого слова - первый
         let arrayElementAfterKeyword2 = this.array[keywordInMessage+2] // элемент массива после ключевого слова - второй
         let arrayElementAfterKeyword3 = this.array[keywordInMessage+3] // элемент массива после ключевого слова - третий
@@ -280,7 +280,7 @@ bot.on('message', async (msg) =>{
         }
         keywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
         try {
-            millisecondsAndMessage = await futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( keywordInMessage, timeMessage)
+            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( keywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
         } catch (e:any) {
             await bot.sendMessage(chatId,e.message)
