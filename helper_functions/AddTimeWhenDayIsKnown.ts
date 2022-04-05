@@ -2,9 +2,10 @@ import {DateAsString} from './DateAsString'
 import ConvertTime from '../ConvertTime'
 import TelegramBot from "node-telegram-bot-api";
 const convertTime = new ConvertTime()
+import MessageToSend from "../MessageToSend";
 
 //функция добавления времени, когда известен день
-async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string){
+async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string) : Promise<MessageToSend> {
     if (array.includes('в') == true || array.includes('во') == true){
         if(array.includes('во') == true){
             array.splice(array.indexOf('во'),1,'в')
@@ -60,7 +61,9 @@ async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,ar
         setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
         DateAsString(millisecondsTime,date)
     }
-    return {millisecondsTime, messageFuture}
+    return new MessageToSend(millisecondsTime, messageFuture)
 }
 
 export default addTimeWhenDayIsKnown
+
+
