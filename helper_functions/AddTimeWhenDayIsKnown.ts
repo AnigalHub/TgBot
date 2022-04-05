@@ -20,10 +20,10 @@ async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,ar
                     timeAfterSecondKeyword = 24
                 }
                 if(convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],timeAfterSecondKeyword) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-                    await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
+                    throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 секунд | 1 секунду | 3 секунды');
                 }
                 else if (timeAfterSecondKeyword > 24 && convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],1) >= 3600000){
-                    await bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
+                    throw new Error('Ошибка! Время не может быть больше 24');
                 }
                 else {
                     messageFuture = array.slice((secondKeywordInMessage+3),array.length).join(' ')//сообщение, которое напоминаем
@@ -37,7 +37,7 @@ async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,ar
                     convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+2],1) == 0 &&
                     convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+3],1) == 0 &&
                     convertTime.ConvertTimeToMilliseconds(array[secondKeywordInMessage+4],1) == 0){
-                    await bot.sendMessage(chatId, 'Ошибка! Не указана единица времени');
+                    throw new Error('Ошибка! Не указана единица времени');
                 }
                 else {
                     let timeAfterSecondKeyword :number =  convertTime.ConvertLargeNumberFromStringToNumber(array[secondKeywordInMessage+1], array[secondKeywordInMessage+2])
@@ -50,11 +50,11 @@ async function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,ar
                 }
             }
             else {
-                await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время');
+                throw new Error('Ошибка! Некорректно введено время');
             }
         }
         else {
-            await bot.sendMessage(chatId,'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
+            throw new Error('Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
         }
     }
     else {
