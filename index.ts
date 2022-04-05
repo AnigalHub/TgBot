@@ -16,8 +16,7 @@ let date = new Date();
 console.log(date.toString()) //день недели | дата | время
 
 //функция подготовки сообщения
-async function CalculationsAndHandlingErrorsOnInputThrough(chatId:number,words:Array<string>,keywordInMessage:number,secondKeywordInMessage:number,
-                                                           timeMessage:number, messageFuture:string, millisecondsTime:number){
+async function CalculationsAndHandlingErrorsOnInputThrough(chatId:number,words:Array<string>, keywordInMessage:number, secondKeywordInMessage:number, timeMessage:number, messageFuture:string, millisecondsTime:number){
 
     let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
     let arrayElementAfterKeyword2 = words[keywordInMessage+2] // элемент массива после ключевого слова - второй
@@ -76,13 +75,14 @@ bot.on('message', async (msg) =>{
     let secondKeywordInMessage:number = 0 //ключевое слово в сообщении
     let millisecondsTime: number = 0 //миллисекунды - через сколько надо прислать сообщение
     let messageFuture: string = ''//сообщение, которое напоминаем
+    let millisecondsAndMessage:object = {}
 
     if (words.includes('через') == true){
         keywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
-    //   await CalculationsAndHandlingErrorsOnInputThrough(chatId, words, keywordInMessage, secondKeywordInMessage, timeMessage, messageFuture,millisecondsTime)
         let through = await CalculationsAndHandlingErrorsOnInputThrough(chatId, words, keywordInMessage, secondKeywordInMessage, timeMessage, messageFuture,millisecondsTime)
         if(through != undefined)
-        console.log(through)
+        millisecondsAndMessage = through
+        console.log(millisecondsAndMessage)
     }
     else if(words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
@@ -96,7 +96,7 @@ bot.on('message', async (msg) =>{
         let arrayElementAfterKeyword5 = words[keywordInMessage+5] // элемент массива после ключевого слова - пятый
         let arrayElementAfterKeyword6 = words[keywordInMessage+6] // элемент массива после ключевого слова - шестой
 
-        if(/^[0-9]*$/.test(arrayElementAfterKeyword1 )) { // только цифры
+        if(/^[0-9]*$/.test(arrayElementAfterKeyword1)) { // только цифры
             let time = parseInt(arrayElementAfterKeyword1) //время с типом число
             if(time == 0){
                 time = 24
@@ -105,10 +105,10 @@ bot.on('message', async (msg) =>{
                 await bot.sendMessage(chatId, 'Ошибка! Время не может быть больше 24');
             }
             else if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-                await  bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
+                await bot.sendMessage(chatId, 'Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
             }
             else if(!arrayElementAfterKeyword3){
-                await  bot.sendMessage(chatId, 'Ошибка! Не указана дата');
+                await bot.sendMessage(chatId, 'Ошибка! Не указана дата');
             }
             else{
                 if (/[А-яЁё]/.test(arrayElementAfterKeyword3)){ // только буквы
@@ -148,9 +148,8 @@ bot.on('message', async (msg) =>{
                         }
                     }
                 }
-                else if(!/[А-яЁё]/.test(arrayElementAfterKeyword3) && (arrayElementAfterKeyword3.includes('.') == true ||
-                    arrayElementAfterKeyword3.includes('-') == true || arrayElementAfterKeyword3.includes('/') == true )) {
-                    if (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
+                else if(!/[А-яЁё]/.test(arrayElementAfterKeyword3) && (arrayElementAfterKeyword3.includes('.') == true || arrayElementAfterKeyword3.includes('-') == true || arrayElementAfterKeyword3.includes('/') == true )) {
+                    if  (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
                         (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-' ||  words[keywordInMessage + 3][2] != '/') &&
                         (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-' || words[keywordInMessage + 3][5] != '/') ||
                         (words[keywordInMessage + 3].length > 10) ||
@@ -161,16 +160,16 @@ bot.on('message', async (msg) =>{
                     else {
                         let yearMessage
                         if (words[keywordInMessage + 3].length == 10) {
-                            yearMessage = parseInt(words[keywordInMessage + 3].substring(6, 12))
+                            yearMessage = parseInt(arrayElementAfterKeyword3.substring(6, 12))
                         }
-                        else if ((words[keywordInMessage + 3].length == 8) && (String(date.getFullYear()).slice(2, 4) <= words[keywordInMessage + 3].substring(6, 8))) {
-                            yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + words[keywordInMessage + 3].substring(6, 8))
+                        else if ((arrayElementAfterKeyword3.length == 8) && (String(date.getFullYear()).slice(2, 4) <= arrayElementAfterKeyword3.substring(6, 8))) {
+                            yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + arrayElementAfterKeyword3.substring(6, 8))
                         }
                         else {
-                            yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + words[keywordInMessage + 3].substring(6, 8))
+                            yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + arrayElementAfterKeyword3.substring(6, 8))
                         }
-                        let monthMessage = parseInt(words[keywordInMessage + 3].substring(3, 6)) - 1
-                        let dayMessage = parseInt(words[keywordInMessage + 3].substring(0, 2))
+                        let monthMessage = parseInt(arrayElementAfterKeyword3.substring(3, 6)) - 1
+                        let dayMessage = parseInt(arrayElementAfterKeyword3.substring(0, 2))
                         let futureDate = new Date(yearMessage, monthMessage, dayMessage)
 
                         messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
@@ -208,7 +207,7 @@ bot.on('message', async (msg) =>{
                                 time = 24
                             }
                          let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,date.getHours(),futureDate.getHours(),words,keywordInMessage+3,keywordInMessage+4,keywordInMessage+5,keywordInMessage+6)
-                           messageFuture = objTime.message
+                            messageFuture = objTime.message
                             millisecondsTime = objTime.millisecondsTime
                         }
                     }
@@ -237,8 +236,8 @@ bot.on('message', async (msg) =>{
 
         }
     }
-    else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true)
-    || (words.includes('послезавтра') == true) || (words.includes('послепослезавтра') == true)){
+    else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true) || (words.includes('послезавтра') == true) || (words.includes('послепослезавтра') == true)){
+
     }
     else {
         await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
