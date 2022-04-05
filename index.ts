@@ -42,11 +42,10 @@ class FutureTimeAndMessage{
             this.messageFuture = this.array.slice((keywordInMessage+3),this.array.length).join(' ') // сообщение, которое напоминаем
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
             if(time == 0) { // если время указано цифрой 0
-                //await bot.sendMessage(this.chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
                 throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!')
             }
             else if(this.millisecondsTime == 0) { // если такого времени нет и произошла ошибка и вернулся 0
-                await bot.sendMessage(this.chatId, 'Ошибка! Отсутствует или некорректно указана единица времени');
+                throw new Error('Ошибка! Отсутствует или некорректно указана единица времени')
             }
             else{ // функция добавления времени когда день известен
                 return await addTime(bot, this.chatId, this.dateMessage, this.array, secondKeywordInMessage, this.millisecondsTime, this.messageFuture)
@@ -54,13 +53,13 @@ class FutureTimeAndMessage{
         }
         else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
             if(arrayElementAfterKeyword1 == 'ноль' || arrayElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
-                await bot.sendMessage(this.chatId, 'Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
+                throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
             }
             else if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword1,1) == 0 &&
                 convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,1) == 0 &&
                 convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword3,1) == 0 &&
                 convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword4,1) == 0){
-                await bot.sendMessage(this.chatId, 'Ошибка! Не указана единица времени');
+                throw new Error('Ошибка! Не указана единица времени');
             }
             else{
                 let time:number = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterKeyword1, arrayElementAfterKeyword2)
@@ -71,7 +70,7 @@ class FutureTimeAndMessage{
             }
         }
         else {
-            await bot.sendMessage(this.chatId,'Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
+            throw new Error('Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
         }
     }
     async CalculationsAndHandlingErrorsOnInputTo( keywordInMessage:number, timeMessage:number){
