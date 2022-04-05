@@ -5,7 +5,7 @@ import DayOfTheWeek from './DayOfTheWeek'
 import {DateAsString} from './helper_functions/DateAsString'
 import addTime from './helper_functions/AddTimeWhenDayIsKnown'
 import prepareMessage from "./helper_functions/PrepareMessage";
-
+import MessageToSend from "./MessageToSend";
 
 const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
@@ -30,7 +30,7 @@ class FutureTimeAndMessage{
         this.messageFuture = ''
     }
 
-    async CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage:number, secondKeywordInMessage:number, timeMessage:number){
+    async CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage:number, secondKeywordInMessage:number, timeMessage:number): Promise<MessageToSend>{
 
         let arrayElementAfterKeyword1 = this.array[keywordInMessage+1] // элемент массива после ключевого слова - первый
         let arrayElementAfterKeyword2 = this.array[keywordInMessage+2] // элемент массива после ключевого слова - второй
@@ -73,7 +73,7 @@ class FutureTimeAndMessage{
             throw new Error('Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
         }
     }
-    async CalculationsAndHandlingErrorsOnInputTo( keywordInMessage:number, timeMessage:number){
+    async CalculationsAndHandlingErrorsOnInputTo( keywordInMessage:number, timeMessage:number): Promise<MessageToSend>{
         let arrayElementAfterKeyword1 = this.array[keywordInMessage+1] // элемент массива после ключевого слова - первый
         let arrayElementAfterKeyword2 = this.array[keywordInMessage+2] // элемент массива после ключевого слова - второй
         let arrayElementAfterKeyword3 = this.array[keywordInMessage+3] // элемент массива после ключевого слова - третий
@@ -110,10 +110,9 @@ class FutureTimeAndMessage{
                             this.messageFuture = this.array.slice((keywordInMessage+5),this.array.length).join(' ')//сообщение, которое напоминаем
                             setTimeout(() => bot.sendMessage(this.chatId, this.messageFuture), this.millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                             DateAsString(this.millisecondsTime,this.dateMessage)
-                            let millisecondsTime  = this.millisecondsTime
-                            let messageFuture = this.messageFuture
-                            return {millisecondsTime, messageFuture}
+                            return new MessageToSend(this.millisecondsTime, this.messageFuture)
                         }
+                        throw new Error('')
                     }
                     else{
                         let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(arrayElementAfterKeyword3)
@@ -135,9 +134,10 @@ class FutureTimeAndMessage{
 
                             let millisecondsTime  = this.millisecondsTime
                             let messageFuture = this.messageFuture
-                            return {millisecondsTime, messageFuture}
+                            return new MessageToSend(millisecondsTime, messageFuture)
                         }
                     }
+                    throw new Error('')
                 }
                 else if(!/[А-яЁё]/.test(arrayElementAfterKeyword3) && (arrayElementAfterKeyword3.includes('.') == true || arrayElementAfterKeyword3.includes('-') == true || arrayElementAfterKeyword3.includes('/') == true )) {
                     if  (this.array[keywordInMessage + 3][2] != this.array[keywordInMessage + 3][5] &&
@@ -171,12 +171,14 @@ class FutureTimeAndMessage{
 
                         let millisecondsTime  = this.millisecondsTime
                         let messageFuture = this.messageFuture
-                        return {millisecondsTime, messageFuture}
+                        return new MessageToSend(millisecondsTime, messageFuture)
                     }
                 }
                 else {
-                    await bot.sendMessage(this.chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | пт | субботу | 21.05.22 | 21-05-22 | 21/05/22 ');
+                    throw new Error('')
+                    //await bot.sendMessage(this.chatId,'Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | пт | субботу | 21.05.22 | 21-05-22 | 21/05/22 ');
                 }
+                throw new Error('')
             }
         }
         else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
@@ -219,20 +221,25 @@ class FutureTimeAndMessage{
                             const futureDateAndTime = new Date(futureMs)
                             this.millisecondsTime = futureDateAndTime.getTime() - this.dateMessage.getTime()
                             this.messageFuture = this.array.slice((keywordInMessage+5),this.array.length).join(' ')//сообщение, которое напоминаем
+                            return new MessageToSend(this.millisecondsTime, this.messageFuture)
                         }
                     }
                 }
                 else {
-
+                    throw new Error('')
                 }
                 setTimeout(() => bot.sendMessage(this.chatId, this.messageFuture),this.millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                 DateAsString(this.millisecondsTime,this.dateMessage)
                 let millisecondsTime  = this.millisecondsTime
                 let messageFuture = this.messageFuture
-                return {millisecondsTime, messageFuture}
+                return new MessageToSend(millisecondsTime, messageFuture)
             }
+            throw new Error('')
+        }
+        else{
 
         }
+        throw new Error('')
     }
 }
 
@@ -251,7 +258,7 @@ bot.on('message', async (msg) =>{
 
     let keywordInMessage:number //ключевое слово в сообщении
     let secondKeywordInMessage:number = 0 //ключевое слово в сообщении
-    let millisecondsAndMessage:object = {}
+    let millisecondsAndMessage:MessageToSend
 
     let futureTimeAndMessage = new FutureTimeAndMessage(chatId,words,dateMessage)
 
@@ -259,9 +266,7 @@ bot.on('message', async (msg) =>{
         keywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
 
         try {
-            let through =  await futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage, secondKeywordInMessage, timeMessage)
-            if(through != undefined)
-                millisecondsAndMessage = through
+            millisecondsAndMessage =  await futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage, secondKeywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
         } catch (e:any) {
            await bot.sendMessage(chatId,e.message)
@@ -275,10 +280,13 @@ bot.on('message', async (msg) =>{
             words.splice(words.indexOf('во'),1,'в')
         }
         keywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
-        let to =  await futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( keywordInMessage, timeMessage)
-        if(to != undefined)
-            millisecondsAndMessage = to
-        console.log(millisecondsAndMessage)
+        try {
+            millisecondsAndMessage = await futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( keywordInMessage, timeMessage)
+            console.log(millisecondsAndMessage)
+        } catch (e:any) {
+            await bot.sendMessage(chatId,e.message)
+        }
+
 
        /*
         let arrayElementAfterKeyword1 = words[keywordInMessage+1] // элемент массива после ключевого слова - первый
