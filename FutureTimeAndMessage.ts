@@ -3,11 +3,8 @@ import addTime from "./helper_functions/AddTimeWhenDayIsKnown";
 import DayOfTheWeek from "./DayOfTheWeek";
 import {DateAsString} from "./helper_functions/DateAsString";
 import ConvertTime from "./ConvertTime";
-import TelegramBot from "node-telegram-bot-api";
-import config from "./config.json";
 const convertTime = new ConvertTime()
-const token:string = config.token
-const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
+
 
 export default class FutureTimeAndMessage{
     private readonly chatId:number
@@ -102,7 +99,6 @@ export default class FutureTimeAndMessage{
                             const futureDateAndTime = new Date(futureMs)
                             this.millisecondsTime = futureDateAndTime.getTime() - this.dateMessage.getTime()
                             this.messageFuture = this.array.slice((keywordInMessage+5),this.array.length).join(' ')//сообщение, которое напоминаем
-                            setTimeout(() => bot.sendMessage(this.chatId, this.messageFuture), this.millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                             DateAsString(this.millisecondsTime,this.dateMessage)
                             return new MessageToSend(this.millisecondsTime, this.messageFuture)
                         }
@@ -123,7 +119,6 @@ export default class FutureTimeAndMessage{
                             let futureDate = new Date(this.dateMessage.getFullYear(), this.dateMessage.getMonth(), futureDay)
                             this.millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage,futureDate.getHours(),time,this.array,keywordInMessage+2)
                             this.messageFuture = this.array.slice((keywordInMessage+4),this.array.length).join(' ')//сообщение, которое напоминаем
-                            setTimeout(() => bot.sendMessage(this.chatId, this.messageFuture), this.millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                             DateAsString(this.millisecondsTime,this.dateMessage)
 
                             let millisecondsTime  = this.millisecondsTime
@@ -159,8 +154,6 @@ export default class FutureTimeAndMessage{
 
                         this.messageFuture = this.array.slice((keywordInMessage+4),this.array.length).join(' ')//сообщение, которое напоминаем
                         this.millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, this.array, keywordInMessage + 2)
-
-                        setTimeout(() => bot.sendMessage(this.chatId, this.messageFuture), this.millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                         DateAsString(this.millisecondsTime,this.dateMessage)
 
                         let millisecondsTime  = this.millisecondsTime
@@ -221,7 +214,6 @@ export default class FutureTimeAndMessage{
                 else {
                     throw new Error('')
                 }
-                setTimeout(() => bot.sendMessage(this.chatId, this.messageFuture),this.millisecondsTime);// функция со временем - когда напомнить + сообщение - что напоминаем
                 DateAsString(this.millisecondsTime,this.dateMessage)
                 let millisecondsTime  = this.millisecondsTime
                 let messageFuture = this.messageFuture
