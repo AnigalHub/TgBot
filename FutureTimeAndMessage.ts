@@ -120,10 +120,7 @@ export default class FutureTimeAndMessage{
                             this.millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage,futureDate.getHours(),time,this.array,keywordInMessage+2)
                             this.messageFuture = this.array.slice((keywordInMessage+4),this.array.length).join(' ')//сообщение, которое напоминаем
                             DateAsString(this.millisecondsTime,this.dateMessage)
-
-                            let millisecondsTime  = this.millisecondsTime
-                            let messageFuture = this.messageFuture
-                            return new MessageToSend(millisecondsTime, messageFuture)
+                            return new MessageToSend(this.millisecondsTime, this.messageFuture)
                         }
                     }
                     throw new Error('')
@@ -156,9 +153,7 @@ export default class FutureTimeAndMessage{
                         this.millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, this.array, keywordInMessage + 2)
                         DateAsString(this.millisecondsTime,this.dateMessage)
 
-                        let millisecondsTime  = this.millisecondsTime
-                        let messageFuture = this.messageFuture
-                        return new MessageToSend(this.millisecondsTime, messageFuture)
+                        return new MessageToSend(this.millisecondsTime, this.messageFuture)
                     }
                 }
                 else {
@@ -192,6 +187,7 @@ export default class FutureTimeAndMessage{
                             let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,this.dateMessage.getHours(),futureDate.getHours(),this.array,keywordInMessage+3,keywordInMessage+4,keywordInMessage+5,keywordInMessage+6)
                             this.messageFuture = objTime.message
                             this.millisecondsTime = objTime.millisecondsTime
+                            return new MessageToSend(this.millisecondsTime, this.messageFuture)
                         }
                     }
                     else {
