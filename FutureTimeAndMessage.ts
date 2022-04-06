@@ -1,7 +1,7 @@
 import MessageToSend from "./MessageToSend";
 import addTime from "./helper_functions/AddTimeWhenDayIsKnown";
 import DayOfTheWeek from "./DayOfTheWeek";
-import {DateAsString} from "./helper_functions/DateAsString";
+import DateAsString from "./helper_functions/DateAsString";
 import ConvertTime from "./ConvertTime";
 const convertTime = new ConvertTime()
 
