@@ -48,7 +48,8 @@ class FutureTimeAndMessage{
                 throw new Error('Ошибка! Отсутствует или некорректно указана единица времени')
             }
             else{ // функция добавления времени когда день известен
-                return addTime(bot, this.chatId, this.dateMessage, this.array, secondKeywordInMessage, this.millisecondsTime, this.messageFuture)
+              //  console.log(this.dateMessage, this.array, secondKeywordInMessage, this.millisecondsTime, this.messageFuture)
+                return addTime(this.dateMessage, this.array, secondKeywordInMessage, this.millisecondsTime, this.messageFuture)
             }
         }
         else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
@@ -66,7 +67,7 @@ class FutureTimeAndMessage{
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.array,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
                 this.messageFuture = objTime.message
                 this.millisecondsTime = objTime.millisecondsTime
-                return addTime(bot, this.chatId, this.dateMessage, this.array, secondKeywordInMessage,this.millisecondsTime,this.messageFuture)
+                return addTime(this.dateMessage, this.array, secondKeywordInMessage,this.millisecondsTime,this.messageFuture)
             }
         }
         else {
@@ -171,7 +172,7 @@ class FutureTimeAndMessage{
 
                         let millisecondsTime  = this.millisecondsTime
                         let messageFuture = this.messageFuture
-                        return new MessageToSend(millisecondsTime, messageFuture)
+                        return new MessageToSend(this.millisecondsTime, messageFuture)
                     }
                 }
                 else {
@@ -245,9 +246,9 @@ class FutureTimeAndMessage{
 bot.on('message', async (msg) =>{
     const chatId = msg.chat.id //id пользователя
     const timeMessage = msg.date*1000 //дата в сек отправки сообщения, которое напоминаем
-    console.log(timeMessage)
     const dateMessage = new Date(timeMessage)
-    console.log('дата сообщения',dateMessage.toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
+   // console.log(dateMessage)
+   console.log('дата сообщения',dateMessage.toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
     if(!msg.text){
         await bot.sendMessage( chatId,"нет сообщения")
         return
