@@ -1,10 +1,6 @@
 import config from './config.json'
 import TelegramBot from "node-telegram-bot-api"
-import ConvertTime from './ConvertTime'
 import FutureTimeAndMessage from './FutureTimeAndMessage'
-import DayOfTheWeek from './DayOfTheWeek'
-import {DateAsString} from './helper_functions/DateAsString'
-import addTime from './helper_functions/AddTimeWhenDayIsKnown'
 import prepareMessage from "./helper_functions/PrepareMessage";
 import MessageToSend from "./MessageToSend";
 
