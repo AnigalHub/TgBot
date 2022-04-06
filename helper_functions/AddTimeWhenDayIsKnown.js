@@ -21,8 +21,8 @@ function addTimeWhenDayIsKnown(date, words, secondKeywordInMessage, milliseconds
         if (millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2, 1) < 86400000) {
             var futureDate = new Date(Date.parse(date.toString()) + millisecondsTime);
             futureDate.setHours(0, 0, 0, 0);
-            var dateMs = Date.parse(date.toString());
-            var futureDateMs = Date.parse(futureDate.toString());
+            var dateMs = Date.parse(date.toString()); //дата сообщения в миллисекундах
+            var futureDateMs = Date.parse(futureDate.toString()); //будущая дата в миллисекундах
             if (/^[0-9]*$/.test(words[secondKeywordInMessage + 1])) { //только цифры
                 var timeAfterSecondKeyword = parseInt(arrayElementAfterSecondKeyword1); //время с типом число
                 if (timeAfterSecondKeyword == 0) {
@@ -42,15 +42,13 @@ function addTimeWhenDayIsKnown(date, words, secondKeywordInMessage, milliseconds
                 }
             }
             else if (/^[А-яЁё]*$/.test(words[secondKeywordInMessage + 1])) { // только буквы
-                if (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1, 1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2, 1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3, 1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4, 1) == 0) {
+                if (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1, 1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2, 1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3, 1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4, 1) == 0) {
                     throw new Error('Ошибка! Не указана единица времени');
                 }
                 else {
                     var timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2);
-                    var objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword, date.getTime(), futureDate.getTime(), words, secondKeywordInMessage + 1, secondKeywordInMessage + 2, secondKeywordInMessage + 3, secondKeywordInMessage + 4);
+                    var objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword, dateMs, futureDateMs, words, secondKeywordInMessage + 1, secondKeywordInMessage + 2, secondKeywordInMessage + 3, secondKeywordInMessage + 4);
                     messageFuture = objTime.message;
                     millisecondsTime = objTime.millisecondsTime;
                     (0, DateAsString_1.DateAsString)(millisecondsTime, date);

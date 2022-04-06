@@ -41,15 +41,13 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
                 }
             }
             else if (/^[А-яЁё]*$/.test(words[secondKeywordInMessage + 1])) {// только буквы
-                if( convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
+                if( convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
                     throw new Error('Ошибка! Не указана единица времени');
                 }
                 else {
                     let timeAfterSecondKeyword :number =  convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
-                    let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,date.getTime(),futureDate.getTime(),words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
+                    let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
                     messageFuture = objTime.message
                     millisecondsTime = objTime.millisecondsTime
 
