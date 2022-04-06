@@ -128,9 +128,7 @@ export default class FutureTimeAndMessage{
                     if  (this.array[keywordInMessage + 3][2] != this.array[keywordInMessage + 3][5] &&
                         (this.array[keywordInMessage + 3][2] != '.' || this.array[keywordInMessage + 3][2] != '-' ||  this.array[keywordInMessage + 3][2] != '/') &&
                         (this.array[keywordInMessage + 3][5] != '.' || this.array[keywordInMessage + 3][5] != '-' || this.array[keywordInMessage + 3][5] != '/') ||
-                        (this.array[keywordInMessage + 3].length > 10) ||
-                        (this.array[keywordInMessage + 3].length == 7) ||
-                        (this.array[keywordInMessage + 3].length == 9)) {
+                        (this.array[keywordInMessage + 3].length > 10) || (this.array[keywordInMessage + 3].length == 7) || (this.array[keywordInMessage + 3].length == 9)) {
                         throw new Error( 'Ошибка! Некорректно введена дата. Опечатка в дате!');
                     }
                     else {
@@ -158,7 +156,6 @@ export default class FutureTimeAndMessage{
                 else {
                     throw new Error('Ошибка! Некорректно введена дата. Ввод времени указывается числом или словом. Пример: завтра | послезавтра | пт | субботу | 21.05.22 | 21-05-22 | 21/05/22 ');
                 }
-                throw new Error('')
             }
         }
         else if (/^[А-яЁё]*$/.test(arrayElementAfterKeyword1)){ // только буквы
@@ -217,8 +214,7 @@ export default class FutureTimeAndMessage{
             throw new Error('')
         }
         else{
-
+            throw new Error('')
         }
-        throw new Error('')
     }
 }
