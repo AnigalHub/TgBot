@@ -123,7 +123,6 @@ export default class FutureTimeAndMessage{
                             return new MessageToSend(this.millisecondsTime, this.messageFuture)
                         }
                     }
-                    throw new Error('')
                 }
                 else if(!/[А-яЁё]/.test(arrayElementAfterKeyword3) && (arrayElementAfterKeyword3.includes('.') == true || arrayElementAfterKeyword3.includes('-') == true || arrayElementAfterKeyword3.includes('/') == true )) {
                     if  (this.array[keywordInMessage + 3][2] != this.array[keywordInMessage + 3][5] &&
