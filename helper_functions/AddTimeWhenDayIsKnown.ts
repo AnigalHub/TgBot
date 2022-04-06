@@ -5,7 +5,7 @@ const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
 
 //функция добавления времени, когда известен день
-function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Array<string>,secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string) : MessageToSend {
+function addTimeWhenDayIsKnown(date:Date, array:Array<string>, secondKeywordInMessage:number,millisecondsTime:number,messageFuture:string) : MessageToSend {
     if (array.includes('в') == true || array.includes('во') == true){
         if(array.includes('во') == true){
             array.splice(array.indexOf('во'),1,'в')
@@ -28,8 +28,8 @@ function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Ar
                 else {
                     messageFuture = array.slice((secondKeywordInMessage+3),array.length).join(' ')//сообщение, которое напоминаем
                     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date.getHours(),futureDate.getHours(),timeAfterSecondKeyword,array, secondKeywordInMessage+2)
-                    setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
                     DateAsString(millisecondsTime,date)
+                    return new MessageToSend(millisecondsTime, messageFuture)
                 }
             }
             else if (/^[А-яЁё]*$/.test(array[secondKeywordInMessage + 1])) {// только буквы
@@ -43,10 +43,10 @@ function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Ar
                     let timeAfterSecondKeyword :number =  convertTime.ConvertLargeNumberFromStringToNumber(array[secondKeywordInMessage+1], array[secondKeywordInMessage+2])
                     let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,date.getTime(),futureDate.getTime(),array,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
                     messageFuture = objTime.message
-
                     millisecondsTime = objTime.millisecondsTime
-                    setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
+
                     DateAsString(millisecondsTime,date)
+                    return new MessageToSend(millisecondsTime, messageFuture)
                 }
             }
             else {
@@ -58,10 +58,9 @@ function addTimeWhenDayIsKnown(bot:TelegramBot, chatId:number,date:Date,array:Ar
         }
     }
     else {
-        setTimeout(() => bot.sendMessage(chatId, messageFuture),millisecondsTime); //функция со временем - когда напомнить + сообщение - что напоминаем
         DateAsString(millisecondsTime,date)
+        return new MessageToSend(millisecondsTime, messageFuture)
     }
-    return new MessageToSend(millisecondsTime, messageFuture)
 }
 
 export default addTimeWhenDayIsKnown
