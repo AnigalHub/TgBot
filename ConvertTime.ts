@@ -218,12 +218,10 @@ export default class Time {
     }
 
     //подсчет разницы в миллисекундах между будущей и текущей датами
-    CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(date:number,futureDateMs:number,time:number,array:Array<string>,arrayElement:number){
+    CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs:number,futureDateMs:number,time:number,array:Array<string>,arrayElement:number){
         let diffMilliseconds:number = 0
         const futureMs = futureDateMs + this.ConvertTimeToMilliseconds(array[arrayElement],time)
-        console.log(futureMs)
-        diffMilliseconds = futureMs - date
-        console.log(date)
+        diffMilliseconds = futureMs - dateMs
         return diffMilliseconds
     }
 }
