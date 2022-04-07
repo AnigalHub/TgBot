@@ -259,7 +259,7 @@ export default class FutureTimeAndMessage{
                             DateAsString(this.millisecondsTime,this.dateMessage)
                             return new MessageToSend(this.millisecondsTime, this.messageFuture)
                         }
-                        throw new Error('Ошибка1')
+                        throw new Error('Ошибка! Некорректно введен день недели. Пример: пн | пнд | понедельник ')
                     }
                     else{
                        return addDayWhenTimeIsKnown(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,keywordInMessage,this.messageFuture, this.millisecondsTime)
