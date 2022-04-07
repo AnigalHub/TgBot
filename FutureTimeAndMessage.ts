@@ -96,8 +96,7 @@ export default class FutureTimeAndMessage{
                             let futureDate = new Date(this.dateMessage.getFullYear(), this.dateMessage.getMonth(), futureDay)
 
                             let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementAfterKeyword2,time)
-                            const futureDateAndTime = new Date(futureMs)
-                            this.millisecondsTime = futureDateAndTime.getTime() - this.dateMessage.getTime()
+                            this.millisecondsTime = futureMs - timeMessage
                             this.messageFuture = this.array.slice((keywordInMessage+5),this.array.length).join(' ')//сообщение, которое напоминаем
                             DateAsString(this.millisecondsTime,this.dateMessage)
                             return new MessageToSend(this.millisecondsTime, this.messageFuture)
@@ -117,7 +116,9 @@ export default class FutureTimeAndMessage{
                         }
                         else{
                             let futureDate = new Date(this.dateMessage.getFullYear(), this.dateMessage.getMonth(), futureDay)
-                            this.millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage,futureDate.getHours(),time,this.array,keywordInMessage+2)
+                            const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
+
+                            this.millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage,futureDateMs,time,this.array,keywordInMessage+2)
                             this.messageFuture = this.array.slice((keywordInMessage+4),this.array.length).join(' ')//сообщение, которое напоминаем
                             DateAsString(this.millisecondsTime,this.dateMessage)
                             return new MessageToSend(this.millisecondsTime, this.messageFuture)
@@ -145,9 +146,10 @@ export default class FutureTimeAndMessage{
                         let monthMessage = parseInt(arrayElementAfterKeyword3.substring(3, 6)) - 1
                         let dayMessage = parseInt(arrayElementAfterKeyword3.substring(0, 2))
                         let futureDate = new Date(yearMessage, monthMessage, dayMessage)
+                        const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
                         this.messageFuture = this.array.slice((keywordInMessage+4),this.array.length).join(' ')//сообщение, которое напоминаем
-                        this.millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDate.getHours(), time, this.array, keywordInMessage + 2)
+                        this.millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessage, futureDateMs, time, this.array, keywordInMessage + 2)
                         DateAsString(this.millisecondsTime,this.dateMessage)
 
                         return new MessageToSend(this.millisecondsTime, this.messageFuture)
