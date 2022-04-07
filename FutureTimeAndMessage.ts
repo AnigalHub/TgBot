@@ -248,6 +248,7 @@ export default class FutureTimeAndMessage{
                 if (/[А-яЁё]/.test(wordsElementAfterKeyword3)){ // только буквы
                     if((wordsElementAfterKeyword3) == "в" || (wordsElementAfterKeyword3) == "во"){
                         let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword4)
+                        console.log(typeof dayOfTheWeek)
                         if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
                             let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
                             let futureDay = this.dateMessage.getDate() + differenceInDays
@@ -259,7 +260,7 @@ export default class FutureTimeAndMessage{
                             DateAsString(this.millisecondsTime,this.dateMessage)
                             return new MessageToSend(this.millisecondsTime, this.messageFuture)
                         }
-                        throw new Error('Ошибка! Некорректно введен день недели. Пример: пн | пнд | понедельник ')
+                        throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
                     }
                     else{
                        return addDayWhenTimeIsKnown(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,keywordInMessage,this.messageFuture, this.millisecondsTime)
@@ -275,6 +276,19 @@ export default class FutureTimeAndMessage{
             throw new Error('Ошибка4')
         }
     }
+}
+function AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWhitTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
+    let dayOfTheWeek = new DayOfTheWeek(arrayElementWithDayOfTheWeek)
+    let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
+    let futureDay = date.getDate() + differenceInDays
+    let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
+
+    let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementWhitTime,time)
+    millisecondsTime = futureMs - timeMessage
+    messageFuture = words.slice((keywordInMessage+5),words.length).join(' ')//сообщение, которое напоминаем
+    DateAsString(millisecondsTime,date)
+    return new MessageToSend(millisecondsTime, messageFuture)
+
 }
 //функция добавления времени, когда известен день
 function addDayWhenTimeIsKnown(date:Date,dayRemind:string,timeRemind:number,dateMs:number,words:Array<string>,keywordInMessage:number,messageFuture:string,millisecondsTime:number) : MessageToSend {
