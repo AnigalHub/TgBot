@@ -64,7 +64,8 @@ export default class FutureTimeAndMessage{
             throw new Error('Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
         }
     }
-    CalculationsAndHandlingErrorsOnInputTo( keywordInMessage:number, timeMessage:number): MessageToSend{
+    CalculationsAndHandlingErrorsOnInputTo( keywordInMessage:number, timeMessage:number){
+        /*
         let wordsElementAfterKeyword1 = this.words[keywordInMessage+1] // элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword2 = this.words[keywordInMessage+2] // элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword3 = this.words[keywordInMessage+3] // элемент массива после ключевого слова - третий
@@ -218,5 +219,82 @@ export default class FutureTimeAndMessage{
         else{
             throw new Error('')
         }
+
+         */
+    }
+    CalculationsAndHandlingErrorsOnInputTo2( keywordInMessage:number, timeMessage:number): MessageToSend{
+        let wordsElementAfterKeyword1 = this.words[keywordInMessage+1] // элемент массива после ключевого слова - первый
+        let wordsElementAfterKeyword2 = this.words[keywordInMessage+2] // элемент массива после ключевого слова - второй
+        let wordsElementAfterKeyword3 = this.words[keywordInMessage+3] // элемент массива после ключевого слова - третий
+        let wordsElementAfterKeyword4 = this.words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
+        let wordsElementAfterKeyword5 = this.words[keywordInMessage+5] // элемент массива после ключевого слова - пятый
+        let wordsElementAfterKeyword6 = this.words[keywordInMessage+6] // элемент массива после ключевого слова - шестой
+
+        if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
+            let time = parseInt(wordsElementAfterKeyword1) //время с типом число
+            if(time == 0){
+                time = 24
+            }
+            if(time > 24 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) >= 3600000){
+                throw new Error('Ошибка! Время не может быть больше 24');
+            }
+            else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
+                throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
+            }
+            else if(!wordsElementAfterKeyword3){
+                throw new Error('Ошибка! Не указана дата');
+            }
+            else{
+                if (/[А-яЁё]/.test(wordsElementAfterKeyword3)){ // только буквы
+                    if((wordsElementAfterKeyword3) == "в" || (wordsElementAfterKeyword3) == "во"){
+                        let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword4)
+                        if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+                            let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
+                            let futureDay = this.dateMessage.getDate() + differenceInDays
+                            let futureDate = new Date(this.dateMessage.getFullYear(), this.dateMessage.getMonth(), futureDay)
+
+                            let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)
+                            this.millisecondsTime = futureMs - timeMessage
+                            this.messageFuture = this.words.slice((keywordInMessage+5),this.words.length).join(' ')//сообщение, которое напоминаем
+                            DateAsString(this.millisecondsTime,this.dateMessage)
+                            return new MessageToSend(this.millisecondsTime, this.messageFuture)
+                        }
+                        throw new Error('Ошибка1')
+                    }
+                    else{
+                       return addDayWhenTimeIsKnown(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,keywordInMessage,this.messageFuture, this.millisecondsTime)
+                    }
+                }
+                throw new Error('Ошибка2')
+            }
+        }
+        else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
+            throw new Error('Ошибка3')
+        }
+        else{
+            throw new Error('Ошибка4')
+        }
+    }
+}
+//функция добавления времени, когда известен день
+function addDayWhenTimeIsKnown(date:Date,dayRemind:string,timeRemind:number,dateMs:number,words:Array<string>,keywordInMessage:number,messageFuture:string,millisecondsTime:number) : MessageToSend {
+    let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(dayRemind)
+    if((timeRemind < date.getHours()) && dayRemind == 'сегодня'){
+        throw new Error('Ошибка! Время указано которое уже прошло - напомнить невозможно');
+    }
+    else if(convertTime.ConvertTimeToMilliseconds(dayRemind,1) >= 3600000){
+        throw new Error( 'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
+    }
+    else if(futureDay  == -1){
+        throw new Error('Ошибка! Некорректно введена дата. Время указано, а дата нет.');
+    }
+    else {
+        let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
+        const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
+
+        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, keywordInMessage + 2)
+        messageFuture = words.slice((keywordInMessage + 4), words.length).join(' ')//сообщение, которое напоминаем
+        DateAsString(millisecondsTime, date)
+        return new MessageToSend(millisecondsTime, messageFuture)
     }
 }
