@@ -41,7 +41,7 @@ bot.on('message', async (msg) =>{
         }
         keywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
         try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( keywordInMessage, timeMessage)
+            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( keywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
         } catch (e:any) {
             await bot.sendMessage(chatId,e.message)
