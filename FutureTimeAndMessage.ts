@@ -258,7 +258,7 @@ export default class FutureTimeAndMessage{
                     }
                 }
                 else if(!/[А-яЁё]/.test(wordsElementAfterKeyword3) && (wordsElementAfterKeyword3.includes('.') == true || wordsElementAfterKeyword3.includes('-') == true || wordsElementAfterKeyword3.includes('/') == true )) {
-                        return AddDateWhenItIsSpecifiedInFull()
+                        return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
                 }
                 else {
                     throw new Error('Ошибка2')
@@ -290,8 +290,36 @@ function AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage:number,arrayElem
     DateAsString(millisecondsTime,date)
     return new MessageToSend(millisecondsTime, messageFuture)
 }
-function AddDateWhenItIsSpecifiedInFull() {
-    return new MessageToSend(millisecondsTime, messageFuture)
+function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,words:Array<string>,date:Date,timeMessageMs:number, time:number, messageFuture:string,millisecondsTime:number): MessageToSend {
+    let wordsElementAfterKeyword3 = words[keywordInMessage + 3]
+    if  (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
+        (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-' ||  words[keywordInMessage + 3][2] != '/') &&
+        (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-' || words[keywordInMessage + 3][5] != '/') ||
+        (words[keywordInMessage + 3].length > 10) || (words[keywordInMessage + 3].length == 7) || (words[keywordInMessage + 3].length == 9)) {
+        throw new Error( 'Ошибка! Некорректно введена дата. Опечатка в дате!');
+    }
+    else {
+        let yearMessage
+        if (words[keywordInMessage + 3].length == 10) {
+            yearMessage = parseInt(wordsElementAfterKeyword3.substring(6, 12))
+        }
+        else if ((wordsElementAfterKeyword3.length == 8) && (String(date.getFullYear()).slice(2, 4) <= wordsElementAfterKeyword3.substring(6, 8))) {
+            yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + wordsElementAfterKeyword3.substring(6, 8))
+        }
+        else {
+            yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + wordsElementAfterKeyword3.substring(6, 8))
+        }
+        let monthMessage = parseInt(wordsElementAfterKeyword3.substring(3, 6)) - 1
+        let dayMessage = parseInt(wordsElementAfterKeyword3.substring(0, 2))
+        let futureDate = new Date(yearMessage, monthMessage, dayMessage)
+        const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
+
+        messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, keywordInMessage + 2)
+        DateAsString(millisecondsTime,date)
+
+        return new MessageToSend(millisecondsTime, messageFuture)
+    }
 }
 
 //функция добавления времени, когда известен день
