@@ -261,7 +261,7 @@ export default class FutureTimeAndMessage{
                         return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
                 }
                 else {
-                    throw new Error('Ошибка2')
+                    throw new Error('Ошибка! Некорректно указана дат. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
                 }
             }
         }
