@@ -250,15 +250,7 @@ export default class FutureTimeAndMessage{
                         let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword4)
                         console.log(typeof dayOfTheWeek)
                         if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-                            let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
-                            let futureDay = this.dateMessage.getDate() + differenceInDays
-                            let futureDate = new Date(this.dateMessage.getFullYear(), this.dateMessage.getMonth(), futureDay)
-
-                            let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)
-                            this.millisecondsTime = futureMs - timeMessage
-                            this.messageFuture = this.words.slice((keywordInMessage+5),this.words.length).join(' ')//сообщение, которое напоминаем
-                            DateAsString(this.millisecondsTime,this.dateMessage)
-                            return new MessageToSend(this.millisecondsTime, this.messageFuture)
+                          return AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
                         }
                         throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
                     }
