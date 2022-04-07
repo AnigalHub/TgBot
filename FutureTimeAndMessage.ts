@@ -248,7 +248,6 @@ export default class FutureTimeAndMessage{
                 if (/[А-яЁё]/.test(wordsElementAfterKeyword3)){ // только буквы
                     if((wordsElementAfterKeyword3) == "в" || (wordsElementAfterKeyword3) == "во"){
                         let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword4)
-                        console.log(typeof dayOfTheWeek)
                         if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
                           return AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
                         }
@@ -262,6 +261,11 @@ export default class FutureTimeAndMessage{
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
+            let time = parseInt(wordsElementAfterKeyword3) //время с типом число
+            let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
+            if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+                return AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+            }
             throw new Error('Ошибка3')
         }
         else{
