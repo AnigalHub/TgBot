@@ -65,7 +65,7 @@ export default class FutureTimeAndMessage{
         }
     }
     CalculationsAndHandlingErrorsOnInputTo( keywordInMessage:number, timeMessage:number){
-        /*
+    /*
         let wordsElementAfterKeyword1 = this.words[keywordInMessage+1] // элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword2 = this.words[keywordInMessage+2] // элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword3 = this.words[keywordInMessage+3] // элемент массива после ключевого слова - третий
@@ -257,7 +257,12 @@ export default class FutureTimeAndMessage{
                        return addDayWhenTimeIsKnown(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,keywordInMessage,this.messageFuture, this.millisecondsTime)
                     }
                 }
-                throw new Error('Ошибка2')
+                else if(!/[А-яЁё]/.test(wordsElementAfterKeyword3) && (wordsElementAfterKeyword3.includes('.') == true || wordsElementAfterKeyword3.includes('-') == true || wordsElementAfterKeyword3.includes('/') == true )) {
+                        return AddDateWhenItIsSpecifiedInFull()
+                }
+                else {
+                    throw new Error('Ошибка2')
+                }
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
@@ -284,8 +289,11 @@ function AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage:number,arrayElem
     messageFuture = words.slice((keywordInMessage+5),words.length).join(' ')//сообщение, которое напоминаем
     DateAsString(millisecondsTime,date)
     return new MessageToSend(millisecondsTime, messageFuture)
-
 }
+function AddDateWhenItIsSpecifiedInFull() {
+    return new MessageToSend(millisecondsTime, messageFuture)
+}
+
 //функция добавления времени, когда известен день
 function addDayWhenTimeIsKnown(date:Date,dayRemind:string,timeRemind:number,dateMs:number,words:Array<string>,keywordInMessage:number,messageFuture:string,millisecondsTime:number) : MessageToSend {
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(dayRemind)
