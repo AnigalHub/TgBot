@@ -277,7 +277,21 @@ export default class FutureTimeAndMessage{
             throw new Error('Ошибка4')
         }
     }
+    CalculationsAndHandlingErrorsOnInputDateFull( keywordInMessage:number, timeMessage:number): MessageToSend{
+        let wordsElementAfterKeyword = this.words[keywordInMessage] // элемент массива после ключевого слова - первый
+        let wordsElementAfterKeyword2 = this.words[keywordInMessage+2] // элемент массива после ключевого слова - второй
+
+        if(!/[А-яЁё]/.test(wordsElementAfterKeyword) && (wordsElementAfterKeyword.includes('.') == true || wordsElementAfterKeyword.includes('-') == true || wordsElementAfterKeyword.includes('/') == true )) {
+            let time = parseInt(wordsElementAfterKeyword2) //время с типом число
+            return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+        }
+
+        throw new Error( 'Ошибка!!!!');
+    }
 }
+
+
+
 function AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWhitTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
     let dayOfTheWeek = new DayOfTheWeek(arrayElementWithDayOfTheWeek)
     let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
