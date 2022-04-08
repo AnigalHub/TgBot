@@ -4,7 +4,8 @@ import DayOfTheWeek from "./DayOfTheWeek";
 import DateAsString from "./helper_functions/DateAsString";
 import ConvertTime from "./ConvertTime";
 const convertTime = new ConvertTime()
-import addDay from "./helper_functions/addDayWhenTimeIsKnown";
+import addDay from "./helper_functions/AddDayWhenTimeIsKnown"
+import addDayOfTheWeek from "./helper_functions/AddDayWhenTimeAndDayOfTheWeekAreKnown"
 
 
 export default class FutureTimeAndMessage{
@@ -250,7 +251,7 @@ export default class FutureTimeAndMessage{
                     if((wordsElementAfterKeyword3) == "в" || (wordsElementAfterKeyword3) == "во"){
                         let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword4)
                         if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-                            return AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+                            return addDayOfTheWeek(keywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
                         }
                         throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
                     }
@@ -270,7 +271,7 @@ export default class FutureTimeAndMessage{
             let time = parseInt(wordsElementAfterKeyword3) //время с типом число
             let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
             if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-                return AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+                return addDayOfTheWeek(keywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
             }
             throw new Error('Ошибка3')
         }
@@ -292,19 +293,6 @@ export default class FutureTimeAndMessage{
 }
 
 
-
-function AddDayWhenTimeAndDayOfTheWeekAreKnown(keywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWhitTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
-    let dayOfTheWeek = new DayOfTheWeek(arrayElementWithDayOfTheWeek)
-    let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
-    let futureDay = date.getDate() + differenceInDays
-    let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
-
-    let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementWhitTime,time)
-    millisecondsTime = futureMs - timeMessage
-    messageFuture = words.slice((keywordInMessage+5),words.length).join(' ')//сообщение, которое напоминаем
-    DateAsString(millisecondsTime,date)
-    return new MessageToSend(millisecondsTime, messageFuture)
-}
 function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,words:Array<string>,date:Date,timeMessageMs:number, time:number, messageFuture:string,millisecondsTime:number): MessageToSend {
     let wordsElementAfterKeyword3 = words[keywordInMessage + 3]
     if  (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
@@ -356,3 +344,5 @@ function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,words:Array<stri
         }
     }
 }
+
+
