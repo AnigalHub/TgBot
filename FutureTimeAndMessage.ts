@@ -300,6 +300,9 @@ function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,words:Array<stri
     }
     else {
         let yearMessage
+        let monthMessage = parseInt(wordsElementAfterKeyword3.substring(3, 6)) - 1
+        let dayMessage = parseInt(wordsElementAfterKeyword3.substring(0, 2))
+
         if (words[keywordInMessage + 3].length == 10) {
             yearMessage = parseInt(wordsElementAfterKeyword3.substring(6, 12))
         }
@@ -309,16 +312,26 @@ function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,words:Array<stri
         else {
             yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + wordsElementAfterKeyword3.substring(6, 8))
         }
-        let monthMessage = parseInt(wordsElementAfterKeyword3.substring(3, 6)) - 1
-        let dayMessage = parseInt(wordsElementAfterKeyword3.substring(0, 2))
-        let futureDate = new Date(yearMessage, monthMessage, dayMessage)
-        const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
-        messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, keywordInMessage + 2)
-        DateAsString(millisecondsTime,date)
+        if (dayMessage > 31){
+            throw new Error( 'Ошибка! Некорректно введен день в дате. День не может быть больше 31. Максимальное число в месяце 30 или 31.');
+        }
+        else if(monthMessage > 11){
+            throw new Error( 'Ошибка! Некорректно введен месяц в дате. Месяц не может быть больше 12. В году всего 12 месяцев');
+        }
+        else if(yearMessage < date.getFullYear()){
+            throw new Error( 'Ошибка! Некорректно введен год в дате. Год меньше текущего. Напомнить в то время, которое уже прошло - невозможно!');
+        }
+        else {
+            let futureDate = new Date(yearMessage, monthMessage, dayMessage)
+            const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
-        return new MessageToSend(millisecondsTime, messageFuture)
+            messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, keywordInMessage + 2)
+            DateAsString(millisecondsTime,date)
+
+            return new MessageToSend(millisecondsTime, messageFuture)
+        }
     }
 }
 
