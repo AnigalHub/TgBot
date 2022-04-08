@@ -39,7 +39,18 @@ bot.on('message', async (msg) =>{
         if(words.includes('во') == true){
             words.splice(words.indexOf('во'),1,'в')
         }
+
+        keywordInMessage = words.indexOf('в') - 1//индекс ключевого слова в массиве
+        console.log(words[keywordInMessage])
+        try {
+            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputDateFull( keywordInMessage, timeMessage)
+            console.log(millisecondsAndMessage)
+        } catch (e:any) {
+            await bot.sendMessage(chatId,e.message)
+        }
+
         keywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
+        console.log(   keywordInMessage = words.indexOf('в') )
         try {
             millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( keywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
@@ -47,6 +58,7 @@ bot.on('message', async (msg) =>{
             await bot.sendMessage(chatId,e.message)
         }
     }
+
     else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true) || (words.includes('послезавтра') == true) || (words.includes('послепослезавтра') == true)){
 
     }
