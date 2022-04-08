@@ -4,7 +4,8 @@ import DateAsString from "./DateAsString";
 import ConvertTime from "../ConvertTime";
 const convertTime = new ConvertTime()
 
-export function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>, keywordInMessage:number, messageFuture:string, millisecondsTime:number) : MessageToSend {
+function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number,
+                                      words:Array<string>, keywordInMessage:number, messageFuture:string, millisecondsTime:number) : MessageToSend {
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(dayRemind)
     if((timeRemind < date.getHours()) && dayRemind == 'сегодня'){
         throw new Error('Ошибка! Время указано которое уже прошло - напомнить невозможно');
@@ -25,3 +26,4 @@ export function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:nu
         return new MessageToSend(millisecondsTime, messageFuture)
     }
 }
+export default addDayWhenTimeIsKnown
