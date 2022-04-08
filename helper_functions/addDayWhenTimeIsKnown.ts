@@ -1,6 +1,8 @@
 //функция добавления времени, когда известен день
 import MessageToSend from "../MessageToSend";
 import DateAsString from "./DateAsString";
+import ConvertTime from "../ConvertTime";
+const convertTime = new ConvertTime()
 
 export function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>, keywordInMessage:number, messageFuture:string, millisecondsTime:number) : MessageToSend {
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(dayRemind)
