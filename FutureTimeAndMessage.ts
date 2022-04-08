@@ -301,9 +301,9 @@ function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,words:Array<stri
     else {
         let yearMessage
         let monthMessage = parseInt(wordsElementAfterKeyword3.substring(3, 6)) - 1
-        console.log(monthMessage)
-        let dayMessage = parseInt(wordsElementAfterKeyword3.substring(0, 2))
 
+        let dayMessage = parseInt(wordsElementAfterKeyword3.substring(0, 2))
+        console.log(dayMessage)
         if (words[keywordInMessage + 3].length == 10) {
             yearMessage = parseInt(wordsElementAfterKeyword3.substring(6, 12))
         }
@@ -316,6 +316,9 @@ function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,words:Array<stri
 
         if (dayMessage > 31){
             throw new Error( 'Ошибка! Некорректно введен день в дате. День не может быть больше 31. Максимальное число в месяце 30 или 31.');
+        }
+        else if (dayMessage == 0){
+            throw new Error( 'Ошибка! Некорректно введен день в дате. День не может быть меньше 01. Такого дня не существует.');
         }
         else if(monthMessage > 11){
             throw new Error( 'Ошибка! Некорректно введен месяц в дате. Месяц не может быть больше 12. В году всего 12 месяцев');
