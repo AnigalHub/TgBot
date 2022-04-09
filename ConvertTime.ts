@@ -3,16 +3,16 @@ export default class Time {
     //перевод времени в милисекунды
     ConvertTimeToMilliseconds(word:string,timePhrase:number):number{
         let ms:number
-        if(word == "секунд" || word == "секунды" || word == "секунду"){
+        if(word == "сек." || word == "сек" || word == "секунд" || word == "секунды" || word == "секунду"){
             ms = timePhrase*1000
         }
-        else if(word == "минут" || word == "минуты" || word == "минуту"){
+        else if(word == "мин." || word == "мин" || word == "минут" || word == "минуты" || word == "минуту"){
             ms = timePhrase*60000
         }
         else if(word == "полчаса"){
             ms = timePhrase*1800000
         }
-        else if(word == "час" || word == "часа" || word == "часов"){
+        else if(word == "ч." || word == "ч" || word == "час" || word == "часа" || word == "часов"){
             ms = timePhrase*3600000
         }
         else if(word == "день" || word == "дня" || word == "дней" || word == "сутки" || word == "суток"){
