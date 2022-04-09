@@ -43,22 +43,16 @@ bot.on('message', async (msg) =>{
         }
         numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
         numberKeywordInMessage2 = words.indexOf(fullDate[0])
-        if(numberKeywordInMessage < numberKeywordInMessage2){
-            try {
-
+        try {
+            if(numberKeywordInMessage < numberKeywordInMessage2){
                 millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( numberKeywordInMessage, timeMessage)
-                console.log(millisecondsAndMessage)
-            } catch (e:any) {
-                await bot.sendMessage(chatId,e.message)
             }
-        }
-        else {
-            try {
+            else {
                 millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage2, timeMessage)
-                console.log(millisecondsAndMessage)
-            } catch (e:any) {
-                await bot.sendMessage(chatId,e.message)
             }
+            console.log(millisecondsAndMessage)
+        } catch (e:any) {
+            await bot.sendMessage(chatId,e.message)
         }
     }
     else if(words.includes('в') == true || words.includes('во') == true){
