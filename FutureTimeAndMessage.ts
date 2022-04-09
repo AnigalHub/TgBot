@@ -274,7 +274,7 @@ export default class FutureTimeAndMessage{
             else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
                 throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов 2222');
             }
-            else if(!wordsElementAfterKeyword4){
+            else if(!wordsElementAfterKeyword5){
                 throw new Error('Ошибка! Не указана дата');
             }
             else {
@@ -291,7 +291,6 @@ export default class FutureTimeAndMessage{
 
         if(!/[А-яЁё]/.test(wordsElementAfterKeyword) && (wordsElementAfterKeyword.includes('.') == true || wordsElementAfterKeyword.includes('-') == true || wordsElementAfterKeyword.includes('/') == true )) {
             let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-            console.log(time)
             return AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
         }
         throw new Error( 'Ошибка!!!!');
@@ -342,8 +341,6 @@ function AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
             const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
             messageFuture = words.slice((numberKeywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-            console.log(time)
-            console.log(words[numberKeywordInMessage + 3])
             millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType)
             DateAsString(millisecondsTime,date)
 
