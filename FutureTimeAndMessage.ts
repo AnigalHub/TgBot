@@ -260,7 +260,7 @@ export default class FutureTimeAndMessage{
                     }
                 }
                 else if(!/[А-яЁё]/.test(wordsElementAfterKeyword3) && (wordsElementAfterKeyword3.includes('.') == true || wordsElementAfterKeyword3.includes('-') == true || wordsElementAfterKeyword3.includes('/') == true )) {
-                    return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+                    return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words[keywordInMessage + 3],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
                 }
                 else {
                     throw new Error('Ошибка! Некорректно указана дат. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
@@ -285,7 +285,7 @@ export default class FutureTimeAndMessage{
 
         if(!/[А-яЁё]/.test(wordsElementAfterKeyword) && (wordsElementAfterKeyword.includes('.') == true || wordsElementAfterKeyword.includes('-') == true || wordsElementAfterKeyword.includes('/') == true )) {
             let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-            return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+            return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words[keywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
         }
 
         throw new Error( 'Ошибка!!!!');
@@ -293,28 +293,24 @@ export default class FutureTimeAndMessage{
 }
 
 
-function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,words:Array<string>,date:Date,timeMessageMs:number, time:number, messageFuture:string,millisecondsTime:number): MessageToSend {
-    let wordsElementAfterKeyword3 = words[keywordInMessage + 3]
-    if  (words[keywordInMessage + 3][2] != words[keywordInMessage + 3][5] &&
-        (words[keywordInMessage + 3][2] != '.' || words[keywordInMessage + 3][2] != '-' ||  words[keywordInMessage + 3][2] != '/') &&
-        (words[keywordInMessage + 3][5] != '.' || words[keywordInMessage + 3][5] != '-' || words[keywordInMessage + 3][5] != '/') ||
-        (words[keywordInMessage + 3].length > 10) || (words[keywordInMessage + 3].length == 7) || (words[keywordInMessage + 3].length == 9)) {
+function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,keyword:string,words:Array<string>,date:Date,timeMessageMs:number, time:number, messageFuture:string,millisecondsTime:number): MessageToSend {
+    if  (keyword[2] != keyword[5] && keyword.includes('.') == false || keyword.includes('/')
+        || keyword.includes('-') || (keyword.length > 10) || (keyword.length == 7) || (keyword.length == 9)) {
         throw new Error( 'Ошибка! Некорректно введена дата. Опечатка в дате!');
     }
     else {
         let yearMessage
-        let monthMessage = parseInt(wordsElementAfterKeyword3.substring(3, 6)) - 1
+        let monthMessage = parseInt(keyword.substring(3, 6)) - 1
 
-        let dayMessage = parseInt(wordsElementAfterKeyword3.substring(0, 2))
-        console.log(dayMessage)
-        if (words[keywordInMessage + 3].length == 10) {
-            yearMessage = parseInt(wordsElementAfterKeyword3.substring(6, 12))
+        let dayMessage = parseInt(keyword.substring(0, 2))
+        if (keyword.length == 10) {
+            yearMessage = parseInt(keyword.substring(6, 12))
         }
-        else if ((wordsElementAfterKeyword3.length == 8) && (String(date.getFullYear()).slice(2, 4) <= wordsElementAfterKeyword3.substring(6, 8))) {
-            yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + wordsElementAfterKeyword3.substring(6, 8))
+        else if ((keyword.length == 8) && (String(date.getFullYear()).slice(2, 4) <= keyword.substring(6, 8))) {
+            yearMessage = parseInt(String(date.getFullYear()).slice(0, 2) + keyword.substring(6, 8))
         }
         else {
-            yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + wordsElementAfterKeyword3.substring(6, 8))
+            yearMessage = parseInt(String(parseInt(String(date.getFullYear()).slice(0, 2)) + 1) + keyword.substring(6, 8))
         }
 
         if (dayMessage > 31){
