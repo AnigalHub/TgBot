@@ -256,7 +256,7 @@ export default class FutureTimeAndMessage{
                     }
                 }
                 else if(!/[А-яЁё]/.test(wordsElementAfterKeyword3) && (wordsElementAfterKeyword3.includes('.') == true || wordsElementAfterKeyword3.includes('-') == true || wordsElementAfterKeyword3.includes('/') == true )) {
-                    return AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage,this.words[numberKeywordInMessage + 3],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+                    return AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 2,this.words[numberKeywordInMessage + 3],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
                 }
                 else {
                     throw new Error('Ошибка! Некорректно указана дата. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
@@ -291,14 +291,15 @@ export default class FutureTimeAndMessage{
 
         if(!/[А-яЁё]/.test(wordsElementAfterKeyword) && (wordsElementAfterKeyword.includes('.') == true || wordsElementAfterKeyword.includes('-') == true || wordsElementAfterKeyword.includes('/') == true )) {
             let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-            return AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+            console.log(time)
+            return AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
         }
         throw new Error( 'Ошибка!!!!');
     }
 }
 
 
-function AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,keyword:string,words:Array<string>,date:Date,timeMessageMs:number, time:number, messageFuture:string,millisecondsTime:number): MessageToSend {
+function AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
     if  (keyword[2] != keyword[5] && keyword.includes('.') == false || keyword.includes('/')
         || keyword.includes('-') || (keyword.length > 10) || (keyword.length == 7) || (keyword.length == 9)) {
         throw new Error( 'Ошибка! Некорректно введена дата. Опечатка в дате!');
@@ -338,7 +339,9 @@ function AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,keyword:st
             const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
             messageFuture = words.slice((numberKeywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberKeywordInMessage + 2)
+            console.log(time)
+            console.log(words[numberKeywordInMessage + 3])
+            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType)
             DateAsString(millisecondsTime,date)
 
             return new MessageToSend(millisecondsTime, messageFuture)
