@@ -19,40 +19,55 @@ bot.on('message', async (msg) =>{
     let words = prepareMessage(msg.text)
     console.log(words) //массив
 
-    let keywordInMessage:number //ключевое слово в сообщении
+    let numberKeywordInMessage:number //ключевое слово в сообщении
+    let numberKeywordInMessage2:number //ключевое слово в сообщении
     let secondKeywordInMessage:number = 0 //ключевое слово в сообщении
     let millisecondsAndMessage:MessageToSend
 
     let futureTimeAndMessage = new FutureTimeAndMessage(chatId,words,dateMessage)
+    let fullDate = words.filter(word => word.includes('-') || word.includes('.') || word.includes('/'))
 
     if (words.includes('через') == true){
-        keywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
+        numberKeywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
         try {
-            millisecondsAndMessage = futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage, secondKeywordInMessage, timeMessage)
+            millisecondsAndMessage = futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage, secondKeywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
         } catch (e:any) {
            await bot.sendMessage(chatId,e.message)
         }
 
     }
+    else if(fullDate && fullDate.length != 0 ){
+        if(words.includes('во') == true){
+            words.splice(words.indexOf('во'),1,'в')
+        }
+        numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
+        numberKeywordInMessage2 = words.indexOf(fullDate[0])
+        if(numberKeywordInMessage < numberKeywordInMessage2){
+            try {
+
+                millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( numberKeywordInMessage, timeMessage)
+                console.log(millisecondsAndMessage)
+            } catch (e:any) {
+                await bot.sendMessage(chatId,e.message)
+            }
+        }
+        else {
+            try {
+                millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage2, timeMessage)
+                console.log(millisecondsAndMessage)
+            } catch (e:any) {
+                await bot.sendMessage(chatId,e.message)
+            }
+        }
+    }
     else if(words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
             words.splice(words.indexOf('во'),1,'в')
         }
-
-        keywordInMessage = words.indexOf('в') - 1//индекс ключевого слова в массиве
-        console.log(words[keywordInMessage])
+        numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
         try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputDateFull( keywordInMessage, timeMessage)
-            console.log(millisecondsAndMessage)
-        } catch (e:any) {
-            await bot.sendMessage(chatId,e.message)
-        }
-
-        keywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
-        console.log(   keywordInMessage = words.indexOf('в') )
-        try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( keywordInMessage, timeMessage)
+            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( numberKeywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
         } catch (e:any) {
             await bot.sendMessage(chatId,e.message)
