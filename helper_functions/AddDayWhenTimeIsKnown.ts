@@ -6,7 +6,7 @@ const convertTime = new ConvertTime()
 
 
 function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number,
-                               words:Array<string>, keywordInMessage:number, messageFuture:string, millisecondsTime:number) : MessageToSend {
+                               words:Array<string>, numberKeywordInMessage:number, messageFuture:string, millisecondsTime:number) : MessageToSend {
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(dayRemind)
     if((timeRemind < date.getHours()) && dayRemind == 'сегодня'){
         throw new Error('Ошибка! Время указано которое уже прошло - напомнить невозможно');
@@ -21,8 +21,8 @@ function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, d
         let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
         const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
-        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, keywordInMessage + 2)
-        messageFuture = words.slice((keywordInMessage + 4), words.length).join(' ')//сообщение, которое напоминаем
+        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, numberKeywordInMessage + 2)
+        messageFuture = words.slice((numberKeywordInMessage + 4), words.length).join(' ')//сообщение, которое напоминаем
         DateAsString(millisecondsTime, date)
         return new MessageToSend(millisecondsTime, messageFuture)
     }
