@@ -334,6 +334,9 @@ function AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
         else if(yearMessage < date.getFullYear()){
             throw new Error( 'Ошибка! Некорректно введен год в дате. Год меньше текущего. Напомнить в то время, которое уже прошло - невозможно!');
         }
+        else if((convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) > 3600000) || (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 1800000)){
+            throw new Error( 'Ошибка! Некорректно введено время. Вместо времени указана неккоректно дата или непонятное время');
+        }
         else {
             let futureDate = new Date(yearMessage, monthMessage, dayMessage)
             const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
