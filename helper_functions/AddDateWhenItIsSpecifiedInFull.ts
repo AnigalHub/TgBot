@@ -3,7 +3,7 @@ import DateAsString from "./DateAsString";
 import ConvertTime from "../ConvertTime";
 const convertTime = new ConvertTime()
 
-function AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
+function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
     if  (keyword[2] != keyword[5] && keyword.includes('.') == false || keyword.includes('/')
         || keyword.includes('-') || (keyword.length > 10) || (keyword.length == 7) || (keyword.length == 9)) {
         throw new Error( 'Ошибка! Некорректно введена дата. Опечатка в дате!');
@@ -53,3 +53,5 @@ function AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
         }
     }
 }
+
+export default addDateWhenItIsSpecifiedInFull
