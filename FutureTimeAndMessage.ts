@@ -23,16 +23,16 @@ export default class FutureTimeAndMessage{
         this.messageFuture = ''
     }
 
-    CalculationsAndHandlingErrorsOnInputThrough(keywordInMessage:number, secondKeywordInMessage:number, timeMessage:number): MessageToSend{
+    CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage:number, secondKeywordInMessage:number, timeMessage:number): MessageToSend{
 
-        let wordsElementAfterKeyword1 = this.words[keywordInMessage+1] // элемент массива после ключевого слова - первый
-        let wordsElementAfterKeyword2 = this.words[keywordInMessage+2] // элемент массива после ключевого слова - второй
-        let wordsElementAfterKeyword3 = this.words[keywordInMessage+3] // элемент массива после ключевого слова - третий
-        let wordsElementAfterKeyword4 = this.words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
+        let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
+        let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
+        let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
+        let wordsElementAfterKeyword4 = this.words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
-            this.messageFuture = this.words.slice((keywordInMessage+3),this.words.length).join(' ') // сообщение, которое напоминаем
+            this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ') // сообщение, которое напоминаем
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
             if(time == 0) { // если время указано цифрой 0
                 throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!')
@@ -56,7 +56,7 @@ export default class FutureTimeAndMessage{
             }
             else{
                 let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
-                let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,keywordInMessage+1,keywordInMessage+2,keywordInMessage+3,keywordInMessage+4)
+                let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
                 this.messageFuture = objTime.message
                 this.millisecondsTime = objTime.millisecondsTime
                 return addTime(this.dateMessage, this.words, secondKeywordInMessage,this.millisecondsTime,this.messageFuture)
@@ -224,13 +224,13 @@ export default class FutureTimeAndMessage{
 
              */
     }
-    CalculationsAndHandlingErrorsOnInputTo2( keywordInMessage:number, timeMessage:number): MessageToSend{
-        let wordsElementAfterKeyword1 = this.words[keywordInMessage+1] // элемент массива после ключевого слова - первый
-        let wordsElementAfterKeyword2 = this.words[keywordInMessage+2] // элемент массива после ключевого слова - второй
-        let wordsElementAfterKeyword3 = this.words[keywordInMessage+3] // элемент массива после ключевого слова - третий
-        let wordsElementAfterKeyword4 = this.words[keywordInMessage+4] // элемент массива после ключевого слова - четвертый
-        let wordsElementAfterKeyword5 = this.words[keywordInMessage+5] // элемент массива после ключевого слова - пятый
-        let wordsElementAfterKeyword6 = this.words[keywordInMessage+6] // элемент массива после ключевого слова - шестой
+    CalculationsAndHandlingErrorsOnInputTo2(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
+        let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
+        let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
+        let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
+        let wordsElementAfterKeyword4 = this.words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
+        let wordsElementAfterKeyword5 = this.words[numberKeywordInMessage+5] // элемент массива после ключевого слова - пятый
+        let wordsElementAfterKeyword6 = this.words[numberKeywordInMessage+6] // элемент массива после ключевого слова - шестой
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
@@ -249,51 +249,56 @@ export default class FutureTimeAndMessage{
             else{
                 if (/[А-яЁё]/.test(wordsElementAfterKeyword3)){ // только буквы
                     if((wordsElementAfterKeyword3) == "в" || (wordsElementAfterKeyword3) == "во"){
-                        let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword4)
-                        if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-                            return addDayOfTheWeek(keywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
-                        }
-                        throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
+                        return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
                     }
                     else{
-                        return addDay(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,keywordInMessage,this.messageFuture, this.millisecondsTime)
+                        return addDay(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
                     }
                 }
                 else if(!/[А-яЁё]/.test(wordsElementAfterKeyword3) && (wordsElementAfterKeyword3.includes('.') == true || wordsElementAfterKeyword3.includes('-') == true || wordsElementAfterKeyword3.includes('/') == true )) {
-                    return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words[keywordInMessage + 3],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+                    return AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage,this.words[numberKeywordInMessage + 3],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
                 }
                 else {
-                    throw new Error('Ошибка! Некорректно указана дат. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
+                    throw new Error('Ошибка! Некорректно указана дата. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
                 }
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             let time = parseInt(wordsElementAfterKeyword3) //время с типом число
-            let dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
-            if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-                return addDayOfTheWeek(keywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+            if(time == 0){
+                time = 24
             }
-            throw new Error('Ошибка3')
+            if(time > 24 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) >= 3600000){
+                throw new Error('Ошибка! Время не может быть больше 24');
+            }
+            else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
+                throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов 2222');
+            }
+            else if(!wordsElementAfterKeyword4){
+                throw new Error('Ошибка! Не указана дата');
+            }
+            else {
+                return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+            }
         }
         else{
-            throw new Error('Ошибка4')
+            throw new Error('Ошибка! В дате или времени содержатся неизвестные символы')
         }
     }
-    CalculationsAndHandlingErrorsOnInputDateFull( keywordInMessage:number, timeMessage:number): MessageToSend{
-        let wordsElementAfterKeyword = this.words[keywordInMessage] // элемент массива после ключевого слова - первый
-        let wordsElementAfterKeyword2 = this.words[keywordInMessage+2] // элемент массива после ключевого слова - второй
+    CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage:number, timeMessage:number): MessageToSend{
+        let wordsElementAfterKeyword = this.words[numberKeywordInMessage] // элемент массива после ключевого слова - первый
+        let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
 
         if(!/[А-яЁё]/.test(wordsElementAfterKeyword) && (wordsElementAfterKeyword.includes('.') == true || wordsElementAfterKeyword.includes('-') == true || wordsElementAfterKeyword.includes('/') == true )) {
             let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-            return AddDateWhenItIsSpecifiedInFull(keywordInMessage,this.words[keywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+            return AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
         }
-
         throw new Error( 'Ошибка!!!!');
     }
 }
 
 
-function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,keyword:string,words:Array<string>,date:Date,timeMessageMs:number, time:number, messageFuture:string,millisecondsTime:number): MessageToSend {
+function AddDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,keyword:string,words:Array<string>,date:Date,timeMessageMs:number, time:number, messageFuture:string,millisecondsTime:number): MessageToSend {
     if  (keyword[2] != keyword[5] && keyword.includes('.') == false || keyword.includes('/')
         || keyword.includes('-') || (keyword.length > 10) || (keyword.length == 7) || (keyword.length == 9)) {
         throw new Error( 'Ошибка! Некорректно введена дата. Опечатка в дате!');
@@ -332,8 +337,8 @@ function AddDateWhenItIsSpecifiedInFull(keywordInMessage:number,keyword:string,w
             let futureDate = new Date(yearMessage, monthMessage, dayMessage)
             const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
-            messageFuture = words.slice((keywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
-            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, keywordInMessage + 2)
+            messageFuture = words.slice((numberKeywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+            millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberKeywordInMessage + 2)
             DateAsString(millisecondsTime,date)
 
             return new MessageToSend(millisecondsTime, messageFuture)
