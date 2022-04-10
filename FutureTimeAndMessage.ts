@@ -365,7 +365,7 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
     let wordsElementAfterKeyword4 = words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
 
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
-        return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage + 3],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
+        return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
     else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
         if((arrayElementWithDate) == "в" || (arrayElementWithDate) == "во"){
