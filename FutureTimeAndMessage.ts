@@ -281,7 +281,7 @@ export default class FutureTimeAndMessage{
             }
         }
         else{
-            throw new Error('Ошибка! В дате или времени содержатся неизвестные символы')
+            throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
         }
     }
     CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage:number, timeMessage:number): MessageToSend{
