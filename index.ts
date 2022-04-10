@@ -68,7 +68,8 @@ bot.on('message', async (msg) =>{
         }
     }
 
-    else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true) || (words.includes('послезавтра') == true) || (words.includes('послепослезавтра') == true)){
+    else if (words.includes('сегодня') == true){
+
 
     }
     else {
