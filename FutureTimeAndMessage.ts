@@ -301,7 +301,6 @@ export default class FutureTimeAndMessage{
                     if(time > 20 && time%10 != 0){
                         numberArrayElementResponsiveForTimeType = numberKeywordInMessage+3
                         arrayElementResponsiveForDateType = wordsElementAfterKeyword4
-                        console.log('тут1')
 
                     }
                     else if(time%10 == 0 && seconds != 60000 && seconds != 180000 && seconds != 3600000 && seconds != 86400000 && seconds != 604800000
@@ -309,14 +308,12 @@ export default class FutureTimeAndMessage{
                         numberArrayElementResponsiveForTimeType = numberKeywordInMessage+2
                         arrayElementResponsiveForDateType = wordsElementAfterKeyword3
                         time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword1)
-                        console.log('тут2')
 
                     }
                     else {
                         time = 1
                         numberArrayElementResponsiveForTimeType = 2
                         arrayElementResponsiveForDateType = wordsElementAfterKeyword2
-                        console.log('тут3')
                     }
                     console.log(time)
 
