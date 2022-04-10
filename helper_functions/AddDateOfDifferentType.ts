@@ -27,3 +27,4 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
         throw new Error('Ошибка! Некорректно указана дата. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
     }
 }
+export default addDateOfDifferentType
