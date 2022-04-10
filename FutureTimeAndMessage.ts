@@ -264,20 +264,84 @@ export default class FutureTimeAndMessage{
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             let time = parseInt(wordsElementAfterKeyword3) //время с типом число
-            if(time == 0){
-                time = 24
-            }
-            if(time > 24 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) >= 3600000){
-                throw new Error('Ошибка! Время не может быть больше 24');
-            }
-            else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-                throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов 2222');
-            }
-            else if(!wordsElementAfterKeyword5){
-                throw new Error('Ошибка! Не указана дата');
+            if(time == NaN){
+                if(time == 0){
+                    time = 24
+                }
+                if(time > 24 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) >= 3600000){
+                    throw new Error('Ошибка! Время не может быть больше 24');
+                }
+                else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
+                    throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
+                }
+                else if(!wordsElementAfterKeyword5){
+                    throw new Error('Ошибка! Не указана дата');
+                }
+                else {
+                    return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+                }
             }
             else {
-                return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+                if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
+                    throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
+                }
+                else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 &&
+                    convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
+                    throw new Error('Ошибка! Не указана единица времени');
+                }
+                else{
+                    let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
+                    let seconds:number = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1)
+                    let numberArrayElementResponsiveForTimeType:number
+                    let arrayElementResponsiveForDateType:string
+                    console.log(time)
+
+                    if(time > 20 && time%10 != 0){
+                        numberArrayElementResponsiveForTimeType = numberKeywordInMessage+3
+                        arrayElementResponsiveForDateType = wordsElementAfterKeyword4
+                        console.log('тут1')
+
+                    }
+                    else if(time%10 == 0 && seconds != 60000 && seconds != 180000 && seconds != 3600000 && seconds != 86400000 && seconds != 604800000
+                        && seconds != 2592000000 && seconds != 15768000000 && seconds != 31536000000){
+                        numberArrayElementResponsiveForTimeType = numberKeywordInMessage+2
+                        arrayElementResponsiveForDateType = wordsElementAfterKeyword3
+                        time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword1)
+                        console.log('тут2')
+
+                    }
+                    else {
+                        time = 1
+                        numberArrayElementResponsiveForTimeType = 2
+                        arrayElementResponsiveForDateType = wordsElementAfterKeyword2
+                        console.log('тут3')
+                    }
+                    console.log(time)
+
+
+                     return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage,
+                        this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+
+                    /*
+                    if(!/[А-яЁё]/.test(wordsElementAfterKeyword3) && (wordsElementAfterKeyword3.includes('.') == true || wordsElementAfterKeyword3.includes('-') == true || wordsElementAfterKeyword3.includes('/') == true )) {
+                        return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,this.words[numberKeywordInMessage + 3],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+                    }
+                    else if (/[А-яЁё]/.test(wordsElementAfterKeyword3)){ // только буквы
+                        if((wordsElementAfterKeyword3) == "в" || (wordsElementAfterKeyword3) == "во"){
+                            return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+                        }
+                        else{
+                            return addDay(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                        }
+                    }
+                    else {
+                        throw new Error('Ошибка! Некорректно указана дата. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
+                    }
+
+                     */
+                }
             }
         }
         else{
@@ -291,6 +355,30 @@ export default class FutureTimeAndMessage{
     }
 }
 
+function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
+                                words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
+
+    console.log('дата',arrayElementWithDate)
+    console.log('время',words[numberArrayElementResponsiveForTimeType])
+
+    let wordsElementAfterKeyword2 = words[numberKeywordInMessage+2] // элемент массива после ключевого слова - третий
+    let wordsElementAfterKeyword4 = words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
+
+    if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
+        return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage + 3],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
+    }
+    else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
+        if((arrayElementWithDate) == "в" || (arrayElementWithDate) == "во"){
+            return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
+        }
+        else{
+            return addDay(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,messageFuture, millisecondsTime)
+        }
+    }
+    else {
+        throw new Error('Ошибка! Некорректно указана дата. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
+    }
+}
 
 
 
