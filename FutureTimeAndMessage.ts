@@ -5,6 +5,7 @@ const convertTime = new ConvertTime()
 import addDay from "./helper_functions/AddDayWhenTimeIsKnown"
 import addDayOfTheWeek from "./helper_functions/AddDayWhenTimeAndDayOfTheWeekAreKnown"
 import addDateWhenItIsSpecifiedInFull from "./helper_functions/AddDateWhenItIsSpecifiedInFull"
+import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 
 
 export default class FutureTimeAndMessage{
