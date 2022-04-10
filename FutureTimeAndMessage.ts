@@ -285,14 +285,9 @@ export default class FutureTimeAndMessage{
         }
     }
     CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage:number, timeMessage:number): MessageToSend{
-        let wordsElementAfterKeyword = this.words[numberKeywordInMessage] // элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
-
-        if(!/[А-яЁё]/.test(wordsElementAfterKeyword) && (wordsElementAfterKeyword.includes('.') == true || wordsElementAfterKeyword.includes('-') == true || wordsElementAfterKeyword.includes('/') == true )) {
-            let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-            return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
-        }
-        throw new Error( 'Ошибка!!!!');
+        let time = parseInt(wordsElementAfterKeyword2) //время с типом число
+        return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
     }
 }
 
