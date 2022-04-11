@@ -5,6 +5,7 @@ const convertTime = new ConvertTime()
 import addDayOfTheWeek from "./helper_functions/date_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown"
 import addDateWhenItIsSpecifiedInFull from "./helper_functions/date_different_type/AddDateWhenItIsSpecifiedInFull"
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
+import calculationTimeAndSearchTimeAndDateInArray from "./helper_functions/CalculationTimeAndSearchTimeAndDateInArray"
 
 
 export default class FutureTimeAndMessage{
@@ -285,15 +286,13 @@ export default class FutureTimeAndMessage{
                 }
                 else{
                     let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
-
-                    let objTimeAndDate = сalculationTimeAndSearchTimeAndDateInArray(time,numberKeywordInMessage,wordsElementAfterKeyword1, wordsElementAfterKeyword2,wordsElementAfterKeyword3,wordsElementAfterKeyword4)
+                    let objTimeAndDate = calculationTimeAndSearchTimeAndDateInArray(time,numberKeywordInMessage,wordsElementAfterKeyword1, wordsElementAfterKeyword2,wordsElementAfterKeyword3,wordsElementAfterKeyword4)
 
                     let numberArrayElementResponsiveForTimeType:number = objTimeAndDate.numberArrayElementResponsiveForTimeType
                     let arrayElementResponsiveForDateType:string = objTimeAndDate.arrayElementResponsiveForDateType
                     time = objTimeAndDate.time
 
-                    return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage,
-                        this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                    return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
                 }
             }
         }
@@ -308,29 +307,3 @@ export default class FutureTimeAndMessage{
     }
 }
 
-
-
-function сalculationTimeAndSearchTimeAndDateInArray(time:number,numberKeywordInMessage:number,wordsElementAfterKeyword1:string,
-                                                     wordsElementAfterKeyword2:string,wordsElementAfterKeyword3:string,wordsElementAfterKeyword4:string) {
-    let seconds:number = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1)
-    let numberArrayElementResponsiveForTimeType:number
-    let arrayElementResponsiveForDateType:string
-    console.log(time)
-
-    if(time > 20 && time%10 != 0){
-        numberArrayElementResponsiveForTimeType = numberKeywordInMessage+3
-        arrayElementResponsiveForDateType = wordsElementAfterKeyword4
-    }
-    else if(time%10 == 0 && seconds != 60000 && seconds != 180000 && seconds != 3600000 && seconds != 86400000 && seconds != 604800000
-        && seconds != 2592000000 && seconds != 15768000000 && seconds != 31536000000){
-        numberArrayElementResponsiveForTimeType = numberKeywordInMessage+2
-        arrayElementResponsiveForDateType = wordsElementAfterKeyword3
-        time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword1)
-    }
-    else {
-        time = 1
-        numberArrayElementResponsiveForTimeType = 2
-        arrayElementResponsiveForDateType = wordsElementAfterKeyword2
-    }
-    return {time,numberArrayElementResponsiveForTimeType,arrayElementResponsiveForDateType}
-}
