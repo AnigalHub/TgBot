@@ -2,9 +2,8 @@ import MessageToSend from "./MessageToSend";
 import addTime from "./helper_functions/AddTimeWhenDayIsKnown";
 import ConvertTime from "./ConvertTime";
 const convertTime = new ConvertTime()
-import addDay from "./helper_functions/AddDayWhenTimeIsKnown"
-import addDayOfTheWeek from "./helper_functions/AddDayWhenTimeAndDayOfTheWeekAreKnown"
-import addDateWhenItIsSpecifiedInFull from "./helper_functions/AddDateWhenItIsSpecifiedInFull"
+import addDayOfTheWeek from "./helper_functions/date_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown"
+import addDateWhenItIsSpecifiedInFull from "./helper_functions/date_different_type/AddDateWhenItIsSpecifiedInFull"
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 
 
