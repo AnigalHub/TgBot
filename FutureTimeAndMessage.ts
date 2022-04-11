@@ -32,7 +32,12 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
-            this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ') // сообщение, которое напоминаем
+            if(convertTime.ConvertWordIndicatorOfTimeToNumber(wordsElementAfterKeyword3) != -1){
+                this.messageFuture = this.words.slice((numberKeywordInMessage+4),this.words.length).join(' ') // сообщение, которое напоминаем
+            }
+            else {
+                this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ') // сообщение, которое напоминаем
+            }
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
             if(time == 0) { // если время указано цифрой 0
                 throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!')
@@ -302,14 +307,12 @@ export default class FutureTimeAndMessage{
                     if(time > 20 && time%10 != 0){
                         numberArrayElementResponsiveForTimeType = numberKeywordInMessage+3
                         arrayElementResponsiveForDateType = wordsElementAfterKeyword4
-
                     }
                     else if(time%10 == 0 && seconds != 60000 && seconds != 180000 && seconds != 3600000 && seconds != 86400000 && seconds != 604800000
                         && seconds != 2592000000 && seconds != 15768000000 && seconds != 31536000000){
                         numberArrayElementResponsiveForTimeType = numberKeywordInMessage+2
                         arrayElementResponsiveForDateType = wordsElementAfterKeyword3
                         time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword1)
-
                     }
                     else {
                         time = 1
