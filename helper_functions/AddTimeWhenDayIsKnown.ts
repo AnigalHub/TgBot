@@ -63,6 +63,9 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
         }
     }
     else {
+        if(messageFuture.indexOf('сегодня') != -1){
+            messageFuture = messageFuture.slice(messageFuture.indexOf(" "));
+        }
         DateAsString(millisecondsTime,date)
         return new MessageToSend(millisecondsTime, messageFuture)
     }
