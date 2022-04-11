@@ -6,7 +6,8 @@ const convertTime = new ConvertTime()
 
 
 function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number,
-                               words:Array<string>, numberKeywordInMessage:number, messageFuture:string, millisecondsTime:number) : MessageToSend {
+                               words:Array<string>, numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
+                               messageFuture:string, millisecondsTime:number) : MessageToSend {
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(dayRemind)
 
     if((timeRemind <= date.getHours()) && dayRemind == 'сегодня'){
@@ -20,6 +21,7 @@ function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, d
     }
     else {
         let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
+        console.log('дата без времени^^^^^',futureDate.toString())
         const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
         millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, numberKeywordInMessage + 2)
