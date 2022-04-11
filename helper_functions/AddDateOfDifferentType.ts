@@ -17,10 +17,12 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
     }
     else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
         if((arrayElementWithDate) == "в" || (arrayElementWithDate) == "во"){
-            return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
+            return addDayOfTheWeek(numberKeywordInMessage,words[numberArrayElementResponsiveForTimeType+2],words[numberArrayElementResponsiveForTimeType],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
         }
         else{
-            return addDay(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,messageFuture, millisecondsTime)
+            console.log(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,messageFuture, millisecondsTime)
+            console.log('тууууууууут')
+            return addDay(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
         }
     }
     else {
