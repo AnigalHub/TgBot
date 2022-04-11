@@ -4,7 +4,9 @@ import ConvertTime from "../ConvertTime";
 const convertTime = new ConvertTime()
 
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
-
+    console.log('дата',numberArrayElementResponsiveForTimeType+1)
+    console.log('дата',words[numberArrayElementResponsiveForTimeType+2])
+    console.log(numberKeywordInMessage)
     console.log('это',keyword)
     if  (keyword[2] != keyword[5] && (keyword.includes('.') == false || keyword.includes('/')== false
         || keyword.includes('-')== false) || (keyword.length > 10) || (keyword.length == 7) || (keyword.length == 9)) {
@@ -47,7 +49,7 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
             let futureDate = new Date(yearMessage, monthMessage, dayMessage)
             const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
-            messageFuture = words.slice((numberKeywordInMessage+4),words.length).join(' ')//сообщение, которое напоминаем
+            messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')//сообщение, которое напоминаем
             millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType)
             DateAsString(millisecondsTime,date)
 
