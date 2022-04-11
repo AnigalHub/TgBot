@@ -257,7 +257,8 @@ export default class FutureTimeAndMessage{
                         return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
                     }
                     else{
-                        return addDay(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                     //   return addDay(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                        throw new Error('Ошибка!')
                     }
                 }
                 else if(!/[А-яЁё]/.test(wordsElementAfterKeyword3) && (wordsElementAfterKeyword3.includes('.') == true || wordsElementAfterKeyword3.includes('-') == true || wordsElementAfterKeyword3.includes('/') == true )) {
