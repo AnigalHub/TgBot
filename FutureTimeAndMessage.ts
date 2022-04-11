@@ -252,21 +252,7 @@ export default class FutureTimeAndMessage{
                 throw new Error('Ошибка! Не указана дата');
             }
             else{
-                if (/[А-яЁё]/.test(wordsElementAfterKeyword3)){ // только буквы
-                    if((wordsElementAfterKeyword3) == "в" || (wordsElementAfterKeyword3) == "во"){
-                        return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword4,wordsElementAfterKeyword2,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
-                    }
-                    else{
-                     //   return addDay(this.dateMessage,wordsElementAfterKeyword3,time,timeMessage,this.words,numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-                        throw new Error('Ошибка!')
-                    }
-                }
-                else if(!/[А-яЁё]/.test(wordsElementAfterKeyword3) && (wordsElementAfterKeyword3.includes('.') == true || wordsElementAfterKeyword3.includes('-') == true || wordsElementAfterKeyword3.includes('/') == true )) {
-                    return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 2,this.words[numberKeywordInMessage + 3],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
-                }
-                else {
-                    throw new Error('Ошибка! Некорректно указана дата. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
-                }
+                return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
