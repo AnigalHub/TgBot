@@ -1,7 +1,7 @@
 //функция добавления времени, когда известен день
-import MessageToSend from "../MessageToSend";
-import DateAsString from "./DateAsString";
-import ConvertTime from '../ConvertTime'
+import MessageToSend from "../../MessageToSend";
+import DateAsString from "../DateAsString";
+import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 
 

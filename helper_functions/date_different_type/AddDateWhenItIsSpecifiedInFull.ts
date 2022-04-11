@@ -1,6 +1,6 @@
-import MessageToSend from "../MessageToSend";
-import DateAsString from "./DateAsString";
-import ConvertTime from "../ConvertTime";
+import MessageToSend from "../../MessageToSend";
+import DateAsString from "../DateAsString";
+import ConvertTime from "../../ConvertTime";
 const convertTime = new ConvertTime()
 
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {

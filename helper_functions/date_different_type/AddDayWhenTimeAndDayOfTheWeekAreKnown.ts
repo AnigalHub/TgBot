@@ -1,7 +1,7 @@
-import MessageToSend from "../MessageToSend";
-import DayOfTheWeek from "../DayOfTheWeek";
-import DateAsString from "./DateAsString";
-import ConvertTime from '../ConvertTime'
+import MessageToSend from "../../MessageToSend";
+import DayOfTheWeek from "../../DayOfTheWeek";
+import DateAsString from "../DateAsString";
+import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 
 function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWhitTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
