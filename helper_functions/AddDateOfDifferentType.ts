@@ -1,13 +1,10 @@
 import MessageToSend from "../MessageToSend";
 import addDateWhenItIsSpecifiedInFull from "./date_different_type/AddDateWhenItIsSpecifiedInFull";
 import addDayOfTheWeek from "./date_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown";
-import addDay from "./date_different_type/AddDayWhenTimeIsKnown";
+import AddDayWhenTimeIsKnown from "./date_different_type/AddDayWhenTimeIsKnown";
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-
-    console.log('дата',arrayElementWithDate)
-    console.log('время',words[numberArrayElementResponsiveForTimeType])
 
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
@@ -17,9 +14,7 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
             return addDayOfTheWeek(numberKeywordInMessage,words[numberArrayElementResponsiveForTimeType+2],words[numberArrayElementResponsiveForTimeType],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
         }
         else{
-            console.log(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,messageFuture, millisecondsTime)
-            console.log('тууууууууут')
-            return addDay(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
+            return AddDayWhenTimeIsKnown(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
         }
     }
     else {
