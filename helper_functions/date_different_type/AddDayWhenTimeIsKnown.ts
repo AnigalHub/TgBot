@@ -5,8 +5,8 @@ import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 
 
-function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number,
-                               words:Array<string>, numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
+function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>,
+                               numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
                                messageFuture:string, millisecondsTime:number) : MessageToSend {
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(dayRemind)
 
@@ -21,11 +21,10 @@ function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, d
     }
     else {
         let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
-        console.log('дата без времени^^^^^',futureDate.toString())
-        const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
+        const futureDateMs = Date.parse(futureDate.toString())  //будущая дата в миллисекундах
 
-        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, numberKeywordInMessage + 2)
-        messageFuture = words.slice((numberKeywordInMessage + 4), words.length).join(' ')//сообщение, которое напоминаем
+        millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, numberArrayElementResponsiveForTimeType)
+        messageFuture = words.slice((numberArrayElementResponsiveForTimeType + 2), words.length).join(' ')//сообщение, которое напоминаем
         DateAsString(millisecondsTime, date)
         return new MessageToSend(millisecondsTime, messageFuture)
     }
