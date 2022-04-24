@@ -6,7 +6,7 @@ import addDayOfTheWeek from "./helper_functions/date_different_type/AddDayWhenTi
 import addDateWhenItIsSpecifiedInFull from "./helper_functions/date_different_type/AddDateWhenItIsSpecifiedInFull"
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 import calculationTimeAndSearchTimeAndDateInArray from "./helper_functions/CalculationTimeAndSearchTimeAndDateInArray"
-import dateAndTimeValidation from  "./helper_functions/dateAndTimeValidation"
+import dateAndTimeValidation from  "./helper_functions/DateAndTimeValidation"
 
 
 export default class FutureTimeAndMessage{
