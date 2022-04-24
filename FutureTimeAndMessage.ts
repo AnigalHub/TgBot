@@ -239,21 +239,6 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
-                /*
-            if(time == 0){
-                time = 24
-            }
-            if(time > 24 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) >= 3600000){
-                throw new Error('Ошибка! Время не может быть больше 24');
-            }
-            else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-                throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
-            }
-            else if(!wordsElementAfterKeyword3){
-                throw new Error('Ошибка! Не указана дата');
-            }
-            */
-
             if ((DateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3) == -1) && this.messageFuture != '') {
                 return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
