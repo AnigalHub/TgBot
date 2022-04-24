@@ -6,7 +6,7 @@ import addDayOfTheWeek from "./helper_functions/date_different_type/AddDayWhenTi
 import addDateWhenItIsSpecifiedInFull from "./helper_functions/date_different_type/AddDateWhenItIsSpecifiedInFull"
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 import calculationTimeAndSearchTimeAndDateInArray from "./helper_functions/CalculationTimeAndSearchTimeAndDateInArray"
-import DateAndTimeValidation from  "./helper_functions/DateAndTimeValidation"
+import dateAndTimeValidation from  "./helper_functions/dateAndTimeValidation"
 
 
 export default class FutureTimeAndMessage{
@@ -240,7 +240,7 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
-            if ((DateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3) == -1) && this.messageFuture != '') {
+            if ((dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3) == -1) && this.messageFuture != '') {
                 return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             throw new Error('Ошибка! Нет сообщения, которое надо напомнить')
@@ -248,7 +248,7 @@ export default class FutureTimeAndMessage{
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             let time = parseInt(wordsElementAfterKeyword3) //время с типом число
             if(time == NaN){
-                if ((DateAndTimeValidation(time,wordsElementAfterKeyword4,wordsElementAfterKeyword5) == -1) && this.messageFuture != '') {
+                if ((dateAndTimeValidation(time,wordsElementAfterKeyword4,wordsElementAfterKeyword5) == -1) && this.messageFuture != '') {
                     return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
                 }
                 throw new Error('Ошибка! Нет сообщения, которое надо напомнить')
