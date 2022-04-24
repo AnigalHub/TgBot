@@ -239,6 +239,7 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
+                /*
             if(time == 0){
                 time = 24
             }
@@ -251,9 +252,12 @@ export default class FutureTimeAndMessage{
             else if(!wordsElementAfterKeyword3){
                 throw new Error('Ошибка! Не указана дата');
             }
-            else{
+            */
+
+            if ((DateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3) == -1) && this.messageFuture != '') {
                 return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
+            throw new Error('Ошибка! Нет сообщения, которое надо напомнить')
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             let time = parseInt(wordsElementAfterKeyword3) //время с типом число
@@ -318,8 +322,8 @@ function DateAndTimeValidation(time:number,wordsElementAfterKeyword1:string,word
         throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
     }
     else if(!wordsElementAfterKeyword2){
-        throw new Error('Ошибка! Не указана дата');
-    }
+      throw new Error('Ошибка! Не указана дата');
+   }
     else {
         return -1
     }
