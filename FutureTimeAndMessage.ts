@@ -247,21 +247,10 @@ export default class FutureTimeAndMessage{
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             let time = parseInt(wordsElementAfterKeyword3) //время с типом число
             if(time == NaN){
-                if(time == 0){
-                    time = 24
-                }
-                if(time > 24 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) >= 3600000){
-                    throw new Error('Ошибка! Время не может быть больше 24');
-                }
-                else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-                    throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
-                }
-                else if(!wordsElementAfterKeyword5){
-                    throw new Error('Ошибка! Не указана дата');
-                }
-                else {
+                if ((DateAndTimeValidation(time,wordsElementAfterKeyword4,wordsElementAfterKeyword5) == -1) && this.messageFuture != '') {
                     return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
                 }
+                throw new Error('Ошибка! Нет сообщения, которое надо напомнить')
             }
             else {
                 if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
