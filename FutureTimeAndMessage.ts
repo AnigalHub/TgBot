@@ -242,8 +242,8 @@ export default class FutureTimeAndMessage{
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
 
-            if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(wordsElementAfterKeyword3) != -1 ){
-                throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз!');
+            if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(wordsElementAfterKeyword3) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != convertTime.ConvertWordIndicatorOfTimeToNumber(wordsElementAfterKeyword3)){
+                throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз и разная!');
             }
             else if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1){
                 dateAndTimeValidation(time,wordsElementAfterKeyword2,dateOfDifferentType)
