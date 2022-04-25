@@ -27,6 +27,16 @@ bot.on('message', async (msg) =>{
     let futureTimeAndMessage = new FutureTimeAndMessage(chatId,words,dateMessage)
     let fullDate = words.filter(word => word.includes('-') || word.includes('.') || word.includes('/'))
 
+    async function keywordCountIn() {
+        numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
+        try {
+            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( numberKeywordInMessage, timeMessage)
+            console.log(millisecondsAndMessage)
+        } catch (e:any) {
+            await bot.sendMessage(chatId,e.message)
+        }
+    }
+
     if (words.includes('через') == true){
         numberKeywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
         try {
@@ -55,27 +65,18 @@ bot.on('message', async (msg) =>{
             await bot.sendMessage(chatId,e.message)
         }
     }
+    else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true) || (words.includes('послезавтра') == true) ||  (words.includes('послепослезавтра') == true) ){
+       await keywordCountIn()
+    }
     else if(words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
             words.splice(words.indexOf('во'),1,'в')
         }
-        numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
-        try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( numberKeywordInMessage, timeMessage)
-            console.log(millisecondsAndMessage)
-        } catch (e:any) {
-            await bot.sendMessage(chatId,e.message)
-        }
-    }
-
-    else if (words.includes('сегодня') == true){
-
-
+        await keywordCountIn()
     }
     else {
         await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
     }
-
    // bot.sendMessage(chatId,'Привет');
 })
 
