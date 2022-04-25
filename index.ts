@@ -16,6 +16,10 @@ bot.on('message', async (msg) =>{
         await bot.sendMessage( chatId,"нет сообщения")
         return
     }
+    if(msg.text == '/start'){
+        await bot.sendMessage( chatId,'')
+        return
+    }
     if(msg.text == '/help'){
         await bot.sendMessage( chatId,'Варианты написания:\n' +
             'Через\n' +
