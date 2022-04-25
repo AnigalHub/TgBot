@@ -231,6 +231,7 @@ export default class FutureTimeAndMessage{
              */
     }
     CalculationsAndHandlingErrorsOnInputTo2(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
+        let dateOfDifferentType = this.words[numberKeywordInMessage-1] // элемент, в котором может быть указа дата (сегодня/завтра/послезавтра)
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
@@ -240,8 +241,14 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
+
             dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3)
-            return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+            if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1){
+                return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage-1],numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+            }
+            else {
+                return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+            }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             let time = parseInt(wordsElementAfterKeyword3) //время с типом число
