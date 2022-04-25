@@ -240,18 +240,14 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
-            if ((dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3) == -1) && this.messageFuture != '') {
-                return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-            }
-            throw new Error('Ошибка! Нет сообщения, которое надо напомнить')
+            dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3)
+            return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             let time = parseInt(wordsElementAfterKeyword3) //время с типом число
             if(time == NaN){
-                if ((dateAndTimeValidation(time,wordsElementAfterKeyword4,wordsElementAfterKeyword5) == -1) && this.messageFuture != '') {
-                    return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
-                }
-                throw new Error('Ошибка! Нет сообщения, которое надо напомнить')
+                dateAndTimeValidation(time,wordsElementAfterKeyword4,wordsElementAfterKeyword5)
+                return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
             }
             else {
                 if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
