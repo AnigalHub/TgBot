@@ -242,11 +242,15 @@ export default class FutureTimeAndMessage{
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
 
-            dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3)
-            if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1){
-                return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage-1],numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+            if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(wordsElementAfterKeyword3) != -1 ){
+                throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз!');
+            }
+            else if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1){
+                dateAndTimeValidation(time,wordsElementAfterKeyword2,dateOfDifferentType)
+                return addDateOfDifferentType(this.dateMessage,dateOfDifferentType,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else {
+                dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3)
                 return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
         }
