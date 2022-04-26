@@ -197,7 +197,7 @@ export default class Time {
         let millisecondsTime: number = 0
         let message:string
         let seconds:number = this.ConvertTimeToMilliseconds(array[arrayElement_1],1)
-        if (time%10 == 0 && seconds != 60000 && seconds != 180000
+        if (time%10 == 0 && seconds != 1000 && seconds != 60000 && seconds != 1800000
             && seconds != 3600000 && seconds != 86400000 && seconds != 604800000
             && seconds != 2592000000 && seconds != 15768000000 && seconds != 31536000000){
             time = this.ConvertSmallNumberFromStringToNumber(array[arrayElement_1])
