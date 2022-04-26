@@ -48,39 +48,31 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
                 }
             }
             else if (/^[А-яЁё]*$/.test(words[secondKeywordInMessage + 1])) {// только буквы
-                if( convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
 
-                   DateAsString(millisecondsTime,date)
-                   return new MessageToSend(millisecondsTime, messageFuture)
+                let timeAfterSecondKeyword:number = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+
+                if ((arrayElementAfterSecondKeyword1 != 'ноль' && arrayElementAfterSecondKeyword1 != 'нуль' ) &&
+                    ((convertTime.ConvertSmallNumberFromStringToNumber(arrayElementAfterSecondKeyword1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) ==0 ) || (convertTime.ConvertSmallNumberFromStringToNumber(arrayElementAfterSecondKeyword2) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) !=0))){
+                    throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
+                }
+                else if(timeAfterSecondKeyword > 24 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 3600000 ){
+                    throw new Error('Ошибка! Время не может быть больше 24 часов');
+                }
+                else if(timeAfterSecondKeyword > 59 && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 60000 || convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 1000)){
+                    throw new Error('Ошибка! Время не может быть больше 59 секунд/минут');
                 }
                 else {
-                    let timeAfterSecondKeyword:number = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+                    let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
 
-                    console.log(arrayElementAfterSecondKeyword1)
-                    if ( arrayElementAfterSecondKeyword1 != 'ноль' && timeAfterSecondKeyword == 0 &&
-                        convertTime.ConvertSmallNumberFromStringToNumber(arrayElementAfterSecondKeyword2) != 0 || convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) != 0){
-                      throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
-                    }
-                    else if(timeAfterSecondKeyword > 24 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 3600000 ){
-                        throw new Error('Ошибка! Время не может быть больше 24 часов');
-                    }
-                    else if(timeAfterSecondKeyword > 59 && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 60000 || convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 1000)){
-                        throw new Error('Ошибка! Время не может быть больше 59 секунд/минут');
-                    }
-                    else {
-                        let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
+                    messageFuture = objTime.message
+                    millisecondsTime = objTime.millisecondsTime
 
-                        messageFuture = objTime.message
-                        millisecondsTime = objTime.millisecondsTime
-
-                        DateAsString(millisecondsTime,date)
-                        return new MessageToSend(millisecondsTime, messageFuture)
-                    }
+                    DateAsString(millisecondsTime,date)
+                    return new MessageToSend(millisecondsTime, messageFuture)
                 }
             }
             else {
-                throw new Error('Ошибка! Некорректно введено время');
+                throw new Error('Ошибка! Некорректно введено время. Неизвестные символы');
             }
         }
         else {
