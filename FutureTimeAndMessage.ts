@@ -58,18 +58,16 @@ export default class FutureTimeAndMessage{
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 &&
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 &&
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
-                throw new Error('Ошибка! Не указана единица времени: отсутствует или опечатка');
+                throw new Error('Ошибка! Некорректно указана единица времени: отсутствует или опечатка');
             }
             else{
-              if(convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword1) == 0 &&  convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0
-                  || convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword2) == 0 &&  convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
-                  || convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword3) == 0 &&  convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) != 0 ){
-                   throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
-               }
                 let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
                 this.messageFuture = objTime.message
                 this.millisecondsTime = objTime.millisecondsTime
+                if( this.millisecondsTime == 0){
+                    throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
+                }
                 return addTime(this.dateMessage, this.words, secondKeywordInMessage,this.millisecondsTime,this.messageFuture)
             }
         }
