@@ -3,6 +3,8 @@ import TelegramBot from "node-telegram-bot-api"
 import FutureTimeAndMessage from './FutureTimeAndMessage'
 import prepareMessage from "./helper_functions/PrepareMessage";
 import MessageToSend from "./MessageToSend";
+import DateAsString from "./helper_functions/DateAsString";
+import ConvertTime from "./ConvertTime";
 
 const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
@@ -114,6 +116,7 @@ bot.on('message', async (msg) =>{
         try {
             millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( numberKeywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
+            DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
         } catch (e:any) {
             await bot.sendMessage(chatId,e.message)
         }
@@ -123,7 +126,8 @@ bot.on('message', async (msg) =>{
         numberKeywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
         try {
             millisecondsAndMessage = futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage, secondKeywordInMessage, timeMessage)
-           // console.log(millisecondsAndMessage)
+            DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
+
         } catch (e:any) {
            await bot.sendMessage(chatId,e.message)
         }
@@ -142,6 +146,7 @@ bot.on('message', async (msg) =>{
                 millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage2, timeMessage)
             }
             console.log(millisecondsAndMessage)
+            DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
         } catch (e:any) {
             await bot.sendMessage(chatId,e.message)
         }
