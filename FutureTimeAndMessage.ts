@@ -58,9 +58,14 @@ export default class FutureTimeAndMessage{
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 &&
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 &&
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
-                throw new Error('Ошибка! Не указана единица времени');
+                throw new Error('Ошибка! Не указана единица времени: отсутствует или опечатка');
             }
             else{
+              if(convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword1) == 0 &&  convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0
+                  || convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword2) == 0 &&  convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
+                  || convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword3) == 0 &&  convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) != 0 ){
+                   throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
+               }
                 let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
                 this.messageFuture = objTime.message
@@ -264,10 +269,7 @@ export default class FutureTimeAndMessage{
                 if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
                     throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
                 }
-                else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 &&
-                    convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
+                else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
                     throw new Error('Ошибка! Не указана единица времени');
                 }
                 else{
