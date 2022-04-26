@@ -19,7 +19,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
             convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
             convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 &&
             convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
-            throw new Error('Ошибка! Некорректно указана единица времени: отсутствует или опечатка');
+            throw new Error('Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени');
         }
 
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
