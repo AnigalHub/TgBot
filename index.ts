@@ -33,7 +33,7 @@ bot.on('message', async (msg) =>{
             '-- год|года|лет\n</pre>' +
             '<b>3)Дата указывается с помощью ключевых слов:\n</b>' +
             '<pre>-- сегодня|завтра|послезавтра|послепослезавтра</pre>' +
-            'день недели:\n' +
+            'День недели:\n' +
             '<pre>-- пн|пнд|понедельник\n' +
             '-- вт|втр|вторник\n' +
             '-- ср|сре|среда\n' +
@@ -44,7 +44,10 @@ bot.on('message', async (msg) =>{
             'Полная дата:\n' +
             '<pre>-- дд-мм-гггг (дд-мм-гг)\n' +
             '-- дд.мм.гггг (дд.мм.гг)\n' +
-            '-- дд/мм/гггг (дд/мм/гг)\n</pre>'
+            '-- дд/мм/гггг (дд/мм/гг)\n</pre>' +
+            '<b>4)После указателя времени "ЧЕРЕЗ" всегда идет:\n</b>' +
+            '<pre>-- число и единица времени: через 10 минут | через шесть часов</pre>' +
+            '<pre>-- единица времени: через час</pre>'
             ,{parse_mode: 'HTML'})
         return
     }
@@ -108,7 +111,7 @@ bot.on('message', async (msg) =>{
         numberKeywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
         try {
             millisecondsAndMessage = futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage, secondKeywordInMessage, timeMessage)
-            console.log(millisecondsAndMessage)
+           // console.log(millisecondsAndMessage)
         } catch (e:any) {
            await bot.sendMessage(chatId,e.message)
         }
