@@ -1,4 +1,3 @@
-import DateAsString from './DateAsString'
 import ConvertTime from '../ConvertTime'
 const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
@@ -42,8 +41,6 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
                 else {
                     messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
                     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
-
-                    DateAsString(millisecondsTime,date)
                     return new MessageToSend(millisecondsTime, messageFuture)
                 }
             }
@@ -66,8 +63,6 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
 
                     messageFuture = objTime.message
                     millisecondsTime = objTime.millisecondsTime
-
-                    DateAsString(millisecondsTime,date)
                     return new MessageToSend(millisecondsTime, messageFuture)
                 }
             }
@@ -83,7 +78,6 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
         if(messageFuture.indexOf('сегодня') != -1){
             messageFuture = messageFuture.slice(messageFuture.indexOf(" "));
         }
-        DateAsString(millisecondsTime,date)
         return new MessageToSend(millisecondsTime, messageFuture)
     }
 }
