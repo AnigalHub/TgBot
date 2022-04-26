@@ -15,6 +15,13 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
         let arrayElementAfterSecondKeyword3 = words[(secondKeywordInMessage)+3] // элемент массива после ключевого слова (secondKeywordInMessage) - третий
         let arrayElementAfterSecondKeyword4 = words[(secondKeywordInMessage)+4] // элемент массива после ключевого слова (secondKeywordInMessage) - четвертый
 
+        if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 &&
+            convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
+            convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 &&
+            convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
+            throw new Error('Ошибка! Некорректно указана единица времени: отсутствует или опечатка');
+        }
+
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
             futureDate.setHours(0,0,0,0)
@@ -35,6 +42,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
                 else {
                     messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
                     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
+
                     DateAsString(millisecondsTime,date)
                     return new MessageToSend(millisecondsTime, messageFuture)
                 }
@@ -42,10 +50,12 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
             else if (/^[А-яЁё]*$/.test(words[secondKeywordInMessage + 1])) {// только буквы
                 if( convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
                     convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
-                    throw new Error('Ошибка! Не указана единица времени');
+
+                    DateAsString(millisecondsTime,date)
+                    return new MessageToSend(millisecondsTime, messageFuture)
                 }
                 else {
-                    let timeAfterSecondKeyword :number =  convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+                    let timeAfterSecondKeyword:number =  convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
                     let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
                     messageFuture = objTime.message
                     millisecondsTime = objTime.millisecondsTime
@@ -59,7 +69,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
             }
         }
         else {
-            throw new Error('Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
+            throw new Error('Ошибка! Некорректно введено время и дата - неизвестно когда напоминать: опечатка или отсутствие');
         }
     }
     else {
