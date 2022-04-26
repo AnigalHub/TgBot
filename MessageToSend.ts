@@ -1,6 +1,6 @@
 export  default class MessageToSend {
-    private millisecondsTime: number;
-    private messageFuture: string;
+    public millisecondsTime: number;
+    public messageFuture: string;
 
     constructor(millisecondsTime: number, messageFuture: string) {
         this.millisecondsTime = millisecondsTime
