@@ -35,11 +35,6 @@ export default class FutureTimeAndMessage{
         if(keywordIndexes.length > 1){
             throw new Error('Ошибка! Несколько раз указан указатель времени "ЧЕРЕЗ"');
         }
-        for (let i= 0; i<this.words.length;i++){
-            if(convertTime.ConvertTimeToMilliseconds(this.words[i],1) != 0 && convertTime.ConvertTimeToMilliseconds(this.words[i+1],1) != 0){
-                throw new Error('Ошибка! Подряд несколько раз указана единица времени');
-            }
-        }
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
