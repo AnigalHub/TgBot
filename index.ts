@@ -4,6 +4,8 @@ import FutureTimeAndMessage from './FutureTimeAndMessage'
 import prepareMessage from "./helper_functions/PrepareMessage";
 import MessageToSend from "./MessageToSend";
 import DateAsString from "./helper_functions/DateAsString";
+import ConvertTime from './ConvertTime'
+const convertTime = new ConvertTime()
 
 const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
@@ -100,6 +102,11 @@ bot.on('message', async (msg) =>{
         return
     }
     let words = prepareMessage(msg.text)
+    for (let i= 0; i<words.length;i++){
+        if(convertTime.ConvertTimeToMilliseconds(words[i],1) != 0 && convertTime.ConvertTimeToMilliseconds(words[i+1],1) != 0){
+          return await bot.sendMessage(chatId,'Ошибка! Подряд несколько раз указана единица времени')
+        }
+    }
     console.log(words) //массив
 
     let numberKeywordInMessage:number //ключевое слово в сообщении
@@ -126,7 +133,6 @@ bot.on('message', async (msg) =>{
         try {
             millisecondsAndMessage = futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage, secondKeywordInMessage, timeMessage)
             DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
-
         } catch (e:any) {
            await bot.sendMessage(chatId,e.message)
         }
