@@ -38,9 +38,7 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
-
-            if(wordsElementAfterKeyword3 == 'сегодня' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 3600000
-            || (wordsElementAfterKeyword3 == 'завтра' || wordsElementAfterKeyword3 == 'послезавтра' || wordsElementAfterKeyword3 == 'послепослезавтра'
+            if((wordsElementAfterKeyword3 == 'завтра' || wordsElementAfterKeyword3 == 'послезавтра' || wordsElementAfterKeyword3 == 'послепослезавтра'
                 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0)){
                 throw new Error('Ошибка! Несовместимое время и дата. Неизвестно когда напоминать');
             }
@@ -79,15 +77,16 @@ export default class FutureTimeAndMessage{
                 if(this.millisecondsTime == 0){
                     throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
                 }
-                else if(wordsElementAfterKeyword3 == 'сегодня' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 3600000 || wordsElementAfterKeyword4 == 'сегодня' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 3600000
+                else if(
+                    (wordsElementAfterKeyword2 == 'завтра' || wordsElementAfterKeyword2 == 'послезавтра' || wordsElementAfterKeyword2 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0)
                     || (wordsElementAfterKeyword3 == 'завтра' || wordsElementAfterKeyword3 == 'послезавтра' || wordsElementAfterKeyword3 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0)
-                    || (wordsElementAfterKeyword4 == 'завтра' || wordsElementAfterKeyword4 == 'послезавтра' || wordsElementAfterKeyword4 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0)){
+                    || (wordsElementAfterKeyword4 == 'завтра' || wordsElementAfterKeyword4 == 'послезавтра' || wordsElementAfterKeyword4 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0)
+                    ){
                     throw new Error('Ошибка! Несовместимое время и дата. Неизвестно когда напоминать');
                 }
                 else {
                     return addTime(this.dateMessage, this.words, secondKeywordInMessage,this.millisecondsTime,this.messageFuture)
                 }
-
             }
         }
         else {
