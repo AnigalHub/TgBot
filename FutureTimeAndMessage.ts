@@ -26,7 +26,6 @@ export default class FutureTimeAndMessage{
 
     CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage:number, secondKeywordInMessage:number, timeMessage:number): MessageToSend{
 
-
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
@@ -35,6 +34,11 @@ export default class FutureTimeAndMessage{
 
         if(keywordIndexes.length > 1){
             throw new Error('Ошибка! Несколько раз указан указатель времени "ЧЕРЕЗ"');
+        }
+        for (let i= 0; i<this.words.length;i++){
+            if(convertTime.ConvertTimeToMilliseconds(this.words[i],1) != 0 && convertTime.ConvertTimeToMilliseconds(this.words[i+1],1) != 0){
+                throw new Error('Ошибка! Подряд несколько раз указана единица времени');
+            }
         }
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
