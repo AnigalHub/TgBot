@@ -134,6 +134,7 @@ bot.on('message', async (msg) =>{
         numberKeywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
         try {
             millisecondsAndMessage = futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage, secondKeywordInMessage, timeMessage)
+            console.log(millisecondsAndMessage)
             DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
         } catch (e:any) {
            await bot.sendMessage(chatId,e.message)
