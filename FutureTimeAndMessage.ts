@@ -26,6 +26,7 @@ export default class FutureTimeAndMessage{
 
     CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage:number, secondKeywordInMessage:number, timeMessage:number): MessageToSend{
 
+        let wordsElementBeforeKeyword1 = this.words[numberKeywordInMessage-1] // элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
@@ -38,7 +39,8 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
-            if((wordsElementAfterKeyword3 == 'завтра' || wordsElementAfterKeyword3 == 'послезавтра' || wordsElementAfterKeyword3 == 'послепослезавтра'
+            if((wordsElementBeforeKeyword1 == 'завтра' || wordsElementBeforeKeyword1 == 'послезавтра' || wordsElementBeforeKeyword1 == 'послепослезавтра') ||
+                (wordsElementAfterKeyword3 == 'завтра' || wordsElementAfterKeyword3 == 'послезавтра' || wordsElementAfterKeyword3 == 'послепослезавтра'
                 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0)){
                 throw new Error('Ошибка! Несовместимое время и дата. Неизвестно когда напоминать');
             }
@@ -74,11 +76,14 @@ export default class FutureTimeAndMessage{
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
                 this.messageFuture = objTime.message
                 this.millisecondsTime = objTime.millisecondsTime
+                console.log(wordsElementAfterKeyword1)
+                console.log(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0)
                 if(this.millisecondsTime == 0){
                     throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
                 }
                 else if(
-                    (wordsElementAfterKeyword2 == 'завтра' || wordsElementAfterKeyword2 == 'послезавтра' || wordsElementAfterKeyword2 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0)
+                    (wordsElementBeforeKeyword1 == 'завтра' || wordsElementBeforeKeyword1 == 'послезавтра' || wordsElementBeforeKeyword1 == 'послепослезавтра')
+                   || (wordsElementAfterKeyword2 == 'завтра' || wordsElementAfterKeyword2 == 'послезавтра' || wordsElementAfterKeyword2 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0)
                     || (wordsElementAfterKeyword3 == 'завтра' || wordsElementAfterKeyword3 == 'послезавтра' || wordsElementAfterKeyword3 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0)
                     || (wordsElementAfterKeyword4 == 'завтра' || wordsElementAfterKeyword4 == 'послезавтра' || wordsElementAfterKeyword4 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0)
                     ){
