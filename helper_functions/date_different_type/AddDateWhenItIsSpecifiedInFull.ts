@@ -1,5 +1,4 @@
 import MessageToSend from "../../MessageToSend";
-import DateAsString from "../DateAsString";
 import ConvertTime from "../../ConvertTime";
 const convertTime = new ConvertTime()
 
@@ -47,12 +46,10 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
 
             messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')//сообщение, которое напоминаем
             millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType)
-            DateAsString(millisecondsTime,date)
 
             return new MessageToSend(millisecondsTime, messageFuture)
         }
     }
-
 }
 
 export default addDateWhenItIsSpecifiedInFull

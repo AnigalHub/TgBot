@@ -1,6 +1,5 @@
 //функция добавления времени, когда известен день
 import MessageToSend from "../../MessageToSend";
-import DateAsString from "../DateAsString";
 import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 
@@ -25,7 +24,6 @@ function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, d
 
         millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, numberArrayElementResponsiveForTimeType)
         messageFuture = words.slice((numberArrayElementResponsiveForTimeType + 2), words.length).join(' ')//сообщение, которое напоминаем
-        DateAsString(millisecondsTime, date)
         return new MessageToSend(millisecondsTime, messageFuture)
     }
 }

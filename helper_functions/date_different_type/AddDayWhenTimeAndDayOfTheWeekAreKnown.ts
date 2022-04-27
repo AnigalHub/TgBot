@@ -1,6 +1,5 @@
 import MessageToSend from "../../MessageToSend";
 import DayOfTheWeek from "../../DayOfTheWeek";
-import DateAsString from "../DateAsString";
 import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 
@@ -20,7 +19,6 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
             let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementWhitTime,time)
             millisecondsTime = futureMs - timeMessage
             messageFuture = words.slice((startFutureMessage),words.length).join(' ')//сообщение, которое напоминаем
-            DateAsString(millisecondsTime,date)
             return new MessageToSend(millisecondsTime, messageFuture) }
     }
     throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
