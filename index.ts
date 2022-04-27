@@ -16,7 +16,7 @@ bot.on('message', async (msg) =>{
     const dateMessage = new Date(timeMessage)
     console.log('дата сообщения',dateMessage.toString())//дата и время, когда отправили сообщение, которое напомнить в виде строки
     if(!msg.text){
-        await bot.sendMessage( chatId,"нет сообщения")
+        await bot.sendMessage( chatId,"Ошибка! Ожидается текст. Бот работает только с текстом!")
         return
     }
     if(msg.text == '/start'){
