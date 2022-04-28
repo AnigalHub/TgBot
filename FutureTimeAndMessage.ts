@@ -264,10 +264,10 @@ export default class FutureTimeAndMessage{
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
 
-            if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(wordsElementAfterKeyword3) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != convertTime.ConvertWordIndicatorOfTimeToNumber(wordsElementAfterKeyword3)){
+            if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3)){
                 throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз и разная!');
             }
-            else if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1){
+            else if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1){
                 return addDateOfDifferentType(this.dateMessage,dateOfDifferentType,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else {
@@ -275,32 +275,24 @@ export default class FutureTimeAndMessage{
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
-           // let time = parseInt(wordsElementAfterKeyword1) //время с типом число
-         //   console.log(time)
-         //   if(!isNaN(time)){
-               // dateAndTimeValidation(time,wordsElementAfterKeyword4,wordsElementAfterKeyword5)
-               //return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
-           // }
-          //  else {
+
+            if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
+                throw new Error('Ошибка! Не указана единица времени');
+            }
+            else{
+
+                let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
                 if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
-                    throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
+                    time = 0
                 }
-                else if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
-                    throw new Error('Ошибка! Не указана единица времени');
-                }
-                else{
-                    let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
-                    let objTimeAndDate = calculationTimeAndSearchTimeAndDateInArray(time,numberKeywordInMessage,wordsElementAfterKeyword1, wordsElementAfterKeyword2,wordsElementAfterKeyword3,wordsElementAfterKeyword4)
+                let objTimeAndDate = calculationTimeAndSearchTimeAndDateInArray(time,numberKeywordInMessage,wordsElementAfterKeyword1, wordsElementAfterKeyword2,wordsElementAfterKeyword3,wordsElementAfterKeyword4)
 
-                    let numberArrayElementResponsiveForTimeType:number = objTimeAndDate.numberArrayElementResponsiveForTimeType
-                    let arrayElementResponsiveForDateType:string = objTimeAndDate.arrayElementResponsiveForDateType
-                    time = objTimeAndDate.time
+                let numberArrayElementResponsiveForTimeType:number = objTimeAndDate.numberArrayElementResponsiveForTimeType
+                let arrayElementResponsiveForDateType:string = objTimeAndDate.arrayElementResponsiveForDateType
+                time = objTimeAndDate.time
 
-                  //  dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3)
-
-                    return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-                }
-         //   }
+                return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+            }
         }
         else{
             throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
