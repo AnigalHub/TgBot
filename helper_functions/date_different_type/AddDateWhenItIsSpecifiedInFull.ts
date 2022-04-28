@@ -45,11 +45,22 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
             const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
             if ( convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
-                messageFuture = words.slice((numberArrayElementResponsiveForTimeType+1),words.length).join(' ')//сообщение, которое напоминаем
-                millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType-1)
-            }
+                if (convertTime.ConvertSmallNumberFromStringToNumber(words[numberArrayElementResponsiveForTimeType]) != 0){
+                    messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')//сообщение, которое напоминаем
+                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType+1)
+                }
+                else {
+                    messageFuture = words.slice((numberArrayElementResponsiveForTimeType),words.length).join(' ')//сообщение, которое напоминаем
+                    millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType-1)
+                }
+           }
             else {
-                messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')//сообщение, которое напоминаем
+                if(numberArrayElementResponsiveForTimeType < words.indexOf(keyword)){
+                    messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')//сообщение, которое напоминаем
+                }
+                else {
+                    messageFuture = words.slice((numberArrayElementResponsiveForTimeType+1),words.length).join(' ')//сообщение, которое напоминаем
+                }
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType)
             }
             return new MessageToSend(millisecondsTime, messageFuture)
