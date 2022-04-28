@@ -7,7 +7,7 @@ const convertTime = new ConvertTime()
 function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>,
                                numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
                                messageFuture:string, millisecondsTime:number) : MessageToSend {
-    let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(dayRemind)
+    let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(date,dayRemind)
 
     if((timeRemind <= date.getHours()) && dayRemind == 'сегодня'){
         throw new Error('Ошибка! Время указано которое уже прошло - напомнить невозможно');
