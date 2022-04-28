@@ -37,8 +37,7 @@ export default class Time {
     }
 
     //перевод слова-указателя времени в число
-    ConvertWordIndicatorOfTimeToNumber(wordIndicatorMessage:string){
-        let date = new Date();
+    ConvertWordIndicatorOfTimeToNumber(date:Date,wordIndicatorMessage:string){
         let day:number
         if(wordIndicatorMessage== "сегодня"){
             day = date.getDate()
@@ -156,7 +155,7 @@ export default class Time {
 
     //перевод времени, состоящего из двух слов в число
     ConvertLargeNumberFromStringToNumber(number1:string,number2:string):number {
-          let  secondPartOfNumber = this.ConvertSmallNumberFromStringToNumber(number2)
+        let  secondPartOfNumber = this.ConvertSmallNumberFromStringToNumber(number2)
         let numberTime:number
         if(number1 == "двадцать"){
             numberTime = 20 + secondPartOfNumber
@@ -219,6 +218,7 @@ export default class Time {
 
     //подсчет разницы в миллисекундах между будущей и текущей датами
     CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs:number,futureDateMs:number,time:number,array:Array<string>,arrayElement:number){
+        console.log('да1')
         const futureMs = futureDateMs + this.ConvertTimeToMilliseconds(array[arrayElement],time)
         let diffMilliseconds = futureMs - dateMs
         return diffMilliseconds
