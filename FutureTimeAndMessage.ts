@@ -260,7 +260,6 @@ export default class FutureTimeAndMessage{
         let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
         let wordsElementAfterKeyword4 = this.words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
         let wordsElementAfterKeyword5 = this.words[numberKeywordInMessage+5] // элемент массива после ключевого слова - пятый
-        let wordsElementAfterKeyword6 = this.words[numberKeywordInMessage+6] // элемент массива после ключевого слова - шестой
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
@@ -269,21 +268,20 @@ export default class FutureTimeAndMessage{
                 throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз и разная!');
             }
             else if(convertTime.ConvertWordIndicatorOfTimeToNumber(dateOfDifferentType) != -1){
-                dateAndTimeValidation(time,wordsElementAfterKeyword2,dateOfDifferentType)
                 return addDateOfDifferentType(this.dateMessage,dateOfDifferentType,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else {
-                dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3)
                 return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
-            let time = parseInt(wordsElementAfterKeyword3) //время с типом число
-            if(time == NaN){
-                dateAndTimeValidation(time,wordsElementAfterKeyword4,wordsElementAfterKeyword5)
-                return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
-            }
-            else {
+           // let time = parseInt(wordsElementAfterKeyword1) //время с типом число
+         //   console.log(time)
+         //   if(!isNaN(time)){
+               // dateAndTimeValidation(time,wordsElementAfterKeyword4,wordsElementAfterKeyword5)
+               //return addDayOfTheWeek(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword4,this.dateMessage,this.words,timeMessage,time,this.messageFuture,this.millisecondsTime)
+           // }
+          //  else {
                 if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
                     throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
                 }
@@ -298,9 +296,11 @@ export default class FutureTimeAndMessage{
                     let arrayElementResponsiveForDateType:string = objTimeAndDate.arrayElementResponsiveForDateType
                     time = objTimeAndDate.time
 
+                  //  dateAndTimeValidation(time,wordsElementAfterKeyword2,wordsElementAfterKeyword3)
+
                     return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
                 }
-            }
+         //   }
         }
         else{
             throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
@@ -308,7 +308,18 @@ export default class FutureTimeAndMessage{
     }
     CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage:number, timeMessage:number): MessageToSend{
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
-        let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-        return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+        if(/^[0-9]*$/.test(wordsElementAfterKeyword2)) { // только цифры
+            let time = parseInt(wordsElementAfterKeyword2) //время с типом число
+            return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+        }
+        else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword2)){ // только буквы
+            throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
+        }
+        else{
+            throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
+        }
+        console.log(wordsElementAfterKeyword2)
+        //let time = parseInt(wordsElementAfterKeyword2) //время с типом число
+       // return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
     }
 }
