@@ -8,6 +8,9 @@ function dateAndTimeValidation(time:number,timeType:string,dateType:string):numb
     if(time > 24 && convertTime.ConvertTimeToMilliseconds(timeType,1) >= 3600000){
         throw new Error('Ошибка! Время не может быть больше 24');
     }
+    else if(time > 59 && (convertTime.ConvertTimeToMilliseconds(timeType,1) == 60000 || convertTime.ConvertTimeToMilliseconds(timeType,1) == 1000)){
+        throw new Error('Ошибка! Время не может быть больше 59 секунд/минут');
+    }
     else if(!timeType){
         throw new Error('Ошибка! Не указано тип времени (мин | сек | час)');
     }
