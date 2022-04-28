@@ -142,18 +142,26 @@ export default class FutureTimeAndMessage{
     }
     CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage:number, timeMessage:number): MessageToSend{
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
+        let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - второй
         if(/^[0-9]*$/.test(wordsElementAfterKeyword2)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword2) //время с типом число
             return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword2)){ // только буквы
-            throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
+            let time:number
+            if(convertTime.ConvertTimeToMilliseconds(this.words[numberKeywordInMessage + 2],1) != 0){
+                time = 1
+            }
+            else if (convertTime.ConvertSmallNumberFromStringToNumber(this.words[numberKeywordInMessage + 3]) != 0){
+                time = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword2, wordsElementAfterKeyword3)
+            }
+            else {
+                time = convertTime.ConvertSmallNumberFromStringToNumber(this.words[numberKeywordInMessage + 2])
+            }
+            return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
         }
         else{
             throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
         }
-        console.log(wordsElementAfterKeyword2)
-        //let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-       // return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
     }
 }
