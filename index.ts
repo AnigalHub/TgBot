@@ -123,7 +123,7 @@ bot.on('message', async (msg) =>{
     async function keywordCountIn() {
         numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
         try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( numberKeywordInMessage, timeMessage)
+            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( numberKeywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
             DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
         } catch (e:any) {
@@ -149,7 +149,7 @@ bot.on('message', async (msg) =>{
         numberKeywordInMessage2 = words.indexOf(fullDate[0])
         try {
             if(numberKeywordInMessage < numberKeywordInMessage2){
-                millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo2( numberKeywordInMessage, timeMessage)
+                millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( numberKeywordInMessage, timeMessage)
             }
             else {
                 millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage2, timeMessage)
