@@ -145,8 +145,7 @@ export default class FutureTimeAndMessage{
         let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - второй
         if(/^[0-9]*$/.test(wordsElementAfterKeyword2)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-
-            return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
+            return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage],numberKeywordInMessage + 3,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword2)){ // только буквы
             let time:number
@@ -160,9 +159,7 @@ export default class FutureTimeAndMessage{
                 time = convertTime.ConvertSmallNumberFromStringToNumber(this.words[numberKeywordInMessage + 2])
             }
             return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage],numberKeywordInMessage + 3,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-
-          //  return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberKeywordInMessage + 3,this.words[numberKeywordInMessage],this.words,this.dateMessage,timeMessage, time, this.messageFuture,this.millisecondsTime)
-        }
+       }
         else{
             throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
         }
