@@ -44,7 +44,7 @@ export default class FutureTimeAndMessage{
                 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0)){
                 throw new Error('Ошибка! Несовместимое время и дата. Неизвестно когда напоминать');
             }
-            else if(convertTime.ConvertWordIndicatorOfTimeToNumber(wordsElementAfterKeyword3) != -1){
+            else if(wordsElementAfterKeyword3 == 'сегодня'){
                 this.messageFuture = this.words.slice((numberKeywordInMessage+4),this.words.length).join(' ') // сообщение, которое напоминаем
             }
             else {
@@ -76,14 +76,11 @@ export default class FutureTimeAndMessage{
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
                 this.messageFuture = objTime.message
                 this.millisecondsTime = objTime.millisecondsTime
-                console.log(wordsElementAfterKeyword1)
-                console.log(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0)
                 if(this.millisecondsTime == 0){
                     throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
                 }
-                else if(
-                    (wordsElementBeforeKeyword1 == 'завтра' || wordsElementBeforeKeyword1 == 'послезавтра' || wordsElementBeforeKeyword1 == 'послепослезавтра')
-                   || (wordsElementAfterKeyword2 == 'завтра' || wordsElementAfterKeyword2 == 'послезавтра' || wordsElementAfterKeyword2 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0)
+                else if((wordsElementBeforeKeyword1 == 'завтра' || wordsElementBeforeKeyword1 == 'послезавтра' || wordsElementBeforeKeyword1 == 'послепослезавтра')
+                    || (wordsElementAfterKeyword2 == 'завтра' || wordsElementAfterKeyword2 == 'послезавтра' || wordsElementAfterKeyword2 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0)
                     || (wordsElementAfterKeyword3 == 'завтра' || wordsElementAfterKeyword3 == 'послезавтра' || wordsElementAfterKeyword3 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0)
                     || (wordsElementAfterKeyword4 == 'завтра' || wordsElementAfterKeyword4 == 'послезавтра' || wordsElementAfterKeyword4 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0)
                     ){
