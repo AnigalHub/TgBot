@@ -115,24 +115,53 @@ export default class FutureTimeAndMessage{
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
-            console.log(wordsElementAfterKeyword1)
             const dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
-            let a = dayOfTheWeek.SearchForTheDayNumberOfTheWeek()
-
-            console.log(dayOfTheWeek)
-            console.log('это',a)
+            if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+                let time = parseInt(wordsElementAfterKeyword3) //время с типом число
+                if(isNaN(time)){
+                    if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0){
+                        time = 1
+                        return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 1 ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                    }
+                    else if (convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword4) != 0){
+                        time = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword3, wordsElementAfterKeyword4)
+                        return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 5 ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                    }
+                    else {
+                        time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword3)
+                        return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 4 ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                    }
+                }
+                else {
+                    return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 4,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                }
+                // сначала день недели, потом время (оно мб и цифрой и словом)
+            }
+            else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
+                convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
+                convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
+            ){
+                // сначала число цифрой или словом, затем день недели
+                console.log('2')
+                throw new Error('Ошибка!');
+            }
+            else {
+                // ошибка
+                console.log('3')
+                throw new Error('Ошибка!');
+            }
 
           //  if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
               //  throw new Error('Ошибка! Не указана единица времени');
           //  }
           //  else{
-                let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
-                let objTimeAndDate = calculationTimeAndSearchTimeAndDateInArray(time,numberKeywordInMessage,wordsElementAfterKeyword1, wordsElementAfterKeyword2,wordsElementAfterKeyword3,wordsElementAfterKeyword4)
+            //   let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
+              //  let objTimeAndDate = calculationTimeAndSearchTimeAndDateInArray(time,numberKeywordInMessage,wordsElementAfterKeyword1, wordsElementAfterKeyword2,wordsElementAfterKeyword3,wordsElementAfterKeyword4)
 
-                let numberArrayElementResponsiveForTimeType:number = objTimeAndDate.numberArrayElementResponsiveForTimeType
-                let arrayElementResponsiveForDateType:string = objTimeAndDate.arrayElementResponsiveForDateType
-                time = objTimeAndDate.time
-                return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+             //   let numberArrayElementResponsiveForTimeType:number = objTimeAndDate.numberArrayElementResponsiveForTimeType
+             //   let arrayElementResponsiveForDateType:string = objTimeAndDate.arrayElementResponsiveForDateType
+              //  time = objTimeAndDate.time
+               // return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
            //}
         }
         else{
