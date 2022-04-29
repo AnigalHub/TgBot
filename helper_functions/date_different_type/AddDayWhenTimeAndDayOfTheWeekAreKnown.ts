@@ -12,7 +12,7 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
             throw new Error( 'Ошибка! Некорректно введено время. Вместо времени указана неккоректно дата или непонятное время');
         }
         else {
-            let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek()
+            let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek(date)
             let futureDay = date.getDate() + differenceInDays
             let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
 
