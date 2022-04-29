@@ -4,7 +4,6 @@ import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 
 function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWithTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
-    console.log(numberKeywordInMessage,arrayElementWithDayOfTheWeek,arrayElementWithTime,date,words,timeMessage,time,messageFuture,millisecondsTime)
     let startFutureMessage = words.indexOf(arrayElementWithTime) +3
     let dayOfTheWeek = new DayOfTheWeek(arrayElementWithDayOfTheWeek)
 
