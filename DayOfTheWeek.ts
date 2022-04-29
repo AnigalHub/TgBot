@@ -15,10 +15,10 @@ export  default class DayOfTheWeek {
             array = ['вск','пнд','втр','сре','чтв','птн','суб']
         }
         else if (this.dayOfTheWeek == 'воскресенье' || this.dayOfTheWeek == 'понедельник' || this.dayOfTheWeek == 'вторник' || this.dayOfTheWeek == 'среда' || this.dayOfTheWeek == 'четверг' || this.dayOfTheWeek == 'пятница' || this.dayOfTheWeek == 'суббота'){
-            array = ['воскресенье','понедельник','вторник','среда','четверг','пятница','cуббота']
+            array = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота']
         }
         else if (this.dayOfTheWeek == 'воскресенье' || this.dayOfTheWeek == 'понедельник' || this.dayOfTheWeek == 'вторник' || this.dayOfTheWeek == 'среду' || this.dayOfTheWeek == 'четверг' || this.dayOfTheWeek == 'пятницу' || this.dayOfTheWeek == 'субботу'){
-            array = ['воскресенье','понедельник','вторник','среду','четверг','пятницу','cубботу']
+            array = ['воскресенье','понедельник','вторник','среду','четверг','пятницу','субботу']
         }
         else {
             array = []
