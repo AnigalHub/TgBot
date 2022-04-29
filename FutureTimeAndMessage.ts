@@ -2,6 +2,7 @@ import MessageToSend from "./MessageToSend";
 import addTime from "./helper_functions/AddTimeWhenDayIsKnown";
 import ConvertTime from "./ConvertTime";
 const convertTime = new ConvertTime()
+import DayOfTheWeek from "./DayOfTheWeek";
 import addDayOfTheWeek from "./helper_functions/date_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown"
 import addDateWhenItIsSpecifiedInFull from "./helper_functions/date_different_type/AddDateWhenItIsSpecifiedInFull"
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
@@ -105,7 +106,6 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
-
             if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3) != -1 &&
                 convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3)){
                 throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз и разная!');
@@ -118,10 +118,17 @@ export default class FutureTimeAndMessage{
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
-            if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
-                throw new Error('Ошибка! Не указана единица времени');
-            }
-            else{
+            console.log(wordsElementAfterKeyword1)
+            const dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
+            let a = dayOfTheWeek.SearchForTheDayNumberOfTheWeek()
+
+            console.log(dayOfTheWeek)
+            console.log('это',a)
+
+          //  if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
+              //  throw new Error('Ошибка! Не указана единица времени');
+          //  }
+          //  else{
                 let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
                 let objTimeAndDate = calculationTimeAndSearchTimeAndDateInArray(time,numberKeywordInMessage,wordsElementAfterKeyword1, wordsElementAfterKeyword2,wordsElementAfterKeyword3,wordsElementAfterKeyword4)
 
@@ -129,7 +136,7 @@ export default class FutureTimeAndMessage{
                 let arrayElementResponsiveForDateType:string = objTimeAndDate.arrayElementResponsiveForDateType
                 time = objTimeAndDate.time
                 return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-            }
+           //}
         }
         else{
             throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
