@@ -118,21 +118,16 @@ export default class FutureTimeAndMessage{
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
-
             if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
                 throw new Error('Ошибка! Не указана единица времени');
             }
             else{
                 let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
-                if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
-                    time = 0
-                }
                 let objTimeAndDate = calculationTimeAndSearchTimeAndDateInArray(time,numberKeywordInMessage,wordsElementAfterKeyword1, wordsElementAfterKeyword2,wordsElementAfterKeyword3,wordsElementAfterKeyword4)
 
                 let numberArrayElementResponsiveForTimeType:number = objTimeAndDate.numberArrayElementResponsiveForTimeType
                 let arrayElementResponsiveForDateType:string = objTimeAndDate.arrayElementResponsiveForDateType
                 time = objTimeAndDate.time
-
                 return addDateOfDifferentType(this.dateMessage,arrayElementResponsiveForDateType,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
         }
