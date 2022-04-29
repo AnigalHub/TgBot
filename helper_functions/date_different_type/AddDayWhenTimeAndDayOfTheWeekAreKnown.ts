@@ -4,7 +4,8 @@ import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 
 function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWithTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
-    let startFutureMessage = words.indexOf(arrayElementWithTime) +3
+    console.log('принимаем',numberKeywordInMessage,arrayElementWithDayOfTheWeek,arrayElementWithTime,date,timeMessage,time)
+    let startFutureMessage = words.indexOf(arrayElementWithTime) +1
     let dayOfTheWeek = new DayOfTheWeek(arrayElementWithDayOfTheWeek)
 
     if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
@@ -21,6 +22,8 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
             messageFuture = words.slice((startFutureMessage),words.length).join(' ')//сообщение, которое напоминаем
             return new MessageToSend(millisecondsTime, messageFuture) }
     }
-    throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
+    else {
+        throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
+    }
 }
 export default addDayWhenTimeAndDayOfTheWeekAreKnown
