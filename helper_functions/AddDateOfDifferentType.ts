@@ -17,25 +17,6 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
     else if (/[А-яЁё]/.test(arrayElementWithDate) || /^[0-9]*$/.test(arrayElementWithDate)){ // только буквы
         console.log(numberArrayElementResponsiveForTimeType)
         const dayOfTheWeek = new DayOfTheWeek(arrayElementWithDate)
-            /*
-        if((words[numberArrayElementResponsiveForTimeType+1]) == "в" || (words[numberArrayElementResponsiveForTimeType+1]) == "во"){
-          console.log('нет')
-           // console.log(timeRemind,words[numberKeywordInMessage+2],words[numberKeywordInMessage])
-           //  dateAndTimeValidation(timeRemind,words[numberKeywordInMessage+2],words[numberKeywordInMessage])
-            console.log(numberKeywordInMessage,words[numberArrayElementResponsiveForTimeType],words[numberArrayElementResponsiveForTimeType+2],dateMs,timeRemind,messageFuture,millisecondsTime)
-            return addDayOfTheWeek(numberKeywordInMessage,words[numberArrayElementResponsiveForTimeType],words[numberArrayElementResponsiveForTimeType+2],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
-        }
-        else if((words[numberArrayElementResponsiveForTimeType]) == "в" || (words[numberArrayElementResponsiveForTimeType]) == "во"){
-            console.log('да')
-
-           //  timeRemind = convertTime.ConvertLargeNumberFromStringToNumber(words[numberArrayElementResponsiveForTimeType+1],words[numberArrayElementResponsiveForTimeType+2])
-           //  console.log(timeRemind)
-           // console.log(numberKeywordInMessage+2,words[numberArrayElementResponsiveForTimeType-1],words[numberArrayElementResponsiveForTimeType+3],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
-           // dateAndTimeValidation(timeRemind,words[numberKeywordInMessage+4],words[numberKeywordInMessage+2])
-            return addDayOfTheWeek(numberKeywordInMessage+2,words[numberArrayElementResponsiveForTimeType-1],words[numberArrayElementResponsiveForTimeType+2],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
-        }
-
-             */
         if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
             return addDayOfTheWeek(numberKeywordInMessage,arrayElementWithDate, words[numberArrayElementResponsiveForTimeType],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
         }
