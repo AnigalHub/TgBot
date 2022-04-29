@@ -3,11 +3,8 @@ import addTime from "./helper_functions/AddTimeWhenDayIsKnown";
 import ConvertTime from "./ConvertTime";
 const convertTime = new ConvertTime()
 import DayOfTheWeek from "./DayOfTheWeek";
-import addDayOfTheWeek from "./helper_functions/date_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown"
-import addDateWhenItIsSpecifiedInFull from "./helper_functions/date_different_type/AddDateWhenItIsSpecifiedInFull"
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 import calculationTimeAndSearchTimeAndDateInArray from "./helper_functions/CalculationTimeAndSearchTimeAndDateInArray"
-import dateAndTimeValidation from  "./helper_functions/DateAndTimeValidation"
 
 
 export default class FutureTimeAndMessage{
