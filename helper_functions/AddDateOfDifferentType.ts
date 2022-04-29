@@ -9,19 +9,20 @@ const convertTime = new ConvertTime()
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
+
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
-       // dateAndTimeValidation(timeRemind,words[numberKeywordInMessage+4],words[numberKeywordInMessage+2])
-      //  console.log(timeRemind,words[numberKeywordInMessage+2],words[numberKeywordInMessage])
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
-    else if (/[А-яЁё]/.test(arrayElementWithDate) || /^[0-9]*$/.test(arrayElementWithDate)){ // только буквы
-        console.log(numberArrayElementResponsiveForTimeType)
-        const dayOfTheWeek = new DayOfTheWeek(arrayElementWithDate)
-        if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+    else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
+        const beforeDayOfTheWeek = new DayOfTheWeek(arrayElementWithDate)
+        const afterDayOfTheWeek = new DayOfTheWeek(words[numberArrayElementResponsiveForTimeType+2])
+        if(beforeDayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
             return addDayOfTheWeek(numberKeywordInMessage,arrayElementWithDate, words[numberArrayElementResponsiveForTimeType],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
         }
+        if (arrayElementWithDate == 'в' || arrayElementWithDate == 'во' &&  afterDayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+            return addDayOfTheWeek(numberKeywordInMessage+1,words[numberArrayElementResponsiveForTimeType+2], words[numberArrayElementResponsiveForTimeType],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
+        }
         else{
-            console.log('рррр')
             return AddDayWhenTimeIsKnown(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
         }
     }
