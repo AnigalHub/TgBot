@@ -1,4 +1,3 @@
-import DeleteFromArray from "./DeleteFromArray"
 import ConvertTime from "./../../ConvertTime";
 const convertTime = new ConvertTime()
 
@@ -9,8 +8,6 @@ function errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(words:Array<str
     let wordsElementAfterKeyword3 = words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
     let wordsElementAfterKeyword4 = words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
 
-    DeleteFromArray(words,'сегодня')
-
     if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
         let time = parseInt(wordsElementAfterKeyword1) // время с типом число
 
@@ -19,7 +16,6 @@ function errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(words:Array<str
                 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2, 1) != 0)) {
             throw new Error('Ошибка! Несовместимое время и дата. Неизвестно когда напоминать');
         }
-
         if (time == 0) { // если время указано цифрой 0
             throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!')
         }
