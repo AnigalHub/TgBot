@@ -12,3 +12,4 @@ function errorHandlingOfIncorrectDateOrTimeEntry(date:Date, dayRemind:string,tim
         throw new Error('Ошибка! Некорректно введена дата. Возможно слитное написание');
     }
 }
+export default errorHandlingOfIncorrectDateOrTimeEntry
