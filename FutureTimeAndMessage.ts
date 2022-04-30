@@ -8,6 +8,8 @@ import calculationTimeAndSearchTimeAndDateInArray from "./helper_functions/Calcu
 import ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry";
 import DeleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
+import ErrorHandlingInZeroMilliseconds
+    from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingInZeroMilliseconds";
 
 
 export default class FutureTimeAndMessage{
@@ -41,9 +43,7 @@ export default class FutureTimeAndMessage{
 
             this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ')
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)
-            if(this.millisecondsTime == 0) {
-                throw new Error('Ошибка! Отсутствует или некорректно указана единица времени')
-            }
+            ErrorHandlingInZeroMilliseconds(this.millisecondsTime)
             return addTimeWhenDayIsKnown(this.dateMessage, this.words, this.millisecondsTime, this.messageFuture)
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
@@ -52,9 +52,7 @@ export default class FutureTimeAndMessage{
             let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
             this.messageFuture = objTime.message
             this.millisecondsTime = objTime.millisecondsTime
-            if(this.millisecondsTime == 0){
-                throw new Error('Ошибка! Отсутствует или некорректно указана единица времени');
-            }
+            ErrorHandlingInZeroMilliseconds(this.millisecondsTime)
             return addTimeWhenDayIsKnown(this.dateMessage, this.words,this.millisecondsTime,this.messageFuture)
 
         }
