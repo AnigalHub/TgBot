@@ -1,4 +1,4 @@
-function CalculationOfTheYear(keyword:string, date:Date):number{
+function calculationOfTheYear(keyword:string, date:Date):number{
    let yearMessage
     if (keyword.length == 10) {
         yearMessage = parseInt(keyword.substring(6, 12))
@@ -11,4 +11,4 @@ function CalculationOfTheYear(keyword:string, date:Date):number{
     }
     return yearMessage
 }
-export default CalculationOfTheYear
+export default calculationOfTheYear
