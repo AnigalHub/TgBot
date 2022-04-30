@@ -7,6 +7,7 @@ import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 import calculationTimeAndSearchTimeAndDateInArray from "./helper_functions/CalculationTimeAndSearchTimeAndDateInArray"
 import ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry";
+import DeleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
 
 
 export default class FutureTimeAndMessage{
@@ -32,21 +33,20 @@ export default class FutureTimeAndMessage{
         if(keywordIndexes.length > 1){
             throw new Error('Ошибка! Несколько раз указан указатель времени "ЧЕРЕЗ"');
         }
-
+        DeleteFromArray(this.words,'сегодня')
         ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(this.words,numberKeywordInMessage)
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
 
-            this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ') // сообщение, которое напоминаем
-            this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
-            if(this.millisecondsTime == 0) { // если такого времени нет и произошла ошибка и вернулся 0
+            this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ')
+            this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)
+            if(this.millisecondsTime == 0) {
                 throw new Error('Ошибка! Отсутствует или некорректно указана единица времени')
             }
             return addTimeWhenDayIsKnown(this.dateMessage, this.words, this.millisecondsTime, this.messageFuture)
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
-
             let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
 
             let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
