@@ -2,12 +2,13 @@
 import MessageToSend from "../../MessageToSend";
 import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
-
+import ErrorHandlingOfIncorrectDateOrTimeEntry from "./add_day_when_time_is_known/ErrorHandlingOfIncorrectDateOrTimeEntry"
 
 function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>,
                                numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
                                messageFuture:string, millisecondsTime:number) : MessageToSend {
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(date,dayRemind)
+
 
     if((timeRemind <= date.getHours()) && dayRemind == 'сегодня'){
         throw new Error('Ошибка! Время указано которое уже прошло - напомнить невозможно');
