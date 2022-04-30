@@ -1,5 +1,5 @@
 import MessageToSend from "./MessageToSend";
-import addTime from "./helper_functions/AddTimeWhenDayIsKnown";
+import addTimeWhenDayIsKnown from "./helper_functions/AddTimeWhenDayIsKnown";
 import ConvertTime from "./ConvertTime";
 const convertTime = new ConvertTime()
 import DayOfTheWeek from "./DayOfTheWeek";
@@ -22,7 +22,7 @@ export default class FutureTimeAndMessage{
         this.messageFuture = ''
     }
 
-    CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage:number, secondKeywordInMessage:number, timeMessage:number): MessageToSend{
+    CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
 
         let wordsElementBeforeKeyword1 = this.words[numberKeywordInMessage-1] // элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
@@ -56,7 +56,7 @@ export default class FutureTimeAndMessage{
                 throw new Error('Ошибка! Отсутствует или некорректно указана единица времени')
             }
             else{ // функция добавления времени когда день известен
-                return addTime(this.dateMessage, this.words, secondKeywordInMessage, this.millisecondsTime, this.messageFuture)
+                return addTimeWhenDayIsKnown(this.dateMessage, this.words, this.millisecondsTime, this.messageFuture)
             }
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
@@ -85,7 +85,7 @@ export default class FutureTimeAndMessage{
                     throw new Error('Ошибка! Несовместимое время и дата. Неизвестно когда напоминать');
                 }
                 else {
-                    return addTime(this.dateMessage, this.words, secondKeywordInMessage,this.millisecondsTime,this.messageFuture)
+                    return addTimeWhenDayIsKnown(this.dateMessage, this.words,this.millisecondsTime,this.messageFuture)
                 }
             }
         }
@@ -103,11 +103,11 @@ export default class FutureTimeAndMessage{
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
-            if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3) != -1 &&
-                convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3)){
-                throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз и разная!');
-            }
-            else if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1){
+           // if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3) != -1 &&
+              //  convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3)){
+              //  throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз и разная!');
+           // }
+            if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1){
                 return addDateOfDifferentType(this.dateMessage,dateOfDifferentType,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else {
@@ -135,20 +135,21 @@ export default class FutureTimeAndMessage{
                 else {
                     return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 4,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
                 }
-                // сначала день недели, потом время (оно мб и цифрой и словом)
             }
             else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
             ){
+                if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1){
+                    console.log(dateOfDifferentType)
+                }
+
                 // сначала число цифрой или словом, затем день недели
-                console.log('2')
-                throw new Error('Ошибка!');
+                throw new Error('Ошибка!2');
             }
             else {
                 // ошибка
-                console.log('3')
-                throw new Error('Ошибка!');
+                throw new Error('Ошибка!3');
             }
 
           //  if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword4,1) == 0){
