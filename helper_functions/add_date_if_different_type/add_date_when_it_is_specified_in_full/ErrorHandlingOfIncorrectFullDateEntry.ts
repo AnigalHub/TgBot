@@ -1,7 +1,11 @@
 import ConvertTime from "../../../ConvertTime";
 const convertTime = new ConvertTime()
 
-function errorHandlingOfIncorrectFullDateEntry(dayMessage:number,monthMessage:number,yearMessage:number,date:Date,words:Array<string>,numberArrayElementResponsiveForTimeType:number){
+function errorHandlingOfIncorrectFullDateEntry(keyword:string, dayMessage:number,monthMessage:number,yearMessage:number,date:Date,words:Array<string>,numberArrayElementResponsiveForTimeType:number){
+    if  (keyword[2] != keyword[5] && (keyword.includes('.') == false || keyword.includes('/')== false
+        || keyword.includes('-')== false) || (keyword.length > 10) || (keyword.length == 7) || (keyword.length == 9)) {
+        throw new Error( 'Ошибка! Некорректно введена дата. Опечатка в дате!');
+    }
     if (dayMessage > 31){
         throw new Error( 'Ошибка! Некорректно введен день в дате. День не может быть больше 31. Максимальное число в месяце 30 или 31.');
     }
