@@ -4,12 +4,12 @@ import MessageToSend from "../MessageToSend";
 import ErrorHandlingOfIncorrecrTimeEntry from "../helper_functions/add_time_when_day_is_known/ErrorHandlingOfIncorrecrTimeEntry"
 
 //функция добавления времени, когда известен день
-function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMessage:number, millisecondsTime:number, messageFuture:string) : MessageToSend {
+function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:number, messageFuture:string) : MessageToSend {
     if (words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
             words.splice(words.indexOf('во'),1,'в')
         }
-        secondKeywordInMessage = words.indexOf('в') // номер ключевого слова в массиве
+        let secondKeywordInMessage:number = words.indexOf('в') // номер ключевого слова в массиве
         let arrayElementAfterSecondKeyword1 = words[(secondKeywordInMessage)+1] // элемент массива после ключевого слова (secondKeywordInMessage) - первый
         let arrayElementAfterSecondKeyword2 = words[(secondKeywordInMessage)+2] // элемент массива после ключевого слова (secondKeywordInMessage) - второй
         let arrayElementAfterSecondKeyword3 = words[(secondKeywordInMessage)+3] // элемент массива после ключевого слова (secondKeywordInMessage) - третий
@@ -33,14 +33,14 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, secondKeywordInMe
                 if(timeAfterSecondKeyword == 0){
                     timeAfterSecondKeyword = 24
                 }
-                ErrorHandlingOfIncorrecrTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword2,arrayElementAfterSecondKeyword1,arrayElementAfterSecondKeyword1)
+                ErrorHandlingOfIncorrecrTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword2)
                 messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
                 return new MessageToSend(millisecondsTime, messageFuture)
             }
             else {// только буквы
                 let timeAfterSecondKeyword:number = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
-                ErrorHandlingOfIncorrecrTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3,arrayElementAfterSecondKeyword1,arrayElementAfterSecondKeyword2)
+                ErrorHandlingOfIncorrecrTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3)
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
 
                 messageFuture = objTime.message
