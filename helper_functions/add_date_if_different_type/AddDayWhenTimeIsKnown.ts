@@ -1,15 +1,14 @@
-//функция добавления времени, когда известен день
 import MessageToSend from "../../MessageToSend";
 import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
-import ErrorHandlingOfIncorrectDateOrTimeEntry from "./add_day_when_time_is_known/ErrorHandlingOfIncorrectDateOrTimeEntry"
+import errorHandlingOfIncorrectDateOrTimeEntry from "./add_day_when_time_is_known/ErrorHandlingOfIncorrectDateOrTimeEntry"
 
 function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>,
                                numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
                                messageFuture:string, millisecondsTime:number) : MessageToSend {
 
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(date,dayRemind)
-    ErrorHandlingOfIncorrectDateOrTimeEntry(date, dayRemind,timeRemind,futureDay)
+    errorHandlingOfIncorrectDateOrTimeEntry(date, dayRemind,timeRemind,futureDay)
     let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
     const futureDateMs = Date.parse(futureDate.toString())  //будущая дата в миллисекундах
 

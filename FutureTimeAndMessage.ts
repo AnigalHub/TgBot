@@ -5,10 +5,10 @@ const convertTime = new ConvertTime()
 import DayOfTheWeek from "./DayOfTheWeek";
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 import calculationTimeAndSearchTimeAndDateInArray from "./helper_functions/CalculationTimeAndSearchTimeAndDateInArray"
-import ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry
+import errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry";
-import DeleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
-import ErrorHandlingInZeroMilliseconds
+import deleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
+import errorHandlingInZeroMilliseconds
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingInZeroMilliseconds";
 
 
@@ -35,26 +35,23 @@ export default class FutureTimeAndMessage{
         if(keywordIndexes.length > 1){
             throw new Error('Ошибка! Несколько раз указан указатель времени "ЧЕРЕЗ"');
         }
-        DeleteFromArray(this.words,'сегодня')
-        ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(this.words,numberKeywordInMessage)
+        deleteFromArray(this.words,'сегодня')
+        errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(this.words,numberKeywordInMessage)
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
-
             this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ')
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)
-            ErrorHandlingInZeroMilliseconds(this.millisecondsTime)
+            errorHandlingInZeroMilliseconds(this.millisecondsTime)
             return addTimeWhenDayIsKnown(this.dateMessage, this.words, this.millisecondsTime, this.messageFuture)
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
-
             let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
             this.messageFuture = objTime.message
             this.millisecondsTime = objTime.millisecondsTime
-            ErrorHandlingInZeroMilliseconds(this.millisecondsTime)
+            errorHandlingInZeroMilliseconds(this.millisecondsTime)
             return addTimeWhenDayIsKnown(this.dateMessage, this.words,this.millisecondsTime,this.messageFuture)
-
         }
         else {
             throw new Error('Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');

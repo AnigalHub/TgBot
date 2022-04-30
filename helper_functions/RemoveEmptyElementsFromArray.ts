@@ -1,4 +1,3 @@
-
 export default function removeEmptyElementsFromArray(array:Array<string>){
     let output:Array<string> = array
     if(array.includes('') == true){

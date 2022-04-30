@@ -1,15 +1,15 @@
 import MessageToSend from "../../MessageToSend";
 import ConvertTime from "../../ConvertTime";
 const convertTime = new ConvertTime()
-import CalculationOfTheYear from "./add_date_when_it_is_specified_in_full/CalculationOfTheYear"
-import ErrorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectFullDateEntry"
+import calculationOfTheYear from "./add_date_when_it_is_specified_in_full/CalculationOfTheYear"
+import errorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectFullDateEntry"
 
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
     let monthMessage = parseInt(keyword.substring(3, 6)) - 1
     let dayMessage = parseInt(keyword.substring(0, 2))
-    let yearMessage = CalculationOfTheYear(keyword,date)
+    let yearMessage = calculationOfTheYear(keyword,date)
 
-    ErrorHandlingOfIncorrectFullDateEntry(keyword,dayMessage,monthMessage,yearMessage,date,words,numberArrayElementResponsiveForTimeType)
+    errorHandlingOfIncorrectFullDateEntry(keyword,dayMessage,monthMessage,yearMessage,date,words,numberArrayElementResponsiveForTimeType)
 
     let futureDate = new Date(yearMessage, monthMessage, dayMessage)
     const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
