@@ -1,7 +1,7 @@
 import ConvertTime from '../ConvertTime'
 const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
-import ErrorHandlingOfIncorrecrTimeEntry from "../helper_functions/add_time_when_day_is_known/ErrorHandlingOfIncorrecrTimeEntry"
+import ErrorHandlingOfIncorrectTimeEntry from "../helper_functions/add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntry"
 
 //функция добавления времени, когда известен день
 function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:number, messageFuture:string) : MessageToSend {
@@ -33,14 +33,14 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 if(timeAfterSecondKeyword == 0){
                     timeAfterSecondKeyword = 24
                 }
-                ErrorHandlingOfIncorrecrTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword2)
+                ErrorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword2)
                 messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
                 return new MessageToSend(millisecondsTime, messageFuture)
             }
             else {// только буквы
                 let timeAfterSecondKeyword:number = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
-                ErrorHandlingOfIncorrecrTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3)
+                ErrorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3)
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
 
                 messageFuture = objTime.message
