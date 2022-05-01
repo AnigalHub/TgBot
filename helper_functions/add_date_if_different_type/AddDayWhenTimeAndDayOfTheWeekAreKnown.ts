@@ -4,7 +4,7 @@ import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 
 function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWithTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
-    let startFutureMessage = words.indexOf(arrayElementWithTime) +1
+
     let dayOfTheWeek = new DayOfTheWeek(arrayElementWithDayOfTheWeek)
 
     if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
@@ -18,8 +18,14 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
 
             let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementWithTime,time)
             millisecondsTime = futureMs - timeMessage
-            messageFuture = words.slice((startFutureMessage),words.length).join(' ')//сообщение, которое напоминаем
-            return new MessageToSend(millisecondsTime, messageFuture) }
+            if (words.indexOf(arrayElementWithTime) < words.indexOf(arrayElementWithDayOfTheWeek)){
+                messageFuture = words.slice((words.indexOf(arrayElementWithDayOfTheWeek)+1),words.length).join(' ')//сообщение, которое напоминаем
+            }
+            else {
+                messageFuture = words.slice((words.indexOf(arrayElementWithTime) +1),words.length).join(' ')//сообщение, которое напоминаем
+            }
+            return new MessageToSend(millisecondsTime, messageFuture)
+        }
     }
     else {
         throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
