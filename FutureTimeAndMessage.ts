@@ -42,12 +42,12 @@ export default class FutureTimeAndMessage{
                 && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0)){
                 throw new Error('Ошибка! Несовместимое время и дата. Неизвестно когда напоминать');
             }
-            else if(wordsElementAfterKeyword3 == 'сегодня'){
-                this.messageFuture = this.words.slice((numberKeywordInMessage+4),this.words.length).join(' ') // сообщение, которое напоминаем
+
+            if(this.words.indexOf('сегодня') != -1){
+                this.words.splice(this.words.indexOf('сегодня'),1)
             }
-            else {
-                this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ') // сообщение, которое напоминаем
-            }
+
+            this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ') // сообщение, которое напоминаем
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)  //миллисекунды - через сколько надо прислать сообщение
             if(time == 0) { // если время указано цифрой 0
                 throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!')
@@ -71,11 +71,14 @@ export default class FutureTimeAndMessage{
             }
             else{
                 let time:number = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
+                if(this.words.indexOf('сегодня') != -1){
+                   this.words.splice(this.words.indexOf('сегодня'),1)
+                }
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time, timeMessage, timeMessage, this.words,numberKeywordInMessage+1,numberKeywordInMessage+2,numberKeywordInMessage+3,numberKeywordInMessage+4)
                 this.messageFuture = objTime.message
                 this.millisecondsTime = objTime.millisecondsTime
                 if(this.millisecondsTime == 0){
-                    throw new Error('Ошибка! Некорректное время: опечатка или отсутствие');
+                    throw new Error('Ошибка! Отсутствует или некорректно указана единица времени');
                 }
                 else if((wordsElementBeforeKeyword1 == 'завтра' || wordsElementBeforeKeyword1 == 'послезавтра' || wordsElementBeforeKeyword1 == 'послепослезавтра')
                     || (wordsElementAfterKeyword2 == 'завтра' || wordsElementAfterKeyword2 == 'послезавтра' || wordsElementAfterKeyword2 == 'послепослезавтра' && convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0)
