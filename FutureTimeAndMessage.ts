@@ -38,6 +38,7 @@ export default class FutureTimeAndMessage{
         deleteFromArray(this.words,'сегодня')
         errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(this.words,numberKeywordInMessage)
 
+
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
             this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ')
@@ -81,11 +82,13 @@ export default class FutureTimeAndMessage{
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             const dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
             if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+
                 let time = parseInt(wordsElementAfterKeyword3) //время с типом число
                 if(isNaN(time)){
+
                     if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0){
                         time = 1
-                        return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 1 ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                        return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 3 ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
                     }
                     else if (convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword4) != 0){
                         time = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword3, wordsElementAfterKeyword4)
