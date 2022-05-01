@@ -3,9 +3,8 @@ import addDateWhenItIsSpecifiedInFull from "./add_date_if_different_type/AddDate
 import addDayOfTheWeek from "./add_date_if_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown";
 import AddDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIsKnown";
 import dateAndTimeValidation from  "../helper_functions/DateAndTimeValidation"
-import ConvertTime from '../ConvertTime'
 import DayOfTheWeek from "../DayOfTheWeek";
-const convertTime = new ConvertTime()
+
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
