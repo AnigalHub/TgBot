@@ -1,7 +1,7 @@
 import ConvertTime from "./../../ConvertTime";
 const convertTime = new ConvertTime()
 
-function errorHandlingOfIncorrecrTimeEntry(timeAfterSecondKeyword:number,wordWithTypeOfTime:string) {
+function errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword:number,wordWithTypeOfTime:string) {
     if (timeAfterSecondKeyword > 24 && convertTime.ConvertTimeToMilliseconds(wordWithTypeOfTime,1) == 3600000){
         throw new Error('Ошибка! Время не может быть больше 24 часов');
     }
@@ -9,4 +9,4 @@ function errorHandlingOfIncorrecrTimeEntry(timeAfterSecondKeyword:number,wordWit
         throw new Error('Ошибка! Время не может быть больше 59 секунд/минут');
     }
 }
-export default errorHandlingOfIncorrecrTimeEntry
+export default errorHandlingOfIncorrectTimeEntry
