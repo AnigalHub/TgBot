@@ -42,7 +42,6 @@ export default class FutureTimeAndMessage{
         deleteFromArray(this.words,'сегодня')
         errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(this.words,numberKeywordInMessage)
 
-
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
             let time = parseInt(wordsElementAfterKeyword1) // время с типом число
             this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ')
@@ -97,7 +96,7 @@ export default class FutureTimeAndMessage{
                     numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
                 }
                 else {
-                    numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 4
+                    numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
                 }
                   return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
