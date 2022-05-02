@@ -117,16 +117,6 @@ bot.on('message', async (msg) =>{
 
     let futureTimeAndMessage = new FutureTimeAndMessage(chatId,words,dateMessage)
 
-    async function keywordCountIn() {
-        numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
-        try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( numberKeywordInMessage, timeMessage)
-            console.log(millisecondsAndMessage)
-            DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
-        } catch (e:any) {
-            await bot.sendMessage(chatId,e.message)
-        }
-    }
 
     if (words.includes('через') == true){
         numberKeywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
@@ -142,7 +132,14 @@ bot.on('message', async (msg) =>{
         if(words.includes('во') == true){
             words.splice(words.indexOf('во'),1,'в')
         }
-        await keywordCountIn()
+        numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
+        try {
+            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( numberKeywordInMessage, timeMessage)
+            console.log(millisecondsAndMessage)
+            DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
+        } catch (e:any) {
+            await bot.sendMessage(chatId,e.message)
+        }
     }
     else {
         await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
