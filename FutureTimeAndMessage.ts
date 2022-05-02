@@ -10,7 +10,7 @@ import errorHandlingInZeroMilliseconds
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingInZeroMilliseconds";
 import countingTheTimeSpecifiedByWords
     from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingTheTimeSpecifiedByWords";
-import CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType
+import сalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType
     from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType";
 
 
@@ -69,7 +69,7 @@ export default class FutureTimeAndMessage{
         let numberArrayElementResponsiveForTimeType:number
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1) || /^[А-яЁё]*$/.test(wordsElementAfterKeyword1)) { // только цифры
-            let obj = CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType(this.dateMessage,this.words,numberKeywordInMessage)
+            let obj = сalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType(this.dateMessage,this.words,numberKeywordInMessage)
             time = obj.time
             arrayElementWithDate =obj.arrayElementWithDate
             numberArrayElementResponsiveForTimeType = obj.numberArrayElementResponsiveForTimeType
