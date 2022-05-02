@@ -68,7 +68,6 @@ export default class FutureTimeAndMessage{
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
         let wordsElementAfterKeyword4 = this.words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
-        let wordsElementAfterKeyword5 = this.words[numberKeywordInMessage+5] // элемент массива после ключевого слова - пятый
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
             let time = parseInt(wordsElementAfterKeyword1) //время с типом число
@@ -94,18 +93,8 @@ export default class FutureTimeAndMessage{
                 let numberArrayElementResponsiveForTimeType:number
                 let time = parseInt(wordsElementAfterKeyword3) //время с типом число
                 if(isNaN(time)){
-                    if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0){
-                        time = 1
-                        numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 3
-                    }
-                    else if (convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword4) != 0){
-                        time = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword3, wordsElementAfterKeyword4)
-                        numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 5
-                    }
-                    else {
-                        time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword3)
-                        numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 4
-                    }
+                    time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword3,wordsElementAfterKeyword4)
+                    numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
                 }
                 else {
                     numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 4
