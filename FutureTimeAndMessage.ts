@@ -14,6 +14,9 @@ import countingTheTimeSpecifiedByWords
     from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingTheTimeSpecifiedByWords";
 import countingNumberArrayElementResponsiveForTimeType
     from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingNumberArrayElementResponsiveForTimeType";
+import CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType
+    from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType";
+
 
 
 export default class FutureTimeAndMessage{
@@ -63,54 +66,18 @@ export default class FutureTimeAndMessage{
         }
     }
     CalculationsAndHandlingErrorsOnInputTo(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
-        let dateOfDifferentType = this.words[numberKeywordInMessage-1] // элемент, в котором может быть указа дата (сегодня/завтра/послезавтра)
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
-        let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
-        let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
-        let wordsElementAfterKeyword4 = this.words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
 
-        let arrayElementWithDate:string
         let time:number
+        let arrayElementWithDate:string
         let numberArrayElementResponsiveForTimeType:number
 
-        if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
-            // if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1 && convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3) != -1 &&
-            //  convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3)){
-            //  throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз и разная!');
-            // }
-            time = parseInt(wordsElementAfterKeyword1) //время с типом число
-            numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 2
-            if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1){
-                arrayElementWithDate = dateOfDifferentType
-            }
-            else {
-                arrayElementWithDate = wordsElementAfterKeyword3
-            }
+        if(/^[0-9]*$/.test(wordsElementAfterKeyword1) || /^[А-яЁё]*$/.test(wordsElementAfterKeyword1)) { // только цифры
+            let obj = CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType(this.dateMessage,this.words,numberKeywordInMessage)
+            time = obj.time
+            arrayElementWithDate =obj.arrayElementWithDate
+            numberArrayElementResponsiveForTimeType = obj.numberArrayElementResponsiveForTimeType
             return addDateOfDifferentType(this.dateMessage, arrayElementWithDate,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-        }
-        else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
-            const dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
-            time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-            numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-
-            if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-               time = parseInt(wordsElementAfterKeyword3) //время с типом число
-                if(isNaN(time)){
-                    time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword3,wordsElementAfterKeyword4)
-                }
-                numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-                arrayElementWithDate = wordsElementAfterKeyword1
-            }
-            else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
-                convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
-                convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
-            ){
-                arrayElementWithDate = this.words[numberArrayElementResponsiveForTimeType+1]
-            }
-            else {
-                arrayElementWithDate = dateOfDifferentType
-            }
-            return addDateOfDifferentType(this.dateMessage,arrayElementWithDate,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
         else{
             throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
