@@ -86,11 +86,11 @@ export default class FutureTimeAndMessage{
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             const dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
-
+            let arrayElementWithDate:string
+            let numberArrayElementResponsiveForTimeType:number
+            let time:number
             if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-
-                let numberArrayElementResponsiveForTimeType:number
-                let time = parseInt(wordsElementAfterKeyword3) //время с типом число
+               time = parseInt(wordsElementAfterKeyword3) //время с типом число
                 if(isNaN(time)){
                     time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword3,wordsElementAfterKeyword4)
                     numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
@@ -98,21 +98,26 @@ export default class FutureTimeAndMessage{
                 else {
                     numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
                 }
-                  return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                arrayElementWithDate = wordsElementAfterKeyword1
+               // return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
             ){
-                let time:number = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-                let numberArrayElementResponsiveForTimeType:number = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-                return addDateOfDifferentType(this.dateMessage,this.words[numberArrayElementResponsiveForTimeType+1],numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+                numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+                arrayElementWithDate = this.words[numberArrayElementResponsiveForTimeType+1]
+               // return addDateOfDifferentType(this.dateMessage,this.words[numberArrayElementResponsiveForTimeType+1],numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else {
-                let time:number = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-                let numberArrayElementResponsiveForTimeType:number = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-                return addDateOfDifferentType(this.dateMessage,dateOfDifferentType,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+                numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+                arrayElementWithDate = dateOfDifferentType
+                //return addDateOfDifferentType(this.dateMessage,dateOfDifferentType,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
+            return addDateOfDifferentType(this.dateMessage,arrayElementWithDate,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+
         }
         else{
             throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
