@@ -12,6 +12,8 @@ import errorHandlingInZeroMilliseconds
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingInZeroMilliseconds";
 import countingTheTimeSpecifiedByWords
     from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingTheTimeSpecifiedByWords";
+import countingNumberArrayElementResponsiveForTimeType
+    from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingNumberArrayElementResponsiveForTimeType";
 
 
 export default class FutureTimeAndMessage{
@@ -112,14 +114,17 @@ export default class FutureTimeAndMessage{
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
             ){
-                if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1){
-                    console.log(dateOfDifferentType)
-                }
-
-                // сначала число цифрой или словом, затем день недели
-                throw new Error('Ошибка!2');
+                let time:number = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+                let numberArrayElementResponsiveForTimeType:number = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+                return addDateOfDifferentType(this.dateMessage,this.words[numberArrayElementResponsiveForTimeType+1],numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else {
+               // if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1){
+                    let time:number = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+                let numberArrayElementResponsiveForTimeType:number = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+                return addDateOfDifferentType(this.dateMessage,dateOfDifferentType,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+
+             //   }
                 // ошибка
                 throw new Error('Ошибка!3');
             }
@@ -142,7 +147,6 @@ export default class FutureTimeAndMessage{
         }
     }
     CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage:number, timeMessage:number): MessageToSend{
-        console.log('туууут')
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - второй
         if(/^[0-9]*$/.test(wordsElementAfterKeyword2)) { // только цифры
