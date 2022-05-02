@@ -5,7 +5,7 @@ import countingTheTimeSpecifiedByWords from "./CountingTheTimeSpecifiedByWords";
 import countingNumberArrayElementResponsiveForTimeType from "./CountingNumberArrayElementResponsiveForTimeType";
 import TimeAndArrayElementWithDateOrTime from "../calculations_and_handling_errors_on_input_to/TimeAndArrayElementWithDateOrTime";
 
-function CalculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKeywordInMessage:number):TimeAndArrayElementWithDateOrTime {
+function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKeywordInMessage:number):TimeAndArrayElementWithDateOrTime {
 
     let dateOfDifferentType = words[numberKeywordInMessage-1] // элемент, в котором может быть указа дата (сегодня/завтра/послезавтра)
     let wordsElementAfterKeyword1 = words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
@@ -50,4 +50,4 @@ function CalculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKey
 
     return new TimeAndArrayElementWithDateOrTime(time, arrayElementWithDate,numberArrayElementResponsiveForTimeType)
 }
-export default CalculatingTimeAndDateInWords
+export default calculatingTimeAndDateInWords
