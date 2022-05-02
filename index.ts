@@ -113,7 +113,6 @@ bot.on('message', async (msg) =>{
     console.log(words) //массив
 
     let numberKeywordInMessage:number //ключевое слово в сообщении
-    let numberKeywordInMessage2:number //ключевое слово в сообщении
     let millisecondsAndMessage:MessageToSend
 
     let futureTimeAndMessage = new FutureTimeAndMessage(chatId,words,dateMessage)
@@ -145,7 +144,6 @@ bot.on('message', async (msg) =>{
             words.splice(words.indexOf('во'),1,'в')
         }
         numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
-        numberKeywordInMessage2 = words.indexOf(fullDate[0])
         try {
             millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( numberKeywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
