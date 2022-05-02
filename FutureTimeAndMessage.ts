@@ -104,7 +104,7 @@ export default class FutureTimeAndMessage{
                 else {
                     numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 4
                 }
-                return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                  return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
@@ -148,14 +148,14 @@ export default class FutureTimeAndMessage{
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword2)){ // только буквы
             let time:number
-            if(convertTime.ConvertTimeToMilliseconds(this.words[numberKeywordInMessage + 2],1) != 0){
+            if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0){
                 time = 1
             }
-            else if (convertTime.ConvertSmallNumberFromStringToNumber(this.words[numberKeywordInMessage + 3]) != 0){
+            else if (convertTime.ConvertSmallNumberFromStringToNumber( wordsElementAfterKeyword3) != 0){
                 time = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword2, wordsElementAfterKeyword3)
             }
             else {
-                time = convertTime.ConvertSmallNumberFromStringToNumber(this.words[numberKeywordInMessage + 2])
+                time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword2)
             }
             return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage],numberKeywordInMessage + 3,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
