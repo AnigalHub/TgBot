@@ -139,9 +139,6 @@ bot.on('message', async (msg) =>{
            await bot.sendMessage(chatId,e.message)
         }
     }
-    else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true) || (words.includes('послезавтра') == true) ||  (words.includes('послепослезавтра') == true) ){
-       await keywordCountIn()
-    }
     else if(words.includes('в') == true || words.includes('во') == true){
         if(words.includes('во') == true){
             words.splice(words.indexOf('во'),1,'в')
