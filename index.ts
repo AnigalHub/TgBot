@@ -116,7 +116,6 @@ bot.on('message', async (msg) =>{
     let millisecondsAndMessage:MessageToSend
 
     let futureTimeAndMessage = new FutureTimeAndMessage(chatId,words,dateMessage)
-    let fullDate = words.filter(word => word.includes('-') || word.includes('.') || word.includes('/'))
 
     async function keywordCountIn() {
         numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
