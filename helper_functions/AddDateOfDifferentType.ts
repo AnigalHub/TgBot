@@ -14,6 +14,10 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
+    else if(!/[А-яЁё]/.test(words[numberKeywordInMessage-1]) &&
+         (words[numberKeywordInMessage-1].includes('.') == true || words[numberKeywordInMessage-1].includes('-') == true || words[numberKeywordInMessage-1].includes('/') == true )){
+        return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage-1,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage-1],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
+    }
     else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
         const beforeDayOfTheWeek = new DayOfTheWeek(arrayElementWithDate)
         const afterDayOfTheWeek = new DayOfTheWeek(words[numberArrayElementResponsiveForTimeType+2])
