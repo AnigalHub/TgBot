@@ -10,6 +10,8 @@ import errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry
 import deleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
 import errorHandlingInZeroMilliseconds
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingInZeroMilliseconds";
+import countingTheTimeSpecifiedByWords
+    from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingTheTimeSpecifiedByWords";
 
 
 export default class FutureTimeAndMessage{
@@ -140,6 +142,7 @@ export default class FutureTimeAndMessage{
         }
     }
     CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage:number, timeMessage:number): MessageToSend{
+        console.log('туууут')
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - второй
         if(/^[0-9]*$/.test(wordsElementAfterKeyword2)) { // только цифры
@@ -147,16 +150,7 @@ export default class FutureTimeAndMessage{
             return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage],numberKeywordInMessage + 3,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword2)){ // только буквы
-            let time:number
-            if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0){
-                time = 1
-            }
-            else if (convertTime.ConvertSmallNumberFromStringToNumber( wordsElementAfterKeyword3) != 0){
-                time = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword2, wordsElementAfterKeyword3)
-            }
-            else {
-                time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword2)
-            }
+            let time:number = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword2,wordsElementAfterKeyword3)
             return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage],numberKeywordInMessage + 3,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
         else{
