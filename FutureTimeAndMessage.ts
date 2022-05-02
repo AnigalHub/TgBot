@@ -80,19 +80,4 @@ export default class FutureTimeAndMessage{
         }
 
     }
-    CalculationsAndHandlingErrorsOnInputDateFull( numberKeywordInMessage:number, timeMessage:number): MessageToSend{
-        let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
-        let wordsElementAfterKeyword3 = this.words[numberKeywordInMessage+3] // элемент массива после ключевого слова - второй
-        if(/^[0-9]*$/.test(wordsElementAfterKeyword2)) { // только цифры
-            let time = parseInt(wordsElementAfterKeyword2) //время с типом число
-            return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage],numberKeywordInMessage + 3,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-        }
-        else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword2)){ // только буквы
-            let time:number = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword2,wordsElementAfterKeyword3)
-            return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage],numberKeywordInMessage + 3,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-        }
-        else{
-            throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
-        }
-    }
 }
