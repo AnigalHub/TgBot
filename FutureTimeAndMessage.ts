@@ -8,8 +8,6 @@ import errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry
 import deleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
 import errorHandlingInZeroMilliseconds
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingInZeroMilliseconds";
-import countingTheTimeSpecifiedByWords
-    from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingTheTimeSpecifiedByWords";
 import сalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType
     from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType";
 
