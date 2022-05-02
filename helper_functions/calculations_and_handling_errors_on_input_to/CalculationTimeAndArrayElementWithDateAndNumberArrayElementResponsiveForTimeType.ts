@@ -3,9 +3,8 @@ const convertTime = new ConvertTime()
 import DayOfTheWeek from "../../DayOfTheWeek";
 import countingTheTimeSpecifiedByWords from "./CountingTheTimeSpecifiedByWords";
 import countingNumberArrayElementResponsiveForTimeType from "./CountingNumberArrayElementResponsiveForTimeType";
-import TimeAndArrayElementWithDateOrTime from "../calculations_and_handling_errors_on_input_to/TimeAndArrayElementWithDateOrTime";
 
-function CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType(date:Date,words:Array<string>,numberKeywordInMessage:number):TimeAndArrayElementWithDateOrTime {
+function CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType(date:Date,words:Array<string>,numberKeywordInMessage:number):object {
 
     let dateOfDifferentType = words[numberKeywordInMessage-1] // элемент, в котором может быть указа дата (сегодня/завтра/послезавтра)
     let wordsElementAfterKeyword1 = words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
@@ -51,6 +50,6 @@ function CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveFo
         }
     }
 
-    return new TimeAndArrayElementWithDateOrTime(time, arrayElementWithDate,numberArrayElementResponsiveForTimeType)
+    return {time, arrayElementWithDate,numberArrayElementResponsiveForTimeType}
 }
 export default CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType
