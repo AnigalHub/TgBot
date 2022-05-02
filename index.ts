@@ -114,9 +114,7 @@ bot.on('message', async (msg) =>{
 
     let numberKeywordInMessage:number //ключевое слово в сообщении
     let millisecondsAndMessage:MessageToSend
-
     let futureTimeAndMessage = new FutureTimeAndMessage(chatId,words,dateMessage)
-
 
     if (words.includes('через') == true){
         numberKeywordInMessage = words.indexOf('через') // индекс ключевого слова в массиве
@@ -134,7 +132,7 @@ bot.on('message', async (msg) =>{
         }
         numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
         try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( numberKeywordInMessage, timeMessage)
+            millisecondsAndMessage = futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( numberKeywordInMessage, timeMessage)
             console.log(millisecondsAndMessage)
             DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
         } catch (e:any) {

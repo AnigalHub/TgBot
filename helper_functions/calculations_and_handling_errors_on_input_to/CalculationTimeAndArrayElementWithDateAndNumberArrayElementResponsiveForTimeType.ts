@@ -40,10 +40,7 @@ function CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveFo
             numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
             arrayElementWithDate = wordsElementAfterKeyword1
         }
-        else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
-            convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
-            convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
-        ){
+        else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 || convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 || convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0){
             arrayElementWithDate = words[numberArrayElementResponsiveForTimeType+1]
         }
         else {
