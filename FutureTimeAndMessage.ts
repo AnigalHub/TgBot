@@ -72,36 +72,39 @@ export default class FutureTimeAndMessage{
               //  convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,wordsElementAfterKeyword3)){
               //  throw new Error('Ошибка! Неккоректно введена дата. Дата введена несколько раз и разная!');
            // }
+            let numberArrayElementResponsiveForTimeType:number = numberKeywordInMessage + 2
+            let arrayElementWithDate:string
             if(convertTime.ConvertWordIndicatorOfTimeToNumber(this.dateMessage,dateOfDifferentType) != -1){
-                return addDateOfDifferentType(this.dateMessage,dateOfDifferentType,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                arrayElementWithDate = dateOfDifferentType
             }
             else {
-                return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword3,numberKeywordInMessage + 2,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                arrayElementWithDate = wordsElementAfterKeyword3
             }
+            return addDateOfDifferentType(this.dateMessage, arrayElementWithDate,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             const dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
             if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-
+                let numberArrayElementResponsiveForTimeType:number
                 let time = parseInt(wordsElementAfterKeyword3) //время с типом число
                 if(isNaN(time)){
-
                     if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0){
                         time = 1
-                        return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 3 ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                        numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 3
                     }
                     else if (convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword4) != 0){
                         time = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword3, wordsElementAfterKeyword4)
-                        return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 5 ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                        numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 5
                     }
                     else {
                         time = convertTime.ConvertSmallNumberFromStringToNumber(wordsElementAfterKeyword3)
-                        return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 4 ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                        numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 4
                     }
                 }
                 else {
-                    return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberKeywordInMessage + 4,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+                    numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 4
                 }
+                return addDateOfDifferentType(this.dateMessage,wordsElementAfterKeyword1,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
             }
             else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
@@ -155,7 +158,7 @@ export default class FutureTimeAndMessage{
                 time = convertTime.ConvertSmallNumberFromStringToNumber(this.words[numberKeywordInMessage + 2])
             }
             return addDateOfDifferentType(this.dateMessage,this.words[numberKeywordInMessage],numberKeywordInMessage + 3,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-       }
+        }
         else{
             throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
         }
