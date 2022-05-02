@@ -90,28 +90,24 @@ export default class FutureTimeAndMessage{
         }
         else if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
             const dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
+            time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+            numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+
             if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
                time = parseInt(wordsElementAfterKeyword3) //время с типом число
                 if(isNaN(time)){
                     time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword3,wordsElementAfterKeyword4)
-                    numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
                 }
-                else {
-                    numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-                }
+                numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
                 arrayElementWithDate = wordsElementAfterKeyword1
             }
             else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
                 convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0
             ){
-                time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-                numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
                 arrayElementWithDate = this.words[numberArrayElementResponsiveForTimeType+1]
             }
             else {
-                time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
-                numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
                 arrayElementWithDate = dateOfDifferentType
             }
             return addDateOfDifferentType(this.dateMessage,arrayElementWithDate,numberArrayElementResponsiveForTimeType ,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
