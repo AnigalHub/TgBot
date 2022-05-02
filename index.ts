@@ -139,19 +139,6 @@ bot.on('message', async (msg) =>{
            await bot.sendMessage(chatId,e.message)
         }
     }
-    else if(fullDate && fullDate.length != 0 ){
-        if(words.includes('во') == true){
-            words.splice(words.indexOf('во'),1,'в')
-        }
-        numberKeywordInMessage = words.indexOf('в') //индекс ключевого слова в массиве
-        try {
-            millisecondsAndMessage =  futureTimeAndMessage.CalculationsAndHandlingErrorsOnInputTo( numberKeywordInMessage, timeMessage)
-            console.log(millisecondsAndMessage)
-            DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
-        } catch (e:any) {
-            await bot.sendMessage(chatId,e.message)
-        }
-    }
     else if ((words.includes('сегодня') == true) || (words.includes('завтра') == true) || (words.includes('послезавтра') == true) ||  (words.includes('послепослезавтра') == true) ){
        await keywordCountIn()
     }
