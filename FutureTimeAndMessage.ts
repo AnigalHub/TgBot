@@ -2,9 +2,7 @@ import MessageToSend from "./MessageToSend";
 import addTimeWhenDayIsKnown from "./helper_functions/AddTimeWhenDayIsKnown";
 import ConvertTime from "./ConvertTime";
 const convertTime = new ConvertTime()
-import DayOfTheWeek from "./DayOfTheWeek";
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
-import calculationTimeAndSearchTimeAndDateInArray from "./helper_functions/CalculationTimeAndSearchTimeAndDateInArray"
 import errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry";
 import deleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
@@ -12,8 +10,6 @@ import errorHandlingInZeroMilliseconds
     from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingInZeroMilliseconds";
 import countingTheTimeSpecifiedByWords
     from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingTheTimeSpecifiedByWords";
-import countingNumberArrayElementResponsiveForTimeType
-    from "./helper_functions/calculations_and_handling_errors_on_input_to/CountingNumberArrayElementResponsiveForTimeType";
 import CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType
     from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculationTimeAndArrayElementWithDateAndNumberArrayElementResponsiveForTimeType";
 
