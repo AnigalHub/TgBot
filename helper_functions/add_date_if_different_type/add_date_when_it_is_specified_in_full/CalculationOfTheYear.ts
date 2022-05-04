@@ -1,5 +1,5 @@
 function calculationOfTheYear(keyword:string, date:Date):number{
-   let yearMessage
+   let yearMessage:number
     if (keyword.length == 10) {
         yearMessage = parseInt(keyword.substring(6, 12))
     }
