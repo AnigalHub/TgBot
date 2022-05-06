@@ -15,10 +15,10 @@ function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, d
     let futureDay = convertTime.ConvertWordIndicatorOfTimeToNumber(date,dayRemind)
     errorHandlingOfIncorrectDateOrTimeEntry(date, dayRemind,timeRemind,futureDay)
     let futureDate = new Date(date.getFullYear(), date.getMonth(), futureDay)
-    const futureDateMs = Date.parse(futureDate.toString())  //будущая дата в миллисекундах
+    const futureDateMs = Date.parse(futureDate.toString())
 
     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, numberArrayElementResponsiveForTimeType)
-    messageFuture = words.slice((startMessageFuture), words.length).join(' ')//сообщение, которое напоминаем
+    messageFuture = words.slice((startMessageFuture), words.length).join(' ')
     return new MessageToSend(millisecondsTime, messageFuture)
 }
 export default addDayWhenTimeIsKnown

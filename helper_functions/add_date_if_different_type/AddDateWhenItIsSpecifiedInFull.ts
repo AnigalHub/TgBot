@@ -5,6 +5,7 @@ import calculationOfTheYear from "./add_date_when_it_is_specified_in_full/Calcul
 import errorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectFullDateEntry"
 
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
+   console.log(numberKeywordInMessage,numberArrayElementResponsiveForTimeType, keyword, timeMessageMs, time,messageFuture, millisecondsTime)
     let monthMessage = parseInt(keyword.substring(3, 6)) - 1
     let dayMessage = parseInt(keyword.substring(0, 2))
     let yearMessage = calculationOfTheYear(keyword,date)
@@ -16,7 +17,7 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
 
     if ( convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
         if (convertTime.ConvertSmallNumberFromStringToNumber(words[numberArrayElementResponsiveForTimeType]) != 0){
-            messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')//сообщение, которое напоминаем
+            messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')
             millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType+1)
         }
         else {
@@ -26,10 +27,10 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
     }
     else {
         if(numberArrayElementResponsiveForTimeType < words.indexOf(keyword)){
-            messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')//сообщение, которое напоминаем
+            messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')
         }
         else {
-            messageFuture = words.slice((numberArrayElementResponsiveForTimeType+1),words.length).join(' ')//сообщение, которое напоминаем
+            messageFuture = words.slice((numberArrayElementResponsiveForTimeType+1),words.length).join(' ')
         }
         millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType)
     }

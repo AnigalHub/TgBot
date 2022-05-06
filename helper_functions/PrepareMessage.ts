@@ -1,11 +1,11 @@
 import removeEmptyElementsFromArray from "./RemoveEmptyElementsFromArray";
 import removeDuplicateAdjacentElementsFromArray from "./RemoveDuplicateAdjacentElementsFromArray";
 
-//функция подготовки сообщения
+//функция подготовки сообщения - избавление в массиве от пустых элементов
 export default function prepareMessage(message:string){
     let text = message.toLocaleLowerCase()
-    let words = text.split(" ") //разбиение на элементы массива, "пробел"
-    words = removeEmptyElementsFromArray(words) // избавление в массиве от пустых элементов
-    words = removeDuplicateAdjacentElementsFromArray (words) // избавление в массиве от пустых элементов
+    let words = text.split(" ")
+    words = removeEmptyElementsFromArray(words)
+    words = removeDuplicateAdjacentElementsFromArray (words)
     return words;
 }

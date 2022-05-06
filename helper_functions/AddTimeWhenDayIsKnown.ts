@@ -23,11 +23,11 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
             futureDate.setHours(0,0,0,0)
-            const dateMs = Date.parse(date.toString()) //дата сообщения в миллисекундах
-            const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
+            const dateMs = Date.parse(date.toString())
+            const futureDateMs = Date.parse(futureDate.toString())
             let timeAfterSecondKeyword:number
             if(/^[0-9]*$/.test(words[secondKeywordInMessage + 1])){ //только цифры
-                timeAfterSecondKeyword = parseInt(arrayElementAfterSecondKeyword1) //время с типом число
+                timeAfterSecondKeyword = parseInt(arrayElementAfterSecondKeyword1)
                 if(timeAfterSecondKeyword == 0){
                     timeAfterSecondKeyword = 24
                 }

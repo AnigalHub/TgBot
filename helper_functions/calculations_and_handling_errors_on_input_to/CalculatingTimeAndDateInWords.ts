@@ -18,7 +18,7 @@ function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKey
     let numberArrayElementResponsiveForTimeType:number = 0
 
     if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
-        time = parseInt(wordsElementAfterKeyword1) //время с типом число
+        time = parseInt(wordsElementAfterKeyword1)
         numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 2
         if(convertTime.ConvertWordIndicatorOfTimeToNumber(date,dateOfDifferentType) != -1){
             arrayElementWithDate = dateOfDifferentType
@@ -33,7 +33,7 @@ function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKey
         numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
 
         if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-            time = parseInt(wordsElementAfterKeyword3) //время с типом число
+            time = parseInt(wordsElementAfterKeyword3)
             if(isNaN(time)){
                 time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword3,wordsElementAfterKeyword4)
             }

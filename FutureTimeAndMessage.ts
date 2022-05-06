@@ -38,7 +38,7 @@ export default class FutureTimeAndMessage{
         errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(this.words,numberKeywordInMessage)
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
-            time = parseInt(wordsElementAfterKeyword1) // время с типом число
+            time = parseInt(wordsElementAfterKeyword1)
             this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ')
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)
             errorHandlingInZeroMilliseconds(this.millisecondsTime)
