@@ -6,6 +6,10 @@ import errorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specifi
 
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
    console.log(numberKeywordInMessage,numberArrayElementResponsiveForTimeType, keyword, timeMessageMs, time,messageFuture, millisecondsTime)
+   console.log(words[numberArrayElementResponsiveForTimeType])
+
+    let wordIn:number = words.indexOf('в')
+
     let monthMessage = parseInt(keyword.substring(3, 6)) - 1
     let dayMessage = parseInt(keyword.substring(0, 2))
     let yearMessage = calculationOfTheYear(keyword,date)
