@@ -6,8 +6,6 @@ import errorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specifi
 import errorHandlingOfIncorrectTimeEntryUsingWords from "../add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntryUsingWords";
 
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
-   console.log(numberKeywordInMessage,numberArrayElementResponsiveForTimeType, keyword, timeMessageMs, time,messageFuture, millisecondsTime)
-   console.log(words[numberArrayElementResponsiveForTimeType])
 
     let wordIn:number = words.indexOf('в')
     errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
