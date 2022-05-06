@@ -22,7 +22,6 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
     const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
     if ( convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
-        console.log('1')
         if (convertTime.ConvertSmallNumberFromStringToNumber(words[numberArrayElementResponsiveForTimeType]) != 0){
             messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')
             millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType+1)
