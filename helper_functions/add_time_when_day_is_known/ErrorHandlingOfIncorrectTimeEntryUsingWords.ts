@@ -1,8 +1,7 @@
 import ConvertTime from "./../../ConvertTime";
 const convertTime = new ConvertTime()
 
-function errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyword1:string,
-                                       arrayElementAfterSecondKeyword2:string) {
+function errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyword1:string, arrayElementAfterSecondKeyword2:string) {
     let number1: number = convertTime.ConvertSmallNumberFromStringToNumber(arrayElementAfterSecondKeyword1)
     let number2: number = convertTime.ConvertSmallNumberFromStringToNumber(arrayElementAfterSecondKeyword2)
 
