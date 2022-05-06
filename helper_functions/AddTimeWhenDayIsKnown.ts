@@ -37,10 +37,9 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
             }
             else {// только буквы
                timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
-                errorHandlingOfIncorrectTimeEntryUsingWords(timeAfterSecondKeyword,arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2,arrayElementAfterSecondKeyword3)
+                errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
                 errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3)
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
-
                 messageFuture = objTime.message
                 millisecondsTime = objTime.millisecondsTime
             }
