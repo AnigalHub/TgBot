@@ -24,5 +24,8 @@ function errorHandlingOfIncorrectFullDateEntry(keyword:string, dayMessage:number
     if((convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) > 3600000) || (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 1800000)){
         throw new Error( 'Ошибка! Некорректно введено время. Вместо времени указана неккоректно дата или непонятное время');
     }
+    if (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
+        throw new Error('Ошибка! Неизвестный тип времени - возможно опечатка в слове: ' + words[numberArrayElementResponsiveForTimeType]);
+    }
 }
 export default errorHandlingOfIncorrectFullDateEntry
