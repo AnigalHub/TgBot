@@ -8,7 +8,9 @@ import errorHandlingOfIncorrectTimeEntryUsingWords from "../add_time_when_day_is
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
 
     let wordIn:number = words.indexOf('в')
-    errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
+    if(!/^[0-9]*$/.test(words[wordIn+1])){
+        errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
+    }
 
     let monthMessage = parseInt(keyword.substring(3, 6)) - 1
     let dayMessage = parseInt(keyword.substring(0, 2))
@@ -20,6 +22,7 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
     const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
     if ( convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
+        console.log('1')
         if (convertTime.ConvertSmallNumberFromStringToNumber(words[numberArrayElementResponsiveForTimeType]) != 0){
             messageFuture = words.slice((numberArrayElementResponsiveForTimeType+2),words.length).join(' ')
             millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(timeMessageMs, futureDateMs, time, words, numberArrayElementResponsiveForTimeType+1)
