@@ -1,11 +1,14 @@
 import ConvertTime from "./../../ConvertTime";
 const convertTime = new ConvertTime()
 
-function errorHandlingOfIncorrectTimeEntryUsingWords(time:number,arrayElementAfterSecondKeyword1:string,
-                                       arrayElementAfterSecondKeyword2:string,arrayElementAfterSecondKeyword3:string) {
-    if((time == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 )
-        || (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
-            convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) != 0 )){
+function errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyword1:string,
+                                       arrayElementAfterSecondKeyword2:string) {
+    let number1: number = convertTime.ConvertSmallNumberFromStringToNumber(arrayElementAfterSecondKeyword1)
+    let number2: number = convertTime.ConvertSmallNumberFromStringToNumber(arrayElementAfterSecondKeyword2)
+
+    if((number1 == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0) ||
+        (number2 == 0 && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0)
+        && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0))){
         throw new Error('Ошибка! Неккоректно введено время - опечатка во времени после указателя времени "В"');
     }
 }
