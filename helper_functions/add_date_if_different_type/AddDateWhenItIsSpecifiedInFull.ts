@@ -18,6 +18,10 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
 
     errorHandlingOfIncorrectFullDateEntry(keyword,dayMessage,monthMessage,yearMessage,date,words,numberArrayElementResponsiveForTimeType)
 
+    if (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
+        throw new Error('Ошибка! Неизвестный тип времени - возможно опечатка в слове: ' + words[numberArrayElementResponsiveForTimeType]);
+    }
+
     let futureDate = new Date(yearMessage, monthMessage, dayMessage)
     const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
 
