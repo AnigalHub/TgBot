@@ -2,6 +2,8 @@ import ConvertTime from '../ConvertTime'
 const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
 import errorHandlingOfIncorrectTimeEntry from "../helper_functions/add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntry"
+import errorHandlingOfIncorrectTimeEntryUsingWords from "./add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntryUsingWords";
+
 
 //функция добавления времени, когда известен день
 function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:number, messageFuture:string) : MessageToSend {
@@ -35,11 +37,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
             }
             else {// только буквы
                timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
-               if((timeAfterSecondKeyword == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 )
-                   || (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
-                   convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) != 0 )){
-                   throw new Error('Ошибка! Неккоректно введено время - опечатка во времени после указателя времени "В"');
-                }
+                errorHandlingOfIncorrectTimeEntryUsingWords(timeAfterSecondKeyword,arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2,arrayElementAfterSecondKeyword3)
                 errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3)
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
 
