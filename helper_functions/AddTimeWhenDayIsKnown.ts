@@ -19,6 +19,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
             throw new Error('Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени. Возможно что-то отсутствует или опечатка');
         }
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
+           console.log('тут')
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
             futureDate.setHours(0,0,0,0)
             const dateMs = Date.parse(date.toString()) //дата сообщения в миллисекундах
@@ -30,12 +31,24 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 if(timeAfterSecondKeyword == 0){
                     timeAfterSecondKeyword = 24
                 }
+                if(timeAfterSecondKeyword == 86400000 || timeAfterSecondKeyword == 604800000
+                    || timeAfterSecondKeyword == 2592000000 || timeAfterSecondKeyword == 15768000000
+                    || timeAfterSecondKeyword == 31536000000){
+                    throw new Error('Ошибка!');
+                }
                 errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword2)
                 messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
             }
             else {// только буквы
-                timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+                console.log('3')
+               timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+               console.log(timeAfterSecondKeyword)
+               if((timeAfterSecondKeyword == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 )
+                   || (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
+                   convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) != 0 )){
+                   throw new Error('Ошибка!');
+                }
                 errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3)
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
 
