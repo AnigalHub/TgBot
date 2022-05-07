@@ -29,11 +29,6 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 if(timeAfterSecondKeyword == 0){
                     timeAfterSecondKeyword = 24
                 }
-                if(timeAfterSecondKeyword == 86400000 || timeAfterSecondKeyword == 604800000
-                    || timeAfterSecondKeyword == 2592000000 || timeAfterSecondKeyword == 15768000000
-                    || timeAfterSecondKeyword == 31536000000){
-                    throw new Error('Ошибка!');
-                }
                 errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword2)
                 messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
