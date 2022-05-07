@@ -21,11 +21,11 @@ function errorHandlingOfIncorrectFullDateEntry(keyword:string, dayMessage:number
     if(yearMessage < date.getFullYear()){
         throw new Error( 'Ошибка! Некорректно введен год в дате. Год меньше текущего. Напомнить в тот год, который уже прошел - невозможно!');
     }
-    if((convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) > 3600000) || (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 1800000)){
-        throw new Error( 'Ошибка! Некорректно введено время. Вместо времени указана неккоректно дата или непонятное время');
-    }
     if (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
         throw new Error('Ошибка! Неизвестный тип времени (сек|мин|час)');
+    }
+    if((convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) > 3600000) || (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 1800000)){
+        throw new Error( 'Ошибка! Некорректно введено время. Вместо времени указана неккоректно дата или непонятное время');
     }
 }
 export default errorHandlingOfIncorrectFullDateEntry
