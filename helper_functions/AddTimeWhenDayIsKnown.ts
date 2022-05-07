@@ -19,13 +19,11 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
             throw new Error('Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени. Возможно что-то отсутствует или опечатка');
         }
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
-           console.log('тут')
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
             futureDate.setHours(0,0,0,0)
             const dateMs = Date.parse(date.toString()) //дата сообщения в миллисекундах
             const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
             let timeAfterSecondKeyword:number
-            console.log(words[secondKeywordInMessage + 1])
             if(/^[0-9]*$/.test(words[secondKeywordInMessage + 1])){ //только цифры
                 timeAfterSecondKeyword = parseInt(arrayElementAfterSecondKeyword1) //время с типом число
                 if(timeAfterSecondKeyword == 0){
@@ -41,9 +39,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
             }
             else {// только буквы
-                console.log('3')
                timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
-               console.log(timeAfterSecondKeyword)
                if((timeAfterSecondKeyword == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 )
                    || (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 &&
                    convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) != 0 )){
