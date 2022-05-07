@@ -25,7 +25,7 @@ function errorHandlingOfIncorrectFullDateEntry(keyword:string, dayMessage:number
         throw new Error( 'Ошибка! Некорректно введено время. Вместо времени указана неккоректно дата или непонятное время');
     }
     if (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
-        throw new Error('Ошибка! Неизвестный тип времени (сек/мин/час)');
+        throw new Error('Ошибка! Неизвестный тип времени (сек|мин|час)');
     }
 }
 export default errorHandlingOfIncorrectFullDateEntry
