@@ -12,13 +12,13 @@ function errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(words:Array<str
         }
     }
     if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
-        let time = parseInt(wordsElementAfterKeyword1) // время с типом число
-        if (time == 0) { // если время указано цифрой 0
+        let time = parseInt(wordsElementAfterKeyword1)
+        if (time == 0) {
             throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!')
         }
     }
     if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
-        if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){ // если время указано ноль/нуль
+        if(wordsElementAfterKeyword1 == 'ноль' || wordsElementAfterKeyword1 == 'нуль'){
             throw new Error('Ошибка! Некорректно введено время. Напомнить невозможно - это прям сейчас!');
         }
     }
