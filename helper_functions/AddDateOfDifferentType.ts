@@ -5,8 +5,6 @@ import AddDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIs
 import dateAndTimeValidation from  "../helper_functions/DateAndTimeValidation"
 import DayOfTheWeek from "../DayOfTheWeek";
 import ConvertTime from "./../ConvertTime";
-import errorHandlingOfIncorrectTimeEntryUsingWords
-    from "./add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntryUsingWords";
 import validationOfTimeInput from "./add_date_if_different_type/ValidationOfTimeInput";
 const convertTime = new ConvertTime()
 
