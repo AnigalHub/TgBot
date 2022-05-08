@@ -13,21 +13,18 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
 
     let wordIn:number = words.indexOf('в')
-    if(!/^[0-9]*$/.test(words[wordIn+1])){
-        errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
-    }
     if (arrayElementWithDate == undefined){
         throw new Error('Ошибка! Неизвестный тип времени (сек|мин|час)');
     }
-
+    if(!/^[0-9]*$/.test(words[wordIn+1])){
+        errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
+    }
     //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
 
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
-        console.log('1')
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
     else if(!/[А-яЁё]/.test(words[numberKeywordInMessage-1]) && (words[numberKeywordInMessage-1].includes('.') == true || words[numberKeywordInMessage-1].includes('-') == true || words[numberKeywordInMessage-1].includes('/') == true )){
-        console.log('2')
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage-1,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage-1],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
     else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
