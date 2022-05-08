@@ -14,13 +14,6 @@ const convertTime = new ConvertTime()
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
     validationOfTimeInput(words,arrayElementWithDate)
-    let wordIn:number = words.indexOf('в')
-    if (arrayElementWithDate == undefined){
-        throw new Error('Ошибка! Неизвестный тип времени (сек|мин|час)');
-    }
-    if(!/^[0-9]*$/.test(words[wordIn+1])){
-        errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
-    }
     //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
 
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
