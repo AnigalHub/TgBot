@@ -66,7 +66,7 @@ export default class FutureTimeAndMessage{
         let arrayElementWithDate:string
         let numberArrayElementResponsiveForTimeType:number
 
-        if(/^[0-9]*$/.test(wordsElementAfterKeyword1) || /^[А-яЁё]*$/.test(wordsElementAfterKeyword1)) { // только цифры
+        if(/^[0-9]*$/.test(wordsElementAfterKeyword1) || /^[А-яЁё]*$/.test(wordsElementAfterKeyword1)) {
             let obj = calculatingTimeAndDateInWords(this.dateMessage,this.words,numberKeywordInMessage)
             time = obj.time
             arrayElementWithDate =obj.arrayElementWithDate
