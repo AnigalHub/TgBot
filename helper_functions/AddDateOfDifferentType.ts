@@ -11,8 +11,7 @@ const convertTime = new ConvertTime()
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-    console.log(words[numberArrayElementResponsiveForTimeType])
-    console.log(words[numberKeywordInMessage])
+
     let wordIn:number = words.indexOf('в')
     if(!/^[0-9]*$/.test(words[wordIn+1])){
         errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
@@ -22,7 +21,7 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
     }
 
     //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
-console.log('arrayElementWithDate  ', arrayElementWithDate)
+
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
         console.log('1')
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
