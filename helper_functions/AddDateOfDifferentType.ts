@@ -11,18 +11,24 @@ const convertTime = new ConvertTime()
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-
-    //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
-
+    console.log(words[numberArrayElementResponsiveForTimeType])
+    console.log(words[numberKeywordInMessage])
     let wordIn:number = words.indexOf('в')
     if(!/^[0-9]*$/.test(words[wordIn+1])){
         errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
     }
+    if (arrayElementWithDate == undefined){
+        throw new Error('Ошибка! Неизвестный тип времени (сек|мин|час)');
+    }
 
+    //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
+console.log('arrayElementWithDate  ', arrayElementWithDate)
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
+        console.log('1')
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
     else if(!/[А-яЁё]/.test(words[numberKeywordInMessage-1]) && (words[numberKeywordInMessage-1].includes('.') == true || words[numberKeywordInMessage-1].includes('-') == true || words[numberKeywordInMessage-1].includes('/') == true )){
+        console.log('2')
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage-1,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage-1],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
     else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
