@@ -5,19 +5,24 @@ import AddDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIs
 import dateAndTimeValidation from  "../helper_functions/DateAndTimeValidation"
 import DayOfTheWeek from "../DayOfTheWeek";
 import ConvertTime from "./../ConvertTime";
+import errorHandlingOfIncorrectTimeEntryUsingWords
+    from "./add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntryUsingWords";
 const convertTime = new ConvertTime()
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
 
     //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
+
+    let wordIn:number = words.indexOf('в')
+    if(!/^[0-9]*$/.test(words[wordIn+1])){
+        errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
+    }
+
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
-        console.log('2')
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
-    else if(!/[А-яЁё]/.test(words[numberKeywordInMessage-1]) &&
-         (words[numberKeywordInMessage-1].includes('.') == true || words[numberKeywordInMessage-1].includes('-') == true || words[numberKeywordInMessage-1].includes('/') == true )){
-       console.log('1')
+    else if(!/[А-яЁё]/.test(words[numberKeywordInMessage-1]) && (words[numberKeywordInMessage-1].includes('.') == true || words[numberKeywordInMessage-1].includes('-') == true || words[numberKeywordInMessage-1].includes('/') == true )){
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage-1,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage-1],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
     else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
