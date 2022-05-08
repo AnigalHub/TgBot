@@ -7,11 +7,13 @@ import DayOfTheWeek from "../DayOfTheWeek";
 import ConvertTime from "./../ConvertTime";
 import errorHandlingOfIncorrectTimeEntryUsingWords
     from "./add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntryUsingWords";
+import validationOfTimeInput from "./add_date_if_different_type/ValidationOfTimeInput";
 const convertTime = new ConvertTime()
+
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-
+    validationOfTimeInput(words,arrayElementWithDate)
     let wordIn:number = words.indexOf('в')
     if (arrayElementWithDate == undefined){
         throw new Error('Ошибка! Неизвестный тип времени (сек|мин|час)');
