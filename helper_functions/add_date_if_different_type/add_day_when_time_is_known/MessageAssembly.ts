@@ -1,3 +1,4 @@
+//функция - Сборка будущего сообщения
 function messageAssembly(words:Array<string>,arrayElementWithTime:string,arrayElementWithDayOfTheWeek:string):string {
     let messageFuture:string
     if (words.indexOf(arrayElementWithTime) < words.indexOf(arrayElementWithDayOfTheWeek)){
