@@ -1,13 +1,13 @@
 import errorHandlingOfIncorrectTimeEntryUsingWords
     from "../add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntryUsingWords";
-import ConvertTime from "../../ConvertTime";
-const convertTime = new ConvertTime()
+import checkingTheTypeOfTime from "../CheckingTheTypeOfTime";
+
 
 function validationOfTimeInput(words:Array<string>,numberArrayElementResponsiveForTimeType:number){
     let wordIn:number = words.indexOf('в')
-    if (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
-        throw new Error('<b>Ошибка! Неизвестный тип времени </b>\n'+'(сек | мин | час)');
-    }
+
+    checkingTheTypeOfTime(words,numberArrayElementResponsiveForTimeType)
+
     if(!/^[0-9]*$/.test(words[wordIn+1])){
         errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
     }
