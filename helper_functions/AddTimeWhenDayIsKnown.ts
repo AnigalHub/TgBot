@@ -46,8 +46,8 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
             return new MessageToSend(millisecondsTime, messageFuture)
         }
         else {
-            throw new Error('Ошибка! Некорректно введено время и дата - неизвестно когда напоминать\n' +
-                'Возможные ошибки:\n' +
+            throw new Error('<b>Ошибка! Некорректно введено время и дата - неизвестно когда напоминать\n\n</b>' +
+                '<u>Возможные ошибки:</u>\n' +
                 '- опечатка/отсутствие времени или даты\n' +
                 '- тавтология: время = дата\n' +
                 '- время является: дней/недель/лет - т е тоже дата, а не время (сек/мин/час)\n' +
