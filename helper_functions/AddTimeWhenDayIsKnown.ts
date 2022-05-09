@@ -18,7 +18,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
         let arrayElementAfterSecondKeyword4 = words[(secondKeywordInMessage)+4] // элемент массива после ключевого слова (secondKeywordInMessage) - четвертый
 
         if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
-            throw new Error('Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени. Возможно что-то отсутствует или опечатка');
+            throw new Error('<b>Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени. </b>\n'+'Возможно что-то отсутствует или опечатка');
         }
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
