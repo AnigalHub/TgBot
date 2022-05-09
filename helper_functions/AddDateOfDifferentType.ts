@@ -11,7 +11,9 @@ const convertTime = new ConvertTime()
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-    validationOfTimeInput(words,arrayElementWithDate)
+console.log(date,arrayElementWithDate,numberArrayElementResponsiveForTimeType,timeRemind,dateMs, numberKeywordInMessage,messageFuture, millisecondsTime)
+    validationOfTimeInput(words,numberArrayElementResponsiveForTimeType)
+
     //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
 
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
@@ -44,7 +46,7 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
         }
     }
     else {
-        throw new Error('Ошибка! Некорректно указана дата. Присутствуют цифры. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
+        throw new Error('Ошибка! Некорректно указана дата. Пример написания даты: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
     }
 }
 export default addDateOfDifferentType
