@@ -7,13 +7,13 @@ function dateAndTimeValidation(time:number,timeType:string,dateType:string){
     }
     ErrorHandlingOfIncorrectTimeEntry(time,timeType)
     if(!timeType){
-        throw new Error('Ошибка! Не указано тип времени (мин | сек | час)');
+        throw new Error('<b>Ошибка! Не указан тип времени. </b>\n'+'(мин | сек | час)');
     }
     if(convertTime.ConvertTimeToMilliseconds(timeType,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
-        throw new Error('Ошибка! Некорректно введено время. Пример: 10 сек | 15 минут | 9 часов');
+        throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+'Пример: 10 сек | 15 минут | 9 часов');
     }
     if(!dateType){
-        throw new Error('Ошибка! Не указана дата');
+        throw new Error('<b>Ошибка! Не указана дата</b>');
     }
 }
 
