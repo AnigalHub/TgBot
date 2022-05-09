@@ -123,7 +123,7 @@ bot.on('message', async (msg) =>{
             console.log(millisecondsAndMessage)
             DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
         } catch (e:any) {
-           await bot.sendMessage(chatId,e.message)
+           await bot.sendMessage(chatId,e.message,{parse_mode: 'HTML'})
         }
     }
     else if(words.includes('в') == true || words.includes('во') == true){
@@ -136,7 +136,7 @@ bot.on('message', async (msg) =>{
             console.log(millisecondsAndMessage)
             DateAsString(millisecondsAndMessage.millisecondsTime,dateMessage)
         } catch (e:any) {
-            await bot.sendMessage(chatId,e.message)
+            await bot.sendMessage(chatId,e.message,{parse_mode: 'HTML'})
         }
     }
     else {
