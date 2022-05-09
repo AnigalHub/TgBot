@@ -30,7 +30,7 @@ export default class FutureTimeAndMessage{
         let time:number
 
         if(keywordIndexes.length > 1){
-            throw new Error('Ошибка! Несколько раз указан указатель времени "ЧЕРЕЗ"');
+            throw new Error('<b>Ошибка! Несколько раз указан указатель времени "ЧЕРЕЗ"</b>');
         }
         if (this.words.indexOf('сегодня') > this.words.indexOf('через')){
             deleteFromArray(this.words,'сегодня')
@@ -56,7 +56,7 @@ export default class FutureTimeAndMessage{
             return addTimeWhenDayIsKnown(this.dateMessage, this.words,this.millisecondsTime,this.messageFuture)
         }
         else {
-            throw new Error('Ошибка! Некорректно введено время. Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
+            throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+'Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
         }
     }
     CalculationsAndHandlingErrorsOnInputTo(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
@@ -74,7 +74,7 @@ export default class FutureTimeAndMessage{
             return addDateOfDifferentType(this.dateMessage, arrayElementWithDate,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
         else{
-            throw new Error('Ошибка! В дате или времени содержатся неизвестные символы. Возможно время или дата указаны слитно')
+            throw new Error('<b>Ошибка! В дате или времени содержатся неизвестные символы. </b>\n'+'Возможно время или дата указаны слитно')
         }
 
     }
