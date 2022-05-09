@@ -8,7 +8,7 @@ function errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(words:Array<str
         dayOfTheWeek = new DayOfTheWeek( words[i]).SearchForTheDayNumberOfTheWeek()
         if (dayOfTheWeek != -1 ||  !/[А-яЁё]/.test( words[i]) && ( words[i].includes('.') == true ||  words[i].includes('-') == true || words[i].includes('/') == true )
         || (words.includes('завтра') || words.includes('послезавтра') || words.includes('послепослезавтра'))){
-            throw new Error('Ошибка! Несовместимое время и дата. Неизвестно когда напоминать');
+            throw new Error('Ошибка! Некорректно введено время и дата. Несовместимое время и дата. Неизвестно когда напоминать');
         }
     }
     if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
