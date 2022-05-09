@@ -3,13 +3,13 @@ const convertTime = new ConvertTime()
 
 function errorHandlingOfIncorrectDateOrTimeEntry(date:Date, dayRemind:string,timeRemind:number,futureDay:number) {
     if((timeRemind <= date.getHours()) && dayRemind == 'сегодня'){
-        throw new Error('Ошибка! Время указано которое уже прошло - напомнить невозможно');
+        throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+ 'Время указано которое уже прошло - напомнить невозможно</b>');
     }
     if(convertTime.ConvertTimeToMilliseconds(dayRemind,1) >= 3600000){
-        throw new Error( 'Ошибка! Некорректно введено время и дата - неизвестно когда напоминать');
+        throw new Error('<b>Ошибка! Некорректно введено время и дата. </b>\n'+ 'Неизвестно когда напоминать</b>');
     }
     if(futureDay  == -1){
-        throw new Error('Ошибка! Некорректно введена дата. Возможно слитное написание');
+        throw new Error('<b>Ошибка! Некорректно введена дата. </b>\n'+'Возможно слитное написание');
     }
 }
 export default errorHandlingOfIncorrectDateOrTimeEntry
