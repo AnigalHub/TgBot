@@ -1,6 +1,3 @@
-import ConvertTime from "../../../ConvertTime";
-const convertTime = new ConvertTime()
-
 //функция - Обработка ошибок неверного ввода полной даты
 function errorHandlingOfIncorrectFullDateEntry(keyword:string, dayMessage:number, monthMessage:number, yearMessage:number, date:Date){
     if  (keyword[2] != keyword[5] && (keyword.includes('.') == false || keyword.includes('/')== false
