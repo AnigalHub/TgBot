@@ -11,7 +11,7 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
 
     if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
         if((convertTime.ConvertTimeToMilliseconds(arrayElementWithTime,1) > 3600000) || (convertTime.ConvertTimeToMilliseconds(arrayElementWithTime,1) == 1800000)){
-            throw new Error( 'Ошибка! Некорректно введено время. Вместо времени указана неккоректно дата или время');
+            throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+'Вместо времени указана неккоректно дата или время');
         }
         else {
             let differenceInDays = dayOfTheWeek.DiffDaysOfTheWeek(date)
@@ -25,7 +25,7 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
         }
     }
     else {
-        throw new Error('Ошибка! Некорректно введен день (день недели). Пример: пн | пнд | понедельник ')
+        throw new Error('<b>Ошибка! Некорректно введен день (день недели). </b>\n'+' День недели указывается: пн|пнд|понедельник ')
     }
 }
 export default addDayWhenTimeAndDayOfTheWeekAreKnown
