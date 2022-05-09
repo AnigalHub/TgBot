@@ -8,7 +8,7 @@ function errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyw
     if((number1 == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0) ||
         (number2 == 0 && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0)
         && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0))){
-        throw new Error('Ошибка! Неккоректно введено время - опечатка во времени после указателя времени "В"');
+        throw new Error('<b>Ошибка! Неккоректно введено время. </b>\n'+'Опечатка во времени после указателя времени "В".');
     }
 }
 export default errorHandlingOfIncorrectTimeEntryUsingWords
