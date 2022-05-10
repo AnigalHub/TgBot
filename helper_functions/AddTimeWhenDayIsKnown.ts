@@ -2,7 +2,7 @@ import ConvertTime from '../ConvertTime'
 const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
 import errorHandlingOfIncorrectTimeEntry from "../helper_functions/add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntry"
-import errorHandlingOfIncorrectTimeEntryUsingWords from "./add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntryUsingWords";
+import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
 
 
 //функция добавления времени, когда известен день
