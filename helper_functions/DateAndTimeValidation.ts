@@ -9,7 +9,7 @@ function dateAndTimeValidation(time:number,timeType:string,dateType:string){
     if(!timeType){
         throw new Error('<b>Ошибка! Не указан тип времени. </b>\n'+'(мин | сек | час)');
     }
-    if(convertTime.ConvertTimeToMilliseconds(timeType,time) == 0){ //проверка, что функция перевода времени в миллисекунды не возвращает 0 (ошибку)
+    if(convertTime.ConvertTimeToMilliseconds(timeType,time) == 0){
         throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+'Пример: 10 сек | 15 минут | 9 часов');
     }
     if(!dateType){
