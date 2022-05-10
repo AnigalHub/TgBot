@@ -3,6 +3,8 @@ import ConvertTime from "../../ConvertTime";
 const convertTime = new ConvertTime()
 import calculationOfTheYear from "./add_date_when_it_is_specified_in_full/CalculationOfTheYear"
 import errorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectFullDateEntry"
+import errorHandlingOfIncorrectTime from "./add_date_when_it_is_specified_in_full/errorHandlingOfIncorrectTime";
+
 
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
 
@@ -11,6 +13,7 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
     let yearMessage = calculationOfTheYear(keyword,date)
 
     errorHandlingOfIncorrectFullDateEntry(keyword,dayMessage,monthMessage,yearMessage,date,words,numberArrayElementResponsiveForTimeType)
+
 
     let futureDate = new Date(yearMessage, monthMessage, dayMessage)
     const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
