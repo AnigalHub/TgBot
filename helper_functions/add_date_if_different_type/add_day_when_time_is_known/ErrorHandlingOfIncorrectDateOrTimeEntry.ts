@@ -8,7 +8,7 @@ function errorHandlingOfIncorrectDateOrTimeEntry(date:Date, dayRemind:string,tim
     if(convertTime.ConvertTimeToMilliseconds(dayRemind,1) >= 3600000){
         throw new Error('<b>Ошибка! Некорректно введено время и дата. </b>\n'+ 'Неизвестно когда напоминать</b>');
     }
-    if(futureDay  == -1){
+    if(futureDay == -1){
         throw new Error('<b>Ошибка! Некорректно введена дата. </b>\n'+ 'Возможно слитное написание');
     }
 }
