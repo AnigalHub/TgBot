@@ -1,5 +1,5 @@
 import errorHandlingOfIncorrectTimeEntryUsingWords
-    from "../add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntryUsingWords";
+    from "../ErrorHandlingOfIncorrectTimeEntryUsingWords";
 import checkingTheTypeOfTime from "../CheckingTheTypeOfTime";
 
 
