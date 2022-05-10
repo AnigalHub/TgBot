@@ -12,8 +12,8 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
     let dayMessage = parseInt(keyword.substring(0, 2))
     let yearMessage = calculationOfTheYear(keyword,date)
 
-    errorHandlingOfIncorrectFullDateEntry(keyword,dayMessage,monthMessage,yearMessage,date,words,numberArrayElementResponsiveForTimeType)
-
+    errorHandlingOfIncorrectFullDateEntry(keyword,dayMessage,monthMessage,yearMessage,date)
+    errorHandlingOfIncorrectTime(words,numberArrayElementResponsiveForTimeType)
 
     let futureDate = new Date(yearMessage, monthMessage, dayMessage)
     const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
