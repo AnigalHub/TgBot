@@ -1,4 +1,4 @@
-function MessageAssembly(words:Array<string>,arrayElementWithTime:string,arrayElementWithDayOfTheWeek:string):string {
+function messageAssembly(words:Array<string>,arrayElementWithTime:string,arrayElementWithDayOfTheWeek:string):string {
     let messageFuture:string
     if (words.indexOf(arrayElementWithTime) < words.indexOf(arrayElementWithDayOfTheWeek)){
         messageFuture = words.slice((words.indexOf(arrayElementWithDayOfTheWeek)+1),words.length).join(' ')//сообщение, которое напоминаем
@@ -8,4 +8,4 @@ function MessageAssembly(words:Array<string>,arrayElementWithTime:string,arrayEl
     }
     return messageFuture
 }
-export default MessageAssembly
+export default messageAssembly

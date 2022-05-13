@@ -1,7 +1,7 @@
 import MessageToSend from "../../MessageToSend";
 import DayOfTheWeek from "../../DayOfTheWeek";
 import ConvertTime from '../../ConvertTime'
-import MessageAssembly from "./add_day_when_time_is_known/MessageAssembly";
+import messageAssembly from "./add_day_when_time_is_known/MessageAssembly";
 const convertTime = new ConvertTime()
 
 
@@ -20,7 +20,7 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
 
             let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementWithTime,time)
             millisecondsTime = futureMs - timeMessage
-            messageFuture = MessageAssembly(words,arrayElementWithTime,arrayElementWithDayOfTheWeek)
+            messageFuture = messageAssembly(words,arrayElementWithTime,arrayElementWithDayOfTheWeek)
             return new MessageToSend(millisecondsTime, messageFuture)
         }
     }
