@@ -24,6 +24,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
             const dateMs = Date.parse(date.toString()) //дата сообщения в миллисекундах
             const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
             let timeAfterSecondKeyword:number
+            console.log(words[secondKeywordInMessage + 1])
             if(/^[0-9]*$/.test(words[secondKeywordInMessage + 1])){ //только цифры
                 timeAfterSecondKeyword = parseInt(arrayElementAfterSecondKeyword1) //время с типом число
                 if(timeAfterSecondKeyword == 0){
@@ -48,6 +49,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 'Возможные ошибки:\n' +
                 '- опечатка/отсутствие времени или даты\n' +
                 '- тавтология: время = дата\n' +
+                '- время является: дней/недель/лет - т е тоже дата, а не время (сек/мин/час)' +
                 '- дата является: сек/мин/полчаса/час - т е тоже время, а не день (день/неделя/месяд)');
         }
     }
