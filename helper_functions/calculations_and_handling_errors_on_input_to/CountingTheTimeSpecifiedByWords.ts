@@ -1,6 +1,7 @@
 import ConvertTime from "./../../ConvertTime";
 const convertTime = new ConvertTime()
 
+//функция - Подсчет времени, указанного словами
 function countingTheTimeSpecifiedByWords(element1:string,element2:string):number {
     let time:number
     if(convertTime.ConvertTimeToMilliseconds(element1,1) != 0){
