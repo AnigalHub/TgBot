@@ -1,7 +1,7 @@
 import ConvertTime from '../ConvertTime'
 const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
-import errorHandlingOfIncorrectTimeEntry from "../helper_functions/add_time_when_day_is_known/ErrorHandlingOfIncorrectTimeEntry"
+import errorHandlingOfIncorrectTimeEntry from "./ErrorHandlingOfIncorrectTimeEntry"
 import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
 
 
