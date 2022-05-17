@@ -1,4 +1,4 @@
-//функция расчета даты и времени в виде строки
+//функция - Расчет даты и времени в виде строки
 export default function DateAsString(time:number,date:Date){
     let timeFuture = Date.parse(date.toString()) + time
     const d = new Date (timeFuture)
