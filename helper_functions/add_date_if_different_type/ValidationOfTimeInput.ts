@@ -3,6 +3,7 @@ import checkingTheTypeOfTime from "../CheckingTheTypeOfTime";
 
 //функция - Проверка ввода времени
 function validationOfTimeInput(words:Array<string>,numberArrayElementResponsiveForTimeType:number){
+    console.log('validationOfTimeInput')
     let wordIn:number = words.indexOf('в')
     //проверка типа времени
     checkingTheTypeOfTime(words,numberArrayElementResponsiveForTimeType)

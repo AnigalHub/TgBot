@@ -86,6 +86,7 @@ export default class FutureTimeAndMessage{
             return addTimeWhenDayIsKnown(this.dateMessage, this.words,this.millisecondsTime,this.messageFuture)
         }
         else {
+            console.log('FutureTimeAndMessage')
             throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+'Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
         }
     }
@@ -116,6 +117,7 @@ export default class FutureTimeAndMessage{
             return addDateOfDifferentType(this.dateMessage, arrayElementWithDate,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
         }
         else{
+            console.log('FutureTimeAndMessage')
             throw new Error('<b>Ошибка! В дате или времени содержатся неизвестные символы. </b>\n'+'Возможно время или дата указаны слитно')
         }
     }

@@ -68,6 +68,7 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
         }
     }
     else {
+        console.log('addDateOfDifferentType')
         throw new Error('<b>Ошибка! Некорректно указана дата. </b>\n'+'Дата указывается: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
     }
 }

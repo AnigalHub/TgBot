@@ -2,6 +2,7 @@
 function errorHandlingInZeroMilliseconds(milliseconds:number) {
     //проверка, когда миллисекунд 0
     if(milliseconds == 0) {
+        console.log('errorHandlingInZeroMilliseconds')
         throw new Error('<b>Ошибка! Неккоректное время или дата - неизвестно когда напоминать.\n\n</b>' +
             '<u>Возможные ошибки:\n</u>' +
             '- неккоректно указано/отсутствие времени или даты \n' +

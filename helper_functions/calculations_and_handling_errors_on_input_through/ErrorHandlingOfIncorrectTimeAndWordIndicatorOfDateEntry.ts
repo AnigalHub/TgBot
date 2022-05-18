@@ -2,6 +2,7 @@ import DayOfTheWeek from "../../DayOfTheWeek";
 
 //функция - Обработка ошибок неправильного времени и даты, введенной словами
 function errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(words:Array<string>,numberKeywordInMessage:number) {
+    console.log('errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry')
     // элемент массива после ключевого слова - первый
     let wordsElementAfterKeyword1 = words[numberKeywordInMessage+1]
     //номер дня недели (в массиве, 0 - вс)

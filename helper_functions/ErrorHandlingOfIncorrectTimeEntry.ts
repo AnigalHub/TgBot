@@ -3,6 +3,7 @@ const convertTime = new ConvertTime()
 
 //функция - Обработка неправильного ввода времени
 function errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword:number,wordWithTypeOfTime:string) {
+    console.log('errorHandlingOfIncorrectTimeEntry')
     //проверка когда время указано больше 24 часов
     if (timeAfterSecondKeyword > 24 && convertTime.ConvertTimeToMilliseconds(wordWithTypeOfTime,1) == 3600000){
         throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+'Время не может быть больше 24 часов');

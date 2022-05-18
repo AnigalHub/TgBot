@@ -4,6 +4,8 @@ import ErrorHandlingOfIncorrectTimeEntry from "./ErrorHandlingOfIncorrectTimeEnt
 
 //функция - Проверка даты и времени
 function dateAndTimeValidation(time:number,timeType:string,dateType:string){
+    console.log('dateAndTimeValidation')
+
     //проверка - если время указано как 0
     if(time == 0){
         time = 24

@@ -27,6 +27,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
 
         //проверка - 1-ый, 2-ой, 3-ий, 4-ый элементы массива - один из содержит тип времени (сек/мин/час)
         if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
+            console.log('addTimeWhenDayIsKnown')
             throw new Error('<b>Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени. </b>\n'+'Возможно что-то отсутствует или опечатка');
         }
         //проверка - если указано время в виде - сек/мин/час (т е не день/мес/неделя и тд)
@@ -77,6 +78,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
             return new MessageToSend(millisecondsTime, messageFuture)
         }
         else {
+            console.log('addTimeWhenDayIsKnown')
             throw new Error('<b>Ошибка! Некорректно введено время и дата - неизвестно когда напоминать\n\n</b>' +
                 '<u>Возможные ошибки:</u>\n' +
                 '- опечатка/отсутствие времени или даты\n' +

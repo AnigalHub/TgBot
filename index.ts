@@ -23,6 +23,7 @@ bot.on('message', async (msg) =>{
 
     //проверка на пустоту ввода
     if(!msg.text){
+        console.log('index')
         await bot.sendMessage( chatId,"Ошибка! Ожидается текст. Бот работает только с текстом!")
         return
     }
@@ -36,7 +37,8 @@ bot.on('message', async (msg) =>{
     for (let i= 0; i<words.length;i++){
         //проверка на одинаковый ввод слова подряд
         if(convertTime.ConvertTimeToMilliseconds(words[i],1) != 0 && convertTime.ConvertTimeToMilliseconds(words[i+1],1) != 0){
-          return await bot.sendMessage(chatId,'Ошибка! Подряд несколько раз указана единица времени')
+            console.log('index')
+            return await bot.sendMessage(chatId,'Ошибка! Подряд несколько раз указана единица времени')
         }
     }
     //массив

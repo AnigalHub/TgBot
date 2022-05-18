@@ -4,6 +4,7 @@ import checkingTheTypeOfTime from "../../CheckingTheTypeOfTime";
 
 //функция - Обработка ошибок неверного ввода времени
 function errorHandlingOfIncorrectTime(words:Array<string>,numberArrayElementResponsiveForTimeType:number){
+    console.log('errorHandlingOfIncorrectTime')
     //проверка на правильный ввод типа времени - минута/час/секунда
     checkingTheTypeOfTime(words,numberArrayElementResponsiveForTimeType)
 
