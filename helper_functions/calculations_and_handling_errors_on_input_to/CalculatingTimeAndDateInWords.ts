@@ -5,7 +5,7 @@ import countingTheTimeSpecifiedByWords from "./CountingTheTimeSpecifiedByWords";
 import countingNumberArrayElementResponsiveForTimeType from "./CountingNumberArrayElementResponsiveForTimeType";
 import TimeAndArrayElementWithDateOrTime from "../calculations_and_handling_errors_on_input_to/TimeAndArrayElementWithDateOrTime";
 
-//фунция - Подсчет времени и даты, введенной словами
+//фунция - Вычисление времени и даты, введенной словами
 function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKeywordInMessage:number):TimeAndArrayElementWithDateOrTime {
 
     // элемент, в котором может быть указана дата (сегодня/завтра/послезавтра)
@@ -27,12 +27,18 @@ function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKey
     let numberArrayElementResponsiveForTimeType:number = 0
 
     if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
+        //время
         time = parseInt(wordsElementAfterKeyword1)
+        //номер элемента массива с типом времени (сек/мин/час)
         numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 2
+
+
         if(convertTime.ConvertWordIndicatorOfTimeToNumber(date,dateOfDifferentType) != -1){
+            //элемент массива с датой (завтра/01.07.2023)
             arrayElementWithDate = dateOfDifferentType
         }
         else {
+            //элемент массива с датой (завтра/01.07.2023)
             arrayElementWithDate = wordsElementAfterKeyword3
         }
     }
