@@ -1,4 +1,4 @@
-import ConvertTime from "./../../ConvertTime";
+import ConvertTime from "../ConvertTime";
 const convertTime = new ConvertTime()
 
 function errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword:number,wordWithTypeOfTime:string) {
