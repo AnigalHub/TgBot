@@ -3,7 +3,9 @@ import removeDuplicateAdjacentElementsFromArray from "./RemoveDuplicateAdjacentE
 
 //функция - Подготовки сообщения
 export default function prepareMessage(message:string){
+    //изменение регистра букв сообщение - везде на маленькие
     let text = message.toLocaleLowerCase()
+    //разбиение сообщение на слова в массив
     let words = text.split(" ")
 
     //Удаление пустых элементов из массива
