@@ -7,14 +7,22 @@ import TimeAndArrayElementWithDateOrTime from "../calculations_and_handling_erro
 
 function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKeywordInMessage:number):TimeAndArrayElementWithDateOrTime {
 
-    let dateOfDifferentType = words[numberKeywordInMessage-1] // элемент, в котором может быть указа дата (сегодня/завтра/послезавтра)
-    let wordsElementAfterKeyword1 = words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
-    let wordsElementAfterKeyword2 = words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
-    let wordsElementAfterKeyword3 = words[numberKeywordInMessage+3] // элемент массива после ключевого слова - третий
-    let wordsElementAfterKeyword4 = words[numberKeywordInMessage+4] // элемент массива после ключевого слова - четвертый
+    // элемент, в котором может быть указана дата (сегодня/завтра/послезавтра)
+    let dateOfDifferentType = words[numberKeywordInMessage-1]
+    // элемент массива после ключевого слова - первый
+    let wordsElementAfterKeyword1 = words[numberKeywordInMessage+1]
+    // элемент массива после ключевого слова - второй
+    let wordsElementAfterKeyword2 = words[numberKeywordInMessage+2]
+    // элемент массива после ключевого слова - третий
+    let wordsElementAfterKeyword3 = words[numberKeywordInMessage+3]
+    // элемент массива после ключевого слова - четвертый
+    let wordsElementAfterKeyword4 = words[numberKeywordInMessage+4]
 
+    //время
     let time:number = 0
+    //элемент массива с датой (завтра/01.07.2023)
     let arrayElementWithDate:string = ''
+    //номер элемента массива с типом времени (сек/мин/час)
     let numberArrayElementResponsiveForTimeType:number = 0
 
     if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
