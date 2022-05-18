@@ -5,18 +5,25 @@ import calculationOfTheYear from "./add_date_when_it_is_specified_in_full/Calcul
 import errorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectFullDateEntry"
 import errorHandlingOfIncorrectTime from "./add_date_when_it_is_specified_in_full/errorHandlingOfIncorrectTime";
 
-
+//функция - Добавление даты, когда дата указана полностью
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
 
-    let monthMessage = parseInt(keyword.substring(3, 6)) - 1
+    //день
     let dayMessage = parseInt(keyword.substring(0, 2))
+    //месяц
+    let monthMessage = parseInt(keyword.substring(3, 6)) - 1
+    //год
     let yearMessage = calculationOfTheYear(keyword,date)
 
+    //обработка ошибок неверного ввода полной даты
     errorHandlingOfIncorrectFullDateEntry(keyword,dayMessage,monthMessage,yearMessage,date)
+    //обработка ошибок неверного ввода времени
     errorHandlingOfIncorrectTime(words,numberArrayElementResponsiveForTimeType)
 
+    //будущая дата - объект Data
     let futureDate = new Date(yearMessage, monthMessage, dayMessage)
-    const futureDateMs = Date.parse(futureDate.toString()) //будущая дата в миллисекундах
+    //будущая дата в миллисекундах
+    const futureDateMs = Date.parse(futureDate.toString())
 
     if ( convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
         if (convertTime.ConvertSmallNumberFromStringToNumber(words[numberArrayElementResponsiveForTimeType]) != 0){
