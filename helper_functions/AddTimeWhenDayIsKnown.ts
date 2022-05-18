@@ -5,18 +5,27 @@ import errorHandlingOfIncorrectTimeEntry from "./ErrorHandlingOfIncorrectTimeEnt
 import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
 
 
-//функция добавления времени, когда известен день
+//функция - Добавление времени, когда известен день
 function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:number, messageFuture:string) : MessageToSend {
+    //проверка - в массиве содержится ключевое слово "в" или "во"
     if (words.includes('в') == true || words.includes('во') == true){
+        //проверка - в массиве содержится ключевое слово "во"
         if(words.includes('во') == true){
+            //замена ключевого слова "во" на ключевое слово "в"
             words.splice(words.indexOf('во'),1,'в')
         }
-        let secondKeywordInMessage:number = words.indexOf('в') // номер ключевого слова в массиве
-        let arrayElementAfterSecondKeyword1 = words[(secondKeywordInMessage)+1] // элемент массива после ключевого слова (secondKeywordInMessage) - первый
-        let arrayElementAfterSecondKeyword2 = words[(secondKeywordInMessage)+2] // элемент массива после ключевого слова (secondKeywordInMessage) - второй
-        let arrayElementAfterSecondKeyword3 = words[(secondKeywordInMessage)+3] // элемент массива после ключевого слова (secondKeywordInMessage) - третий
-        let arrayElementAfterSecondKeyword4 = words[(secondKeywordInMessage)+4] // элемент массива после ключевого слова (secondKeywordInMessage) - четвертый
+        //номер ключевого слова в массиве
+        let secondKeywordInMessage:number = words.indexOf('в')
+        //элемент массива после ключевого слова (secondKeywordInMessage) - первый
+        let arrayElementAfterSecondKeyword1 = words[(secondKeywordInMessage)+1]
+        //элемент массива после ключевого слова (secondKeywordInMessage) - второй
+        let arrayElementAfterSecondKeyword2 = words[(secondKeywordInMessage)+2]
+        //элемент массива после ключевого слова (secondKeywordInMessage) - третий
+        let arrayElementAfterSecondKeyword3 = words[(secondKeywordInMessage)+3]
+        //элемент массива после ключевого слова (secondKeywordInMessage) - четвертый
+        let arrayElementAfterSecondKeyword4 = words[(secondKeywordInMessage)+4]
 
+        //проверка - первый, второй, третий, четвертый элементы массива - один из содержит тип времени (сек/мин/час)
         if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
             throw new Error('<b>Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени. </b>\n'+'Возможно что-то отсутствует или опечатка');
         }
