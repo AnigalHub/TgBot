@@ -4,7 +4,7 @@ import ConvertTime from '../../ConvertTime'
 import messageAssembly from "./add_day_when_time_is_known/MessageAssembly";
 const convertTime = new ConvertTime()
 
-
+//функция - Добавление дня, когда указано время и день недели
 function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWithTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
 
     let dayOfTheWeek = new DayOfTheWeek(arrayElementWithDayOfTheWeek)
