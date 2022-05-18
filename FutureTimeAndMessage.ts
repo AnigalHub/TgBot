@@ -9,11 +9,16 @@ import errorHandlingInZeroMilliseconds from "./helper_functions/calculations_and
 import calculatingTimeAndDateInWords from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
 
 export default class FutureTimeAndMessage{
+    //id пользователя
     private readonly chatId:number
+    //массив слов - сообщение, которое написали
     private readonly words:Array<string>
+    //дата отправки сообщения - объект Date
     private readonly dateMessage:Date
+    //миллисекунды - время когда напоминаем
     private millisecondsTime: number
-    private messageFuture: string = ''//сообщение, которое напоминаем
+    //сообщение, которое напоминаем
+    private messageFuture: string = ''
 
     constructor(chatId:number,words:Array<string>, dateMessage:Date) {
         this.chatId = chatId
@@ -22,10 +27,12 @@ export default class FutureTimeAndMessage{
         this.millisecondsTime = 0
         this.messageFuture = ''
     }
-
+    //метод - Вычисление и Обработка ошибок при вводе "Через"
     CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
-        let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1] // элемент массива после ключевого слова - первый
-        let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2] // элемент массива после ключевого слова - второй
+        // элемент массива после ключевого слова - первый
+        let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1]
+        // элемент массива после ключевого слова - второй
+        let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2]
         let keywordIndexes = Array.from(this.words.entries()).filter(i => i[1] == this.words[numberKeywordInMessage]).map(i => i[0])
         let time:number
 
@@ -76,6 +83,5 @@ export default class FutureTimeAndMessage{
         else{
             throw new Error('<b>Ошибка! В дате или времени содержатся неизвестные символы. </b>\n'+'Возможно время или дата указаны слитно')
         }
-
     }
 }
