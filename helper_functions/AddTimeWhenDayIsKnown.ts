@@ -25,31 +25,53 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
         //элемент массива после ключевого слова (secondKeywordInMessage) - четвертый
         let arrayElementAfterSecondKeyword4 = words[(secondKeywordInMessage)+4]
 
-        //проверка - первый, второй, третий, четвертый элементы массива - один из содержит тип времени (сек/мин/час)
+        //проверка - 1-ый, 2-ой, 3-ий, 4-ый элементы массива - один из содержит тип времени (сек/мин/час)
         if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
             throw new Error('<b>Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени. </b>\n'+'Возможно что-то отсутствует или опечатка');
         }
+        //проверка - если указано время в виде - сек/мин/час (т е не день/мес/неделя и тд)
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
+
+            //будущая дата - объект Data
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
+            //время в будущей дате - зануляем
             futureDate.setHours(0,0,0,0)
+            //дата сообщения в миллисекундах
             const dateMs = Date.parse(date.toString())
+            //будущая дата в миллисекундах
             const futureDateMs = Date.parse(futureDate.toString())
+            //время - после второго ключевого слова ("В")
             let timeAfterSecondKeyword:number
-            if(/^[0-9]*$/.test(words[secondKeywordInMessage + 1])){ //только цифры
+
+            //проверка - если (words[secondKeywordInMessage + 1])
+            // элемент массива после второго ключевого слова содержит только цифры
+            if(/^[0-9]*$/.test(words[secondKeywordInMessage + 1])){
+                //время - после второго ключевого слова ("В")
                 timeAfterSecondKeyword = parseInt(arrayElementAfterSecondKeyword1)
+                //проверка - если время равно 0
                 if(timeAfterSecondKeyword == 0){
+                    //время - после второго ключевого слова ("В")
                     timeAfterSecondKeyword = 24
                 }
+                //обработка неправильного ввода времени
                 errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword2)
-                messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')//сообщение, которое напоминаем
+                //сборка будущего сообщения
+                messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')
+                //подсчет миллисекунд
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
             }
             else {
-               timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+                //время - после второго ключевого слова ("В")
+                timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+                //обработка неправильного ввода времени словами
                 errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+                //обработка неправильного ввода времени
                 errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3)
+                //объект, содержащий сообщение и миллисекунды
                 let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
+                //сборка будущего сообщения
                 messageFuture = objTime.message
+                //подсчет миллисекунд
                 millisecondsTime = objTime.millisecondsTime
             }
             return new MessageToSend(millisecondsTime, messageFuture)
