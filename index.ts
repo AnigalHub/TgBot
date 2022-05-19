@@ -5,7 +5,6 @@ import DateAsString from "./helper_functions/DateAsString";
 import outputMessageOnCommand from "./helper_functions/OutputMessageOnCommand";
 import getMessageWithTime from "./helper_functions/GetMessageWithTime";
 
-
 const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 
@@ -25,8 +24,9 @@ bot.on('message', async (msg) =>{
         await bot.sendMessage( chatId,"Ошибка! Ожидается текст. Бот работает только с текстом!")
         return
     }
+
     //вывод сообщения по команде
-    if(await outputMessageOnCommand(msg.text, chatId, bot) == true){
+    if(await outputMessageOnCommand(msg.text, chatId, bot)){
         return
     }
     //массив слов - сообщение, которое написали
