@@ -6,6 +6,7 @@ import MessageToSend from "./MessageToSend";
 import DateAsString from "./helper_functions/DateAsString";
 import ConvertTime from './ConvertTime'
 import outputMessageOnCommand from "./helper_functions/OutputMessageOnCommand";
+import errorHandlingRepeatingDifferentTypeOfTime from "./helper_functions/ErrorHandlingRepeatingDifferentTypeOfTime";
 const convertTime = new ConvertTime()
 
 const token:string = config.token
@@ -34,7 +35,10 @@ bot.on('message', async (msg) =>{
     }
 
     //массив слов - сообщение, которое написали
-    let words = prepareMessage(msg.text)
+    let words = await prepareMessage(msg.text,bot,chatId)
+    if(words == undefined){
+        return
+    }
 
     //массив
     console.log(words)
