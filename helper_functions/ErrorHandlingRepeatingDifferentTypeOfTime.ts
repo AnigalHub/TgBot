@@ -7,8 +7,10 @@ function errorHandlingRepeatingDifferentTypeOfTime(words:Array<string>) {
     for (let i= 0; i<words.length;i++){
         //проверка на повтор разного типа времени подряд
         if(convertTime.ConvertTimeToMilliseconds(words[i],1) != 0 && convertTime.ConvertTimeToMilliseconds(words[i+1],1) != 0){
-            console.log('index.js')
-            return await bot.sendMessage(chatId,'Ошибка! Подряд несколько раз указана единица времени')
+            console.log('errorHandlingRepeatingDifferentTypeOfTime')
+            throw new Error('Ошибка! Подряд несколько раз указана единица времени')
+
+           // return await bot.sendMessage(chatId,'Ошибка! Подряд несколько раз указана единица времени')
         }
     }
 }
