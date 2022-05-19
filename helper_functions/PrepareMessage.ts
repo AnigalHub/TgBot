@@ -1,12 +1,10 @@
 import removeEmptyElementsFromArray from "./RemoveEmptyElementsFromArray";
 import removeDuplicateAdjacentElementsFromArray from "./RemoveDuplicateAdjacentElementsFromArray";
-import DateAsString from "./DateAsString";
 import TelegramBot from "node-telegram-bot-api";
 import errorHandlingRepeatingDifferentTypeOfTime from "./ErrorHandlingRepeatingDifferentTypeOfTime";
 
 //функция - Подготовки сообщения
 export default async function prepareMessage(message:string,bot:TelegramBot,chatId:number){
-
     try {
         //изменение регистра букв сообщение - везде на маленькие
         let text = message.toLocaleLowerCase()
