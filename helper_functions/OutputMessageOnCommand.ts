@@ -1,7 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 
 //функция - Вывод сообщения по команде
-async function outputMessageOnCommand(message:string, chatId:number, bot:TelegramBot) {
+async function outputMessageOnCommand(message:string, chatId:number, bot:TelegramBot){
     if(message == '/start'){
         await bot.sendMessage(chatId,'<b>Telegram-бот-Напоминальщик событий</b>.\n' +
             'Бот помогает не забывать о важных делах и событиях. Он напоминает о событиях или делах ' +
@@ -12,10 +12,10 @@ async function outputMessageOnCommand(message:string, chatId:number, bot:Telegra
             '<code>/help</code> - правила написания сообщений боту\n\n' +
             '<code>/messageOptions</code> - варианты написания сообщений боту\n\n'
             ,{parse_mode: 'HTML'})
-        return
+        return true
     }
     if(message == '/help'){
-        bot.sendMessage(chatId,'<b><u>Правила при написании сообщения:\n\n</u></b>' +
+        await bot.sendMessage(chatId,'<b><u>Правила при написании сообщения:\n\n</u></b>' +
             '<b>1)Бот адаптирован только под русский язык!!!!\n\n</b>' +
             '<b>2)Структура сообщения:\n</b><code>Напомнить КОГДА (дата и время) СООБЩЕНИЕ (что напомнить)\n\n</code>' +
             '<b>3)Время указывается с помощью ключевых слов:\n</b>' +
@@ -50,7 +50,7 @@ async function outputMessageOnCommand(message:string, chatId:number, bot:Telegra
             '<i>единица времени:</i><code> в минуту|в час\n</code>' +
             '<i>день недели:</i><code> в вт|в пятницу\n\n</code>',  {parse_mode: 'HTML'}
         )
-        return
+        return true
     }
     if(message == '/messageOptions'){
         await bot.sendMessage(chatId,'<b><u>Варианты написания сообщений:\n</u></b>' +
@@ -85,7 +85,8 @@ async function outputMessageOnCommand(message:string, chatId:number, bot:Telegra
             '29) <code>напомнить в/во «день недели» в «Х(число цифрой)» секунд/минут/часов\n\n</code>' +
             '30) <code>напомнить в/во «день недели» в «Х(число словами)» секунд/минут/часов\n\n</code>',  {parse_mode: 'HTML'}
         )
-        return
+        return true
     }
+    return false
 }
 export default outputMessageOnCommand
