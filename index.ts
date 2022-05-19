@@ -4,10 +4,7 @@ import FutureTimeAndMessage from './FutureTimeAndMessage'
 import prepareMessage from "./helper_functions/PrepareMessage";
 import MessageToSend from "./MessageToSend";
 import DateAsString from "./helper_functions/DateAsString";
-import ConvertTime from './ConvertTime'
 import outputMessageOnCommand from "./helper_functions/OutputMessageOnCommand";
-import errorHandlingRepeatingDifferentTypeOfTime from "./helper_functions/ErrorHandlingRepeatingDifferentTypeOfTime";
-const convertTime = new ConvertTime()
 
 const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
