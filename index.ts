@@ -23,12 +23,16 @@ bot.on('message', async (msg) =>{
 
     //проверка на пустоту ввода
     if(!msg.text){
-        console.log('index')
+        console.log('index.js')
         await bot.sendMessage( chatId,"Ошибка! Ожидается текст. Бот работает только с текстом!")
         return
     }
     //вывод сообщения по команде
-    await outputMessageOnCommand(msg.text, chatId, bot)
+
+    if(await outputMessageOnCommand(msg.text, chatId, bot) == true){
+        return
+    }
+
 
     //массив слов - сообщение, которое написали
     let words = prepareMessage(msg.text)
@@ -37,7 +41,7 @@ bot.on('message', async (msg) =>{
     for (let i= 0; i<words.length;i++){
         //проверка на одинаковый ввод слова подряд
         if(convertTime.ConvertTimeToMilliseconds(words[i],1) != 0 && convertTime.ConvertTimeToMilliseconds(words[i+1],1) != 0){
-            console.log('index')
+            console.log('index.js')
             return await bot.sendMessage(chatId,'Ошибка! Подряд несколько раз указана единица времени')
         }
     }
@@ -84,6 +88,7 @@ bot.on('message', async (msg) =>{
         }
     }
     else {
+        console.log('index.js')
         await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
     }
 })
