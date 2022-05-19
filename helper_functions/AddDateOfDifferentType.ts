@@ -8,40 +8,62 @@ import ConvertTime from "./../ConvertTime";
 import validationOfTimeInput from "./add_date_if_different_type/ValidationOfTimeInput";
 const convertTime = new ConvertTime()
 
-
+//функция - Добавление даты разного типа (полная дата/день недели/словом указателем)
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-
+    //проверка ввода времени
     validationOfTimeInput(words,numberArrayElementResponsiveForTimeType)
 
+    //проверка даты и времени
     //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
 
+    //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
+        //добавление даты, когда дата указана полностью
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
+    //проверка - если дата указана полная (с .,-,/ и только цифры) до ключевого слова "В"
     else if(!/[А-яЁё]/.test(words[numberKeywordInMessage-1]) && (words[numberKeywordInMessage-1].includes('.') == true || words[numberKeywordInMessage-1].includes('-') == true || words[numberKeywordInMessage-1].includes('/') == true )){
+        //добавление даты, когда дата указана полностью
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage-1,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage-1],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
-    else if (/[А-яЁё]/.test(arrayElementWithDate)){ // только буквы
+    //проверка - если элемент arrayElementWithDate (элемент массива, отвечающий за дату) содержит только буквы
+    else if (/[А-яЁё]/.test(arrayElementWithDate)){
+        //слово до "дня недели"
         const beforeDayOfTheWeek = new DayOfTheWeek(arrayElementWithDate)
+        //слово после "дня недели"
         const afterDayOfTheWeek = new DayOfTheWeek(words[numberArrayElementResponsiveForTimeType+2])
+
+        //проверка - слово до "дня недели" - является днем недели
         if(beforeDayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
-         let dayOfTheWeek:string
+           //день недели
+           let dayOfTheWeek:string
+
+           //проверка - слово, которое находится до элемента, который отвечает за время (сек/мин/час) - является временем
            if(convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType-1],1) != 0){
+               //день недели
                dayOfTheWeek = words[numberArrayElementResponsiveForTimeType-1]
            }
+           //проверка - слово, которое отвечает за время (сек/мин/час) - является временем
            else if(convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) != 0){
+               //день недели
                dayOfTheWeek = words[numberArrayElementResponsiveForTimeType]
            }
+           //проверка - слово, которое находится после элемента, который отвечает за время (сек/мин/час) - является временем
            else {
+               //день недели
                dayOfTheWeek = words[numberArrayElementResponsiveForTimeType+1]
            }
+            //добавление дня, когда указано время и день недели
             return addDayOfTheWeek(numberKeywordInMessage,arrayElementWithDate, dayOfTheWeek,date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
         }
+        //проверка - если в arrayElementWithDate - попала не дата, а "в" или "во" и afterDayOfTheWeek - является днем недели (находится в массиве дней недели)
         if (arrayElementWithDate == 'в' || arrayElementWithDate == 'во' &&  afterDayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+            //добавление дня, когда указано время и день недели
             return addDayOfTheWeek(numberKeywordInMessage+1,words[numberArrayElementResponsiveForTimeType+2], words[numberArrayElementResponsiveForTimeType],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
         }
         else{
+            //добавление дня, когда время известно
             return AddDayWhenTimeIsKnown(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
         }
     }
