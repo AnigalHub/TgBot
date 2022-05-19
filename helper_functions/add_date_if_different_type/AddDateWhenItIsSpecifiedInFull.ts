@@ -3,7 +3,7 @@ import ConvertTime from "../../ConvertTime";
 const convertTime = new ConvertTime()
 import calculationOfTheYear from "./add_date_when_it_is_specified_in_full/CalculationOfTheYear"
 import errorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectFullDateEntry"
-import errorHandlingOfIncorrectTime from "./add_date_when_it_is_specified_in_full/errorHandlingOfIncorrectTime";
+import errorHandlingOfIncorrectTime from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectTime"
 
 //функция - Добавление даты, когда дата указана полностью
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
