@@ -26,13 +26,14 @@ function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKey
     //номер элемента массива с типом времени (сек/мин/час)
     let numberArrayElementResponsiveForTimeType:number = 0
 
-    if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) { // только цифры
+    //проверка - если элемент массива после ключевого слова содержит только цифры
+    if(/^[0-9]*$/.test(wordsElementAfterKeyword1)) {
         //время
         time = parseInt(wordsElementAfterKeyword1)
         //номер элемента массива с типом времени (сек/мин/час)
         numberArrayElementResponsiveForTimeType = numberKeywordInMessage + 2
 
-
+        //проверка - dateOfDifferentType - не является словом-указателем (сегодня/завтра/послезавтра/послепослезавтра)
         if(convertTime.ConvertWordIndicatorOfTimeToNumber(date,dateOfDifferentType) != -1){
             //элемент массива с датой (завтра/01.07.2023)
             arrayElementWithDate = dateOfDifferentType
@@ -42,23 +43,38 @@ function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKey
             arrayElementWithDate = wordsElementAfterKeyword3
         }
     }
-    if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
+    //проверка - если элемент массива после ключевого слова содержит только буквы
+    if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){
+        //день недели
         const dayOfTheWeek = new DayOfTheWeek(wordsElementAfterKeyword1)
+        //время
         time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+        //номер элемента массива с типом времени (сек/мин/час)
         numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
 
+        //проверка - если dayOfTheWeek - не день недели (нет в массиве дней недели)
         if(dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
+            //время
             time = parseInt(wordsElementAfterKeyword3)
+            //проверка - если время было указано не цифрой, а словами
             if(isNaN(time)){
+                //время
                 time = countingTheTimeSpecifiedByWords(wordsElementAfterKeyword3,wordsElementAfterKeyword4)
             }
+            //номер элемента массива с типом времени (сек/мин/час)
             numberArrayElementResponsiveForTimeType = countingNumberArrayElementResponsiveForTimeType(numberKeywordInMessage+2,wordsElementAfterKeyword1,wordsElementAfterKeyword2)
+            //элемент массива с датой (завтра/01.07.2023)
             arrayElementWithDate = wordsElementAfterKeyword1
         }
-        else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 || convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 || convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0){
+        //проверка - какой то из элементов массива после ключевого слова (1-ый,2-ой или 3-ий) - являются временем (сек/мин/час/мес)
+        else if (convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0 ||
+            convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,1) != 0 ||
+            convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword3,1) != 0){
+            //элемент массива с датой (завтра/01.07.2023)
             arrayElementWithDate = words[numberArrayElementResponsiveForTimeType+1]
         }
         else {
+            //элемент массива с датой (завтра/01.07.2023)
             arrayElementWithDate = dateOfDifferentType
         }
     }
