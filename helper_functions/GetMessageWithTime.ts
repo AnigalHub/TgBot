@@ -1,6 +1,5 @@
 import MessageToSend from "../MessageToSend";
 import FutureTimeAndMessage from "../FutureTimeAndMessage";
-import DateAsString from "./DateAsString";
 import TelegramBot from "node-telegram-bot-api";
 
 //функция - Получение сообщения со временем в миллисекундах
