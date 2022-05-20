@@ -1,4 +1,4 @@
-
+//функция - Проверка времени на прошлое
 function checkingForPastTense(milliseconds:number) {
     //проверка, когда миллисекунд 0
     if(milliseconds < 0) {
