@@ -61,6 +61,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')
                 //подсчет миллисекунд
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
+                //проверка времени на прошлое
                 checkingForPastTense(millisecondsTime)
             }
             else {
@@ -76,6 +77,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 messageFuture = objTime.message
                 //подсчет миллисекунд
                 millisecondsTime = objTime.millisecondsTime
+                //проверка времени на прошлое
                 checkingForPastTense(millisecondsTime)
             }
             return new MessageToSend(millisecondsTime, messageFuture)
