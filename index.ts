@@ -39,6 +39,7 @@ bot.on('message', async (msg) =>{
     //массив
     console.log(words)
 
+    //получение сообщения и Времени в миллисекундах
     let messageWithTime = await getMessageWithTime(chatId, bot, words, timeMessage, dateMessage)
     console.log(messageWithTime)
     if (messageWithTime != undefined){
