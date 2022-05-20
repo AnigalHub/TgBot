@@ -2,7 +2,7 @@ import MessageToSend from "../MessageToSend";
 import FutureTimeAndMessage from "../FutureTimeAndMessage";
 import TelegramBot from "node-telegram-bot-api";
 
-//функция - Получение сообщения со временем в миллисекундах
+//функция - Получение сообщения и Времени в миллисекундах
 async function getMessageWithTime(chatId:number, bot:TelegramBot,words:Array<string>,timeMessage:number,dateMessage:Date){
 
     //номер ключевого слова в сообщении (в массиве слов)
