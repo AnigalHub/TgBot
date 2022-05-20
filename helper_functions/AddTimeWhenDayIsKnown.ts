@@ -3,6 +3,7 @@ const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
 import errorHandlingOfIncorrectTimeEntry from "./ErrorHandlingOfIncorrectTimeEntry"
 import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
+import checkingForPastTense from "./add_date_if_different_type/add_day_when_time_is_known/CheckingForPastTense";
 
 
 //функция - Добавление времени, когда известен день
@@ -60,6 +61,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')
                 //подсчет миллисекунд
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
+                checkingForPastTense(millisecondsTime)
             }
             else {
                 //время - после второго ключевого слова ("В")
@@ -74,6 +76,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 messageFuture = objTime.message
                 //подсчет миллисекунд
                 millisecondsTime = objTime.millisecondsTime
+                checkingForPastTense(millisecondsTime)
             }
             return new MessageToSend(millisecondsTime, messageFuture)
         }
