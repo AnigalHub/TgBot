@@ -9,8 +9,6 @@ function errorHandlingRepeatingDifferentTypeOfTime(words:Array<string>) {
         if(convertTime.ConvertTimeToMilliseconds(words[i],1) != 0 && convertTime.ConvertTimeToMilliseconds(words[i+1],1) != 0){
             console.log('errorHandlingRepeatingDifferentTypeOfTime')
             throw new Error('Ошибка! Подряд несколько раз указана единица времени')
-
-           // return await bot.sendMessage(chatId,'Ошибка! Подряд несколько раз указана единица времени')
         }
     }
 }
