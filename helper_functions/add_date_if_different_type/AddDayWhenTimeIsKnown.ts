@@ -29,6 +29,7 @@ function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, d
 
     //подсчет миллисекунд
     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, numberArrayElementResponsiveForTimeType)
+    //проверка времени на прошлое
     checkingForPastTense(millisecondsTime)
     //сборка будущего сообщения
     messageFuture = words.slice((startMessageFuture), words.length).join(' ')
