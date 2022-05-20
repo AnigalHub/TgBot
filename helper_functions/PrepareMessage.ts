@@ -18,7 +18,9 @@ export default async function prepareMessage(message:string,bot:TelegramBot,chat
 
         //Удаление повторяющихся соседних элементов из массива
         words = removeDuplicateAdjacentElementsFromArray (words)
+        //Обработка повтора разного типа времени
         errorHandlingRepeatingDifferentTypeOfTime(words)
+
         return words;
     } catch (e:any) {
         await bot.sendMessage(chatId,e.message,{parse_mode: 'HTML'})
