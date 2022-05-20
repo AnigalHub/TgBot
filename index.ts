@@ -11,6 +11,9 @@ const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegr
 bot.on('message', async (msg) =>{
     //id пользователя
     const chatId = msg.chat.id
+    try{
+
+
     //дата отправки сообщения в сек
     const timeMessage = msg.date*1000
     //дата отправки сообщения - объект Date
@@ -37,14 +40,21 @@ bot.on('message', async (msg) =>{
     //массив
     console.log(words)
 
+
     //получение сообщения и Времени в миллисекундах
-    let messageWithTime = await getMessageWithTime(chatId, bot, words, timeMessage, dateMessage)
+    let messageWithTime =  await getMessageWithTime(chatId, bot, words, timeMessage, dateMessage)
     console.log(messageWithTime)
     if (messageWithTime != undefined){
         //расчет даты и времени в виде строки
         DateAsString(messageWithTime.millisecondsTime,dateMessage)
     }
 
+} catch (e:any) {
+    console.log({e})
+}
+finally {
+
+}
 })
 
 
