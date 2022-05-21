@@ -11,8 +11,11 @@ const convertTime = new ConvertTime()
 //функция - Добавление даты разного типа (полная дата/день недели/словом указателем)
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-    //проверка ввода времени
-    validationOfTimeInput(words,numberArrayElementResponsiveForTimeType)
+
+    if(new DayOfTheWeek(arrayElementWithDate).SearchForTheDayNumberOfTheWeek() == -1){
+        //проверка ввода времени
+        validationOfTimeInput(words,numberArrayElementResponsiveForTimeType)
+    }
 
     //проверка даты и времени
     //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
