@@ -2,31 +2,33 @@ import MessageToSend from "../MessageToSend";
 import addDateWhenItIsSpecifiedInFull from "./add_date_if_different_type/AddDateWhenItIsSpecifiedInFull";
 import addDayOfTheWeek from "./add_date_if_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown";
 import AddDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIsKnown";
-import dateAndTimeValidation from  "../helper_functions/DateAndTimeValidation"
+import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime"
 import DayOfTheWeek from "../DayOfTheWeek";
 import ConvertTime from "./../ConvertTime";
-import validationOfTimeInput from "./add_date_if_different_type/ValidationOfTimeInput";
 const convertTime = new ConvertTime()
 
 //функция - Добавление даты разного типа (полная дата/день недели/словом указателем)
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-
+console.log('addDateOfDifferentType')
     if(new DayOfTheWeek(arrayElementWithDate).SearchForTheDayNumberOfTheWeek() == -1){
         //проверка ввода времени
-        validationOfTimeInput(words,numberArrayElementResponsiveForTimeType)
+       // validationOfTimeInput(words,numberArrayElementResponsiveForTimeType)
+        errorHandlingOfIncorrectTime(timeRemind,words,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
     }
 
     //проверка даты и времени
-    //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
+    //dateAndTimeValidation(timeRemind,words,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
 
     //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
+        console.log('тут1')
         //добавление даты, когда дата указана полностью
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
     //проверка - если дата указана полная (с .,-,/ и только цифры) до ключевого слова "В"
     else if( (words[numberKeywordInMessage-1]) && !/[А-яЁё]/.test(words[numberKeywordInMessage-1]) && (words[numberKeywordInMessage-1].includes('.') == true || words[numberKeywordInMessage-1].includes('-') == true || words[numberKeywordInMessage-1].includes('/') == true )){
+        console.log('тут2')
         //добавление даты, когда дата указана полностью
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage-1,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage-1],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
