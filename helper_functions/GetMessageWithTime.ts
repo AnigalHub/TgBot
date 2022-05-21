@@ -42,7 +42,7 @@ async function getMessageWithTime(chatId:number, bot:TelegramBot,words:Array<str
     }
     else {
         console.log('index.js')
-        await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны!');
+        await bot.sendMessage(chatId,'Ошибка! Не корректный ввод.');
     }
 }
 export default getMessageWithTime
