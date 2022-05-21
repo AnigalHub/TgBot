@@ -3,7 +3,7 @@ const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
 import errorHandlingOfIncorrectTimeEntry from "./ErrorHandlingOfIncorrectTimeEntry"
 import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
-import checkingForPastTense from "./add_date_if_different_type/add_day_when_time_is_known/CheckingForPastTense";
+import checkingForPastTense from "./CheckingForPastTense";
 
 
 //функция - Добавление времени, когда известен день

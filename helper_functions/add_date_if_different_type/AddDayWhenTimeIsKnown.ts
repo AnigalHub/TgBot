@@ -2,7 +2,7 @@ import MessageToSend from "../../MessageToSend";
 import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 import errorHandlingOfIncorrectDateOrTimeEntry from "../ErrorHandlingOfIncorrectDateOrTimeEntry"
-import checkingForPastTense from "./add_day_when_time_is_known/CheckingForPastTense";
+import checkingForPastTense from "../CheckingForPastTense";
 
 //функция - Добавление дня, когда время известно
 function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>,
