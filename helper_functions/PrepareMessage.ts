@@ -1,8 +1,8 @@
-import removeEmptyElementsFromArray from "./RemoveEmptyElementsFromArray";
-import removeDuplicateAdjacentElementsFromArray from "./RemoveDuplicateAdjacentElementsFromArray";
 import TelegramBot from "node-telegram-bot-api";
-import errorHandlingRepeatingDifferentTypeOfTime from "./ErrorHandlingRepeatingDifferentTypeOfTime";
-import checkingMessageForForeignLetters from "./CheckingMessageForForeignLetters"
+import removeEmptyElementsFromArray from "./prepare_message/RemoveEmptyElementsFromArray";
+import removeDuplicateAdjacentElementsFromArray from "./prepare_message/RemoveDuplicateAdjacentElementsFromArray";
+import errorHandlingRepeatingDifferentTypeOfTime from "./prepare_message/ErrorHandlingRepeatingDifferentTypeOfTime";
+import checkingMessageForForeignLetters from "./prepare_message/CheckingMessageForForeignLetters"
 
 //функция - Подготовки сообщения
 export default async function prepareMessage(message:string,bot:TelegramBot,chatId:number){
