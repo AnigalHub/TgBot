@@ -27,6 +27,12 @@ bot.on('message', async (msg) =>{
         await bot.sendMessage( chatId,"Ошибка! Ожидается текст. Бот работает только с текстом!")
         return
     }
+    console.log(msg.text)
+
+    if(!/^[?!,.а-яА-ЯёЁ0-9\s]+$/.test(msg.text)){
+        await bot.sendMessage( chatId,"Ошибка! Не корректный ввод. Символы неизвестны - бот знает только русский язык!")
+        return
+    }
 
     //вывод сообщения по команде
     if(await outputMessageOnCommand(msg.text, chatId, bot)){
