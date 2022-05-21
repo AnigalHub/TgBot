@@ -6,20 +6,16 @@ import errorHandlingRepeatingDifferentTypeOfTime from "./ErrorHandlingRepeatingD
 //функция - Подготовки сообщения
 export default async function prepareMessage(message:string,bot:TelegramBot,chatId:number){
     try {
-        //изменение регистра букв сообщение - везде на маленькие
-        let text = message.toLocaleLowerCase()
-        //разбиение сообщение на слова в массив
-        let words = text.split(" ")
+        if (!(!/^[?!,.а-яА-ЯёЁ0-9\s]+$/.test(message) && message[0] != '/')) {
+            let text = message.toLocaleLowerCase()
+            let words = text.split(" ")
+            words = removeEmptyElementsFromArray(words)
+            words = removeDuplicateAdjacentElementsFromArray(words)
+            errorHandlingRepeatingDifferentTypeOfTime(words)
+            return words;
+        }
+        await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Символы неизвестны - бот знает только русский язык!',{parse_mode: 'HTML'})
 
-        //Удаление пустых элементов из массива
-        words = removeEmptyElementsFromArray(words)
-
-        //Удаление повторяющихся соседних элементов из массива
-        words = removeDuplicateAdjacentElementsFromArray (words)
-        //Обработка повтора разного типа времени
-        errorHandlingRepeatingDifferentTypeOfTime(words)
-
-        return words;
     } catch (e:any) {
         await bot.sendMessage(chatId,e.message,{parse_mode: 'HTML'})
     }
