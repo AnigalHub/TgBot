@@ -1,4 +1,4 @@
-import ConvertTime from "../ConvertTime";
+import ConvertTime from "../../ConvertTime";
 const convertTime = new ConvertTime()
 
 //функция - Обработка повтора разного типа времени
