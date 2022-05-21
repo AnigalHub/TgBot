@@ -29,7 +29,7 @@ bot.on('message', async (msg) =>{
     }
     console.log(msg.text)
 
-    if(!/^[?!,.а-яА-ЯёЁ0-9\s]+$/.test(msg.text)){
+    if(!/^[?!,.а-яА-ЯёЁ0-9\s]+$/.test(msg.text) && msg.text[0] != '/'){
         await bot.sendMessage( chatId,"Ошибка! Не корректный ввод. Символы неизвестны - бот знает только русский язык!")
         return
     }
