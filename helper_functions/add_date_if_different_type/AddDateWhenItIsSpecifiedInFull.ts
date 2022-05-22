@@ -35,14 +35,20 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
 
     //проверка - когда words[numberArrayElementResponsiveForTimeType] - является типом времени (сек/мин/час)
     if (convertTime.ConvertTimeToMilliseconds(words[numberArrayElementResponsiveForTimeType],1) == 0){
+        //Подсчет сообщения и миллисекунд, когда полная дата раньше времени
         let obj = countingMessageAndMillisecondsWhenFullDateAheadOfTime(futureDateMs, numberArrayElementResponsiveForTimeType, words, timeMessageMs, time, messageFuture, millisecondsTime)
+        //сборка будущего сообщения
         messageFuture = obj.messageFuture
+        //подсчет миллисекунд
         millisecondsTime = obj.milliseconds
     }
     //проверка - когда words[numberArrayElementResponsiveForTimeType] - не является типом времени (сек/мин/час)
     else {
+        //Подсчет сообщения и миллисекунд, когда время раньше полной даты
         let obj = countingMessageAndMillisecondsWhenTimeAheadOfFullDate(keyword, futureDateMs, numberArrayElementResponsiveForTimeType, words, timeMessageMs, time, messageFuture, millisecondsTime)
+        //сборка будущего сообщения
         messageFuture = obj.messageFuture
+        //подсчет миллисекунд
         millisecondsTime = obj.milliseconds
     }
     return new MessageToSend(millisecondsTime, messageFuture)
