@@ -8,6 +8,7 @@ import errorHandlingWhenPastTimeOrTimeIsZero from "../ErrorHandlingWhenPastTimeO
 function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>,
                                numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
                                messageFuture:string, millisecondsTime:number) : MessageToSend {
+    console.log('addDayWhenTimeIsKnown')
     //номер откуда начинаем собирать будущее сообщение
     let startMessageFuture:number = numberArrayElementResponsiveForTimeType + 2
 

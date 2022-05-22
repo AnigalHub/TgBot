@@ -8,7 +8,7 @@ import errorHandlingOfIncorrectTime from "../ErrorHandlingOfIncorrectTime"
 //функция - Добавление даты, когда дата указана полностью
 function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
                                         keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
-
+    console.log('addDateWhenItIsSpecifiedInFull')
     //день
     let dayMessage = parseInt(keyword.substring(0, 2))
     //месяц

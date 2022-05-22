@@ -6,7 +6,7 @@ const convertTime = new ConvertTime()
 
 //функция - Добавление дня, когда указано время и день недели
 function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWithTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
-
+    console.log('addDayWhenTimeAndDayOfTheWeekAreKnown')
     //день недели
     let dayOfTheWeek = new DayOfTheWeek(arrayElementWithDayOfTheWeek)
 
