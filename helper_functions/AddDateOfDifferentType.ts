@@ -2,7 +2,6 @@ import MessageToSend from "../MessageToSend";
 import addDateWhenItIsSpecifiedInFull from "./add_date_if_different_type/AddDateWhenItIsSpecifiedInFull";
 import addDayOfTheWeek from "./add_date_if_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown";
 import addDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIsKnown";
-import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime"
 import DayOfTheWeek from "../DayOfTheWeek";
 import ConvertTime from "./../ConvertTime";
 import optionsForCheckingTimeAndDate from "./OptionsForCheckingTimeAndDate";
