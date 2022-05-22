@@ -5,7 +5,7 @@ import addDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIs
 import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime"
 import DayOfTheWeek from "../DayOfTheWeek";
 import ConvertTime from "./../ConvertTime";
-import variationOfCheckingTimeAndDate from "./VariationOfCheckingTimeAndDate";
+import optionsForCheckingTimeAndDate from "./OptionsForCheckingTimeAndDate";
 const convertTime = new ConvertTime()
 
 
@@ -15,7 +15,7 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
 
     console.log('addDateOfDifferentType')
 
-    variationOfCheckingTimeAndDate(words,numberKeywordInMessage,arrayElementWithDate,timeRemind,numberArrayElementResponsiveForTimeType)
+    optionsForCheckingTimeAndDate(words,numberKeywordInMessage,arrayElementWithDate,timeRemind,numberArrayElementResponsiveForTimeType)
 
     //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
