@@ -22,13 +22,11 @@ console.log('addDateOfDifferentType')
 
     //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
-        console.log('тут1')
         //добавление даты, когда дата указана полностью
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage,numberArrayElementResponsiveForTimeType,arrayElementWithDate,words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
     //проверка - если дата указана полная (с .,-,/ и только цифры) до ключевого слова "В"
     else if( (words[numberKeywordInMessage-1]) && !/[А-яЁё]/.test(words[numberKeywordInMessage-1]) && (words[numberKeywordInMessage-1].includes('.') == true || words[numberKeywordInMessage-1].includes('-') == true || words[numberKeywordInMessage-1].includes('/') == true )){
-        console.log('тут2')
         //добавление даты, когда дата указана полностью
         return addDateWhenItIsSpecifiedInFull(numberKeywordInMessage-1,numberArrayElementResponsiveForTimeType,words[numberKeywordInMessage-1],words,date,dateMs, timeRemind, messageFuture,millisecondsTime)
     }
