@@ -42,7 +42,7 @@ async function getMessageWithTime(chatId:number, bot:TelegramBot,words:Array<str
         }
     }
     else {
-        await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Возможно не указано время или дата');
+        await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Напомнить возможно ЧЕРЕЗ какое-то время или В какое-то время. Возможна опечатка');
     }
 }
 export default getMessageWithTime
