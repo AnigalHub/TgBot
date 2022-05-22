@@ -49,7 +49,6 @@ function errorHandlingOfIncorrectTime(time:number,words:Array<string>,arrayEleme
     //проверка - когда введено не число
     if(!/^[0-9]*$/.test(words[wordIn+1]) && new DayOfTheWeek(words[wordIn+1]).SearchForTheDayNumberOfTheWeek() == -1){
         //обработка неправильного ввода времени словами
-        console.log('здесь')
         errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
     }
 }

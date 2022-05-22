@@ -14,7 +14,6 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
     if (dayOfTheWeek.SearchForTheDayNumberOfTheWeek() != -1){
         //проверка - не введено вместо времени - дата (т е вместо сек/мин/час - дни/недели/месяцы)
         if((convertTime.ConvertTimeToMilliseconds(arrayElementWithTime,1) > 3600000) || (convertTime.ConvertTimeToMilliseconds(arrayElementWithTime,1) == 1800000)){
-            console.log('addDayWhenTimeAndDayOfTheWeekAreKnown')
             throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+'Вместо времени указана неккоректно дата или время');
         }
         else {
@@ -36,7 +35,6 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
     }
     //проверка - не является dayOfTheWeek - днем недели (пн/вт/ср...)
     else {
-        console.log('addDayWhenTimeAndDayOfTheWeekAreKnown')
         throw new Error('<b>Ошибка! Некорректно введен день (день недели). </b>\n'+' День недели указывается: пн|пнд|понедельник ')
     }
 }
