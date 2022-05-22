@@ -1,4 +1,4 @@
-import ConvertTime from "../ConvertTime";
+import ConvertTime from "../../../ConvertTime";
 const convertTime = new ConvertTime()
 
 //функция - Обработка ошибок неправильного ввода даты или времени
