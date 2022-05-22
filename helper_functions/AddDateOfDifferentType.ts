@@ -1,7 +1,7 @@
 import MessageToSend from "../MessageToSend";
 import addDateWhenItIsSpecifiedInFull from "./add_date_if_different_type/AddDateWhenItIsSpecifiedInFull";
 import addDayOfTheWeek from "./add_date_if_different_type/AddDayWhenTimeAndDayOfTheWeekAreKnown";
-import AddDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIsKnown";
+import addDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIsKnown";
 import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime"
 import DayOfTheWeek from "../DayOfTheWeek";
 import ConvertTime from "./../ConvertTime";
@@ -67,7 +67,7 @@ console.log('addDateOfDifferentType')
         }
         else{
             //добавление дня, когда время известно
-            return AddDayWhenTimeIsKnown(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
+            return addDayWhenTimeIsKnown(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
         }
     }
     else {
