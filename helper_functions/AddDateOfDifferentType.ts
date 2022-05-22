@@ -11,9 +11,14 @@ const convertTime = new ConvertTime()
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
 console.log('addDateOfDifferentType')
+    if (arrayElementWithDate == undefined){
+        arrayElementWithDate = words[numberKeywordInMessage-1]
+    }
     if(new DayOfTheWeek(arrayElementWithDate).SearchForTheDayNumberOfTheWeek() == -1){
-        //проверка ввода времени
         errorHandlingOfIncorrectTime(timeRemind,words,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
+    }
+    else {
+        errorHandlingOfIncorrectTime(timeRemind,words,words[numberArrayElementResponsiveForTimeType],words[numberKeywordInMessage])
     }
 
     //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
@@ -62,6 +67,7 @@ console.log('addDateOfDifferentType')
             return addDayOfTheWeek(numberKeywordInMessage+1,words[numberArrayElementResponsiveForTimeType+2], words[numberArrayElementResponsiveForTimeType],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
         }
         else{
+
             //добавление дня, когда время известно
             return addDayWhenTimeIsKnown(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
         }
