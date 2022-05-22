@@ -25,7 +25,15 @@ function errorHandlingOfIncorrectFullDateEntry(keyword:string, dayMessage:number
     }
     //проверка года в дате на то, что указаный год в дате меньше текущего
     if(yearMessage < date.getFullYear()){
-        throw new Error('<b>Ошибка! Некорректно введен год в дате. </b>\n'+'Год меньше текущего. Напомнить в тот год, который уже прошел - невозможно!');
+        throw new Error('<b>Ошибка! Некорректно введен год в дате. </b>\n'+'Указанный год меньше текущего года. Напомнить в тот год, который уже прошел - невозможно!');
+    }
+    //проверка года в дате на то, что указаный год в дате меньше текущего
+    if(yearMessage == date.getFullYear() && monthMessage < date.getMonth()){
+        throw new Error('<b>Ошибка! Некорректно введа дата. </b>\n'+'Год указан текущий, а указанный месяц меньше текущего месяца. Напомнить в тот месяц, который уже прошел - невозможно!');
+    }
+    //проверка года в дате на то, что указаный год в дате меньше текущего
+    if(yearMessage == date.getFullYear() && monthMessage == date.getMonth() && dayMessage < date.getDate()){
+        throw new Error('<b>Ошибка! Некорректно введа дата. </b>\n'+'Год и месяц указаны текущие, а указанный день меньше текущего дня. Напомнить в тот день, который уже прошел - невозможно!\'');
     }
 }
 export default errorHandlingOfIncorrectFullDateEntry
