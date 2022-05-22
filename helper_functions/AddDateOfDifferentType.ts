@@ -14,6 +14,7 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
 
     console.log('addDateOfDifferentType')
 
+    //Варианты проверки времени и даты
     optionsForCheckingTimeAndDate(words,numberKeywordInMessage,arrayElementWithDate,timeRemind,numberArrayElementResponsiveForTimeType)
 
     //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
