@@ -10,6 +10,7 @@ function optionsForCheckingTimeAndDate(words:Array<string>, numberKeywordInMessa
         if (arrayElementWithDate == undefined){
             arrayElementWithDate = words[numberKeywordInMessage-1]
         }
+        //Обработка ошибок неверного ввода времени
         errorHandlingOfIncorrectTime(timeRemind,words,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
     }
     else {
@@ -20,6 +21,7 @@ function optionsForCheckingTimeAndDate(words:Array<string>, numberKeywordInMessa
         if (timeRemind == 1) {
             arrayElementWithTimeType = words[numberArrayElementResponsiveForTimeType-1]
         }
+        //Обработка ошибок неверного ввода времени
         errorHandlingOfIncorrectTime(timeRemind,words,arrayElementWithTimeType,words[numberKeywordInMessage])
     }
 }
