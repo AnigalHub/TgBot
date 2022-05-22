@@ -2,9 +2,9 @@ import DayOfTheWeek from "../DayOfTheWeek";
 import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime";
 
 
-function variationOfCheckingTimeAndDate(words:Array<string>,numberKeywordInMessage:number,arrayElementWithDate:string,timeRemind:number,numberArrayElementResponsiveForTimeType:number){
+function optionsForCheckingTimeAndDate(words:Array<string>, numberKeywordInMessage:number, arrayElementWithDate:string, timeRemind:number, numberArrayElementResponsiveForTimeType:number){
 
-    console.log('variationOfCheckingTimeAndDate')
+    console.log('optionsForCheckingTimeAndDate')
 
     if(new DayOfTheWeek(arrayElementWithDate).SearchForTheDayNumberOfTheWeek() == -1){
         if (arrayElementWithDate == undefined){
@@ -24,4 +24,4 @@ function variationOfCheckingTimeAndDate(words:Array<string>,numberKeywordInMessa
     }
 }
 
-export default variationOfCheckingTimeAndDate
+export default optionsForCheckingTimeAndDate
