@@ -1,13 +1,12 @@
 import ConvertTime from "../ConvertTime";
 import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
 const convertTime = new ConvertTime()
+import DayOfTheWeek from "../DayOfTheWeek";
 
 
 //функция - Обработка ошибок неверного ввода времени
 function errorHandlingOfIncorrectTime(time:number,words:Array<string>,arrayElementWithTimeType:string,arrayElementWithDate:string){
     console.log('errorHandlingOfIncorrectTime')
-    console.log(arrayElementWithTimeType)
-    console.log(arrayElementWithDate)
 
     let wordIn:number = words.indexOf('в')
 
@@ -48,8 +47,9 @@ function errorHandlingOfIncorrectTime(time:number,words:Array<string>,arrayEleme
         throw new Error('<b>Ошибка! Некорректно введено время.</b>\n'+'Вместо времени указана неккоректно дата или непонятное время');
     }
     //проверка - когда введено не число
-    if(!/^[0-9]*$/.test(words[wordIn+1])){
+    if(!/^[0-9]*$/.test(words[wordIn+1]) && new DayOfTheWeek(words[wordIn+1]).SearchForTheDayNumberOfTheWeek() == -1){
         //обработка неправильного ввода времени словами
+        console.log('здесь')
         errorHandlingOfIncorrectTimeEntryUsingWords(words[wordIn+1],words[wordIn+2])
     }
 }
