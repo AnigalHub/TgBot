@@ -12,14 +12,22 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
 console.log('addDateOfDifferentType')
 
-    if (arrayElementWithDate == undefined){
-        arrayElementWithDate = words[numberKeywordInMessage-1]
-    }
+
     if(new DayOfTheWeek(arrayElementWithDate).SearchForTheDayNumberOfTheWeek() == -1){
+        if (arrayElementWithDate == undefined){
+            arrayElementWithDate = words[numberKeywordInMessage-1]
+        }
         errorHandlingOfIncorrectTime(timeRemind,words,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
     }
     else {
-        errorHandlingOfIncorrectTime(timeRemind,words,words[numberArrayElementResponsiveForTimeType],words[numberKeywordInMessage])
+        let arrayElementWithTimeType = words[numberArrayElementResponsiveForTimeType]
+        if(timeRemind >20  && timeRemind%10 != 0 ){
+            arrayElementWithTimeType = words[numberArrayElementResponsiveForTimeType+1]
+        }
+        if (timeRemind == 1) {
+            arrayElementWithTimeType = words[numberArrayElementResponsiveForTimeType-1]
+        }
+        errorHandlingOfIncorrectTime(timeRemind,words,arrayElementWithTimeType,words[numberKeywordInMessage])
     }
 
     //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
