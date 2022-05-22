@@ -1,7 +1,7 @@
 import MessageToSend from "../../MessageToSend";
 import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
-import errorHandlingOfIncorrectDateOrTimeEntry from "../ErrorHandlingOfIncorrectDateOrTimeEntry"
+import errorHandlingOfIncorrectDateOrTimeEntry from "./add_day_when_time_is_known/ErrorHandlingOfIncorrectDateOrTimeEntry"
 import errorHandlingWhenPastTimeOrTimeIsZero from "../ErrorHandlingWhenPastTimeOrTimeIsZero";
 
 //функция - Добавление дня, когда время известно
