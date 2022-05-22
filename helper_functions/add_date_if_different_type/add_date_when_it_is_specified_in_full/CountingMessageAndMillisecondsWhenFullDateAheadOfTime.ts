@@ -2,7 +2,7 @@ import ConvertTime from './../../../ConvertTime'
 const convertTime = new ConvertTime()
 import MessageFutureAndMilliseconds from "./MessageFutureAndMilliseconds";
 
-
+//Подсчет сообщения и миллисекунд, когда полная дата раньше времени
 function countingMessageAndMillisecondsWhenFullDateAheadOfTime(futureDateMs:number,numberArrayElementResponsiveForTimeType:number,
                                                                words:Array<string>,timeMessageMs:number,
                                                                time:number,messageFuture:string, millisecondsTime:number):MessageFutureAndMilliseconds{

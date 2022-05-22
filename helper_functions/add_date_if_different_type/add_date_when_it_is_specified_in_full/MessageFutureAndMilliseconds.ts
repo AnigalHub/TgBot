@@ -1,4 +1,4 @@
-
+//Будущее сообщение и Миллисекунды
 export default class MessageFutureAndMilliseconds {
     //будущее сообщение
     public messageFuture:string;
