@@ -3,9 +3,9 @@ const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
 import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime"
 import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
-import errorHandlingWhenPastTimeOrTimeIsZero from "./errorHandlingWhenPastTimeOrTimeIsZero";
 import calculatingTimeAndDateInWords
     from "./calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
+import errorHandlingWhenPastTimeOrTimeIsZero from "./ErrorHandlingWhenPastTimeOrTimeIsZero";
 
 
 //функция - Добавление времени, когда известен день
