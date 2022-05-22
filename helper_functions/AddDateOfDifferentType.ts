@@ -13,12 +13,8 @@ function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArra
 console.log('addDateOfDifferentType')
     if(new DayOfTheWeek(arrayElementWithDate).SearchForTheDayNumberOfTheWeek() == -1){
         //проверка ввода времени
-       // validationOfTimeInput(words,numberArrayElementResponsiveForTimeType)
         errorHandlingOfIncorrectTime(timeRemind,words,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
     }
-
-    //проверка даты и времени
-    //dateAndTimeValidation(timeRemind,words,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
 
     //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
