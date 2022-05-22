@@ -3,6 +3,7 @@ const convertTime = new ConvertTime()
 
 //функция - Обработка неправильного ввода времени словами
 function errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyword1:string, arrayElementAfterSecondKeyword2:string) {
+    console.log('errorHandlingOfIncorrectTimeEntryUsingWords')
 
     //время1 время2 тип_времени (пример: двадцать два часа)
     //время1 - числом - когда arrayElementAfterSecondKeyword1 - число указано словами (одним словом)
@@ -16,7 +17,7 @@ function errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyw
     if((number1 == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0) ||
         (number2 == 0 && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0)
         && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0))){
-        console.log('errorHandlingOfIncorrectTimeEntryUsingWords')
+
         throw new Error('<b>Ошибка! Неккоректно введено время. </b>\n'+'Опечатка во времени после указателя времени "В".');
     }
 }

@@ -11,6 +11,7 @@ const convertTime = new ConvertTime()
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
 console.log('addDateOfDifferentType')
+
     if (arrayElementWithDate == undefined){
         arrayElementWithDate = words[numberKeywordInMessage-1]
     }
@@ -67,13 +68,11 @@ console.log('addDateOfDifferentType')
             return addDayOfTheWeek(numberKeywordInMessage+1,words[numberArrayElementResponsiveForTimeType+2], words[numberArrayElementResponsiveForTimeType],date,words,dateMs,timeRemind,messageFuture,millisecondsTime)
         }
         else{
-
             //добавление дня, когда время известно
             return addDayWhenTimeIsKnown(date,arrayElementWithDate,timeRemind,dateMs,words,numberKeywordInMessage,numberArrayElementResponsiveForTimeType,messageFuture, millisecondsTime)
         }
     }
     else {
-        console.log('addDateOfDifferentType')
         throw new Error('<b>Ошибка! Некорректно указана дата. </b>\n'+'Дата указывается: день недели | завтра | послезавра | 20.01.25 | 22-05-27 | 26/07/28')
     }
 }

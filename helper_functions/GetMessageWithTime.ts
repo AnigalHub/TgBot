@@ -4,6 +4,7 @@ import TelegramBot from "node-telegram-bot-api";
 
 //функция - Получение сообщения и Времени в миллисекундах
 async function getMessageWithTime(chatId:number, bot:TelegramBot,words:Array<string>,timeMessage:number,dateMessage:Date){
+    console.log('getMessageWithTime')
 
     //номер ключевого слова в сообщении (в массиве слов)
     let numberKeywordInMessage:number
@@ -41,7 +42,6 @@ async function getMessageWithTime(chatId:number, bot:TelegramBot,words:Array<str
         }
     }
     else {
-        console.log('index.js')
         await bot.sendMessage(chatId,'Ошибка! Не корректный ввод. Возможно не указано время или дата');
     }
 }

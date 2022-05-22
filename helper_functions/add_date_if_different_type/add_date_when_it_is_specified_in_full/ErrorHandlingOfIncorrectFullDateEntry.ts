@@ -1,6 +1,7 @@
 //функция - Обработка ошибок неверного ввода полной даты
 function errorHandlingOfIncorrectFullDateEntry(keyword:string, dayMessage:number, monthMessage:number, yearMessage:number, date:Date){
     console.log('errorHandlingOfIncorrectFullDateEntry')
+
     //проверка на то, когда в дате не хватает символов илм это не дата, а содержатся: . или - или /
     if  (keyword[2] != keyword[5] && (keyword.includes('.') == false || keyword.includes('/')== false
         || keyword.includes('-')== false) || (keyword.length > 10) || (keyword.length == 7) || (keyword.length == 9)) {
