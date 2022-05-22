@@ -1,7 +1,7 @@
 import DayOfTheWeek from "../DayOfTheWeek";
 import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime";
 
-
+//функция - Варианты проверки времени и даты
 function optionsForCheckingTimeAndDate(words:Array<string>, numberKeywordInMessage:number, arrayElementWithDate:string, timeRemind:number, numberArrayElementResponsiveForTimeType:number){
 
     console.log('optionsForCheckingTimeAndDate')
