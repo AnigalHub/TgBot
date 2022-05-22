@@ -27,7 +27,6 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
         let arrayElementAfterSecondKeyword3 = words[(secondKeywordInMessage)+3]
         //элемент массива после ключевого слова (secondKeywordInMessage) - четвертый
         let arrayElementAfterSecondKeyword4 = words[(secondKeywordInMessage)+4]
-        console.log(arrayElementAfterSecondKeyword1,arrayElementAfterSecondKeyword2,arrayElementAfterSecondKeyword3,arrayElementAfterSecondKeyword4)
 
         //проверка - 1-ый, 2-ой, 3-ий, 4-ый элементы массива - один из содержит тип времени (сек/мин/час)
         if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
