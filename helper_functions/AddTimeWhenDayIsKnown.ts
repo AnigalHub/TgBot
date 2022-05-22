@@ -35,7 +35,8 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
             throw new Error('<b>Ошибка! После указателя времени "В" ожидалось число и единица времени или просто единица времени. </b>\n'+'Возможно что-то отсутствует или опечатка');
         }
         //проверка - если указано время в виде - сек/мин/час (т е не день/мес/неделя и тд)
-        if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
+        if(millisecondsTime >= 86400000 && (convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000
+            && convertTime.ConvertTimeToMilliseconds(words[(secondKeywordInMessage)-1],1) > 3600000) ){
             //будущая дата - объект Data
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
             //время в будущей дате - зануляем
