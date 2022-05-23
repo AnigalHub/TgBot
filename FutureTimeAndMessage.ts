@@ -29,6 +29,7 @@ export default class FutureTimeAndMessage{
         this.millisecondsTime = 0
         this.messageFuture = ''
     }
+    //метод - Вычисление и Обработка ошибок при вводе месяца даты словами
     CalculationsAndErrorHandlingWhenEnteringMonthInWords(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
 
         // элемент массива с ключевым словом
