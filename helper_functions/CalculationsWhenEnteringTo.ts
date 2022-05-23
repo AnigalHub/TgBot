@@ -2,7 +2,7 @@ import calculatingTimeAndDateInWords
     from "./calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
 import addDateOfDifferentType from "./AddDateOfDifferentType";
 
-
+//функция - Расчеты при вводе "В"
 function calculationsWhenEnteringTo(words:Array<string>, dateMessage:Date,
                                     numberKeywordInMessage:number,timeMessage:number,
                                     messageFuture: string, millisecondsTime: number) {
