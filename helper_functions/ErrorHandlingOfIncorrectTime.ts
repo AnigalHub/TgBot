@@ -12,7 +12,7 @@ function errorHandlingOfIncorrectTime(time:number,words:Array<string>,arrayEleme
 
     //проверка - не указан тип времени (не введен)
     if(!arrayElementWithTimeType){
-        throw new Error('<b>Ошибка! Не указан тип времени. </b>\n'+'(мин | сек | час)');
+        throw new Error('<b>Ошибка! Не указан тип времени. </b>\n'+'(сек | мин | час)');
     }
     //проверка - неккоректно введено время - тип времени
     if(convertTime.ConvertTimeToMilliseconds(arrayElementWithTimeType,time) == 0){
