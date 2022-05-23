@@ -54,6 +54,7 @@ export default class FutureTimeAndMessage{
         //номер ключевого слова
         numberKeywordInMessage = this.words.indexOf('в')
 
+        //расчеты при вводе "В"
         return calculationsWhenEnteringTo(this.words, this.dateMessage, numberKeywordInMessage,timeMessage, this.messageFuture, this.millisecondsTime)
 
     }
@@ -128,7 +129,8 @@ export default class FutureTimeAndMessage{
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1]
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1) || /^[А-яЁё]*$/.test(wordsElementAfterKeyword1)) {
-          return calculationsWhenEnteringTo(this.words,this.dateMessage,numberKeywordInMessage,timeMessage,this.messageFuture, this.millisecondsTime)
+            //расчеты при вводе "В"
+            return calculationsWhenEnteringTo(this.words,this.dateMessage,numberKeywordInMessage,timeMessage,this.messageFuture, this.millisecondsTime)
         }
         else{
             console.log('FutureTimeAndMessage')
