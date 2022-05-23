@@ -23,10 +23,10 @@ export default  class Month {
             || this.month == 'сент' || this.month == 'октб' || this.month == 'нояб' || this.month == 'дек'){
             array=['янв','февр','март','апр','май','июнь','июль','авг','сент','октб','нояб','дек']
         }
-        else if(this.month == 'январе' || this.month == 'феврале' || this.month == 'марте' || this.month == 'апреле'
-            || this.month == 'мае' || this.month == 'июне' || this.month == 'июле' || this.month == 'августе'
-            || this.month == 'сентябре' || this.month == 'октябре' || this.month == 'ноябре' || this.month == 'декабре'){
-            array=['январе','феврале','марте','апреле','мае','июне','июле','августе','сентябре','октябре','ноябре','декабре']
+        else if(this.month == 'января' || this.month == 'февраля' || this.month == 'марта' || this.month == 'апреля'
+            || this.month == 'мая' || this.month == 'июня' || this.month == 'июля' || this.month == 'августа'
+            || this.month == 'сентября' || this.month == 'октября' || this.month == 'ноября' || this.month == 'декабря'){
+            array=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря']
         }
         else {
             array = []
