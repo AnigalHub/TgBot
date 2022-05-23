@@ -30,24 +30,29 @@ export default class FutureTimeAndMessage{
         this.messageFuture = ''
     }
     CalculationsAndErrorHandlingWhenEnteringMonthInWords(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
-        console.log(this.words)
 
-        // элемент массива до ключевого слова
-        let dayMessage = this.words[numberKeywordInMessage-1]
         // элемент массива с ключевым словом
         let wordsElementAfterKeyword = this.words[numberKeywordInMessage]
-        // элемент массива после ключевого слова - первый
-        let yearMessage = this.words[numberKeywordInMessage+1]
 
+        // день
+        let dayMessage = this.words[numberKeywordInMessage-1]
+        // год
+        let yearMessage = this.words[numberKeywordInMessage+1]
+        //объект класса Month
         let monthObj = new Month(wordsElementAfterKeyword)
+        // месяц
         let month = '0'.concat((monthObj.SearchForTheNumberOfTheMonth()+1).toString())
 
+        //дата в сообщении в виде дд.мм.гггг
         let dateMessage =  dayMessage.concat('.',month,'.',yearMessage)
         console.log('дата',dateMessage)
 
+        //замена даты словами на дату в виде дд.мм.гггг
         this.words.splice(this.words.indexOf(dayMessage), 3, dateMessage);
-        console.log(this.words)
+
+        //номер ключевого слова
         numberKeywordInMessage = this.words.indexOf('в')
+
         return calculationsWhenEnteringTo(this.words, this.dateMessage, numberKeywordInMessage,timeMessage, this.messageFuture, this.millisecondsTime)
 
     }
