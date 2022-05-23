@@ -7,6 +7,9 @@ import errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry from "./helper_fu
 import deleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
 import errorHandlingWhenPastTimeOrTimeIsZero from "./helper_functions/ErrorHandlingWhenPastTimeOrTimeIsZero";
 import calculatingTimeAndDateInWords from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
+import calculationOfTheYear
+    from "./helper_functions/add_date_if_different_type/add_date_when_it_is_specified_in_full/CalculationOfTheYear";
+import Month from "./Month";
 
 export default class FutureTimeAndMessage{
     //id пользователя
@@ -27,6 +30,29 @@ export default class FutureTimeAndMessage{
         this.millisecondsTime = 0
         this.messageFuture = ''
     }
+    CalculationsAndErrorHandlingWhenEnteringMonthInWords(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
+        console.log(this.words)
+
+        // элемент массива до ключевого слова
+        let dayMessage = this.words[numberKeywordInMessage-1]
+        // элемент массива с ключевым словом
+        let wordsElementAfterKeyword = this.words[numberKeywordInMessage]
+        // элемент массива после ключевого слова - первый
+        let yearMessage = this.words[numberKeywordInMessage+1]
+
+        let monthObj = new Month(wordsElementAfterKeyword)
+        let month = '0'.concat((monthObj.SearchForTheNumberOfTheMonth()+1).toString())
+
+        let dateMessage =  dayMessage.concat('.',month,'.',yearMessage)
+        console.log('дата',dateMessage)
+
+        this.words.splice(this.words.indexOf(dayMessage), 3, dateMessage);
+        console.log(this.words)
+        throw new Error('<b>Ошибка!</b>')
+
+
+    }
+
     //метод - Вычисление и Обработка ошибок при вводе "Через"
     CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
         // элемент массива после ключевого слова - первый
@@ -96,25 +122,27 @@ export default class FutureTimeAndMessage{
         //элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1]
 
-        //время
-        let time:number
-        //элемент массива с датой (завтра/01.07.2023)
-        let arrayElementWithDate:string
-        //номер элемента массива с типом времени (сек/мин/час)
-        let numberArrayElementResponsiveForTimeType:number
-
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1) || /^[А-яЁё]*$/.test(wordsElementAfterKeyword1)) {
+            //время
+            let time:number
+            //элемент массива с датой (завтра/01.07.2023)
+            let arrayElementWithDate:string
+            //номер элемента массива с типом времени (сек/мин/час)
+            let numberArrayElementResponsiveForTimeType:number
+
             //объект, содержащий время и дату, введенные словами
             let obj = calculatingTimeAndDateInWords(this.dateMessage,this.words,numberKeywordInMessage)
             //время
             time = obj.time
             //элемент массива с датой (завтра/01.07.2023)
-            arrayElementWithDate =obj.arrayElementWithDate
+            arrayElementWithDate = obj.arrayElementWithDate
             //номер элемента массива с типом времени (сек/мин/час)
             numberArrayElementResponsiveForTimeType = obj.numberArrayElementResponsiveForTimeType
 
             //добавление даты разного типа (полная дата/день недели/словом указателем)
             return addDateOfDifferentType(this.dateMessage, arrayElementWithDate,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
+
+
         }
         else{
             console.log('FutureTimeAndMessage')
