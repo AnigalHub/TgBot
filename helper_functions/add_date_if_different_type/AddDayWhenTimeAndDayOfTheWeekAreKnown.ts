@@ -3,6 +3,7 @@ import DayOfTheWeek from "../../DayOfTheWeek";
 import ConvertTime from '../../ConvertTime'
 import messageAssembly from "./add_day_when_time_is_known/MessageAssembly";
 const convertTime = new ConvertTime()
+import errorHandlingWhenPastTimeOrTimeIsZero from "../ErrorHandlingWhenPastTimeOrTimeIsZero";
 
 //функция - Добавление дня, когда указано время и день недели
 function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arrayElementWithDayOfTheWeek:string,arrayElementWithTime:string,date:Date,words:Array<string>,timeMessage:number,time:number,messageFuture:string,millisecondsTime:number) : MessageToSend{
@@ -27,6 +28,7 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
             let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementWithTime,time)
             //подсчет миллисекунд
             millisecondsTime = futureMs - timeMessage
+            errorHandlingWhenPastTimeOrTimeIsZero(millisecondsTime)
             //сборка будущего сообщения
             messageFuture = messageAssembly(words,arrayElementWithTime,arrayElementWithDayOfTheWeek)
 

@@ -8,6 +8,7 @@ import countingMessageAndMillisecondsWhenFullDateAheadOfTime
     from "./add_date_when_it_is_specified_in_full/CountingMessageAndMillisecondsWhenFullDateAheadOfTime";
 import countingMessageAndMillisecondsWhenTimeAheadOfFullDate
     from "./add_date_when_it_is_specified_in_full/CountingMessageAndMillisecondsWhenTimeAheadOfFullDate";
+import errorHandlingWhenPastTimeOrTimeIsZero from "../ErrorHandlingWhenPastTimeOrTimeIsZero";
 
 
 
@@ -51,6 +52,7 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
         //подсчет миллисекунд
         millisecondsTime = obj.milliseconds
     }
+    errorHandlingWhenPastTimeOrTimeIsZero(millisecondsTime)
     return new MessageToSend(millisecondsTime, messageFuture)
 }
 
