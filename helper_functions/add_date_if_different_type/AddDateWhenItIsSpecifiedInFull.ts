@@ -52,7 +52,9 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
         //подсчет миллисекунд
         millisecondsTime = obj.milliseconds
     }
+    //проверка времени на прошлое
     errorHandlingWhenPastTimeOrTimeIsZero(millisecondsTime)
+
     return new MessageToSend(millisecondsTime, messageFuture)
 }
 

@@ -28,6 +28,7 @@ function addDayWhenTimeAndDayOfTheWeekAreKnown(numberKeywordInMessage:number,arr
             let futureMs = futureDate.getTime() + convertTime.ConvertTimeToMilliseconds(arrayElementWithTime,time)
             //подсчет миллисекунд
             millisecondsTime = futureMs - timeMessage
+            //проверка времени на прошлое
             errorHandlingWhenPastTimeOrTimeIsZero(millisecondsTime)
             //сборка будущего сообщения
             messageFuture = messageAssembly(words,arrayElementWithTime,arrayElementWithDayOfTheWeek)
