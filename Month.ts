@@ -34,22 +34,4 @@ export default  class Month {
         indexArray = array.indexOf(this.month)
         return indexArray
     }
-    //разница между месяцами(когда указано время в сообщении)
-     DiffMonth():number {
-        let date = new Date();
-        let numberOfTheMonth:number = this.SearchForTheNumberOfTheMonth()
-        let differenceInMonths:number
-
-        if(date.getMonth() > numberOfTheMonth){
-            differenceInMonths = 12 - date.getMonth() + numberOfTheMonth
-        }
-        else if (date.getMonth() < numberOfTheMonth){
-            differenceInMonths = numberOfTheMonth - date.getMonth()
-        }
-        else {
-            differenceInMonths = 12
-        }
-        return differenceInMonths
-    }
-
 }
