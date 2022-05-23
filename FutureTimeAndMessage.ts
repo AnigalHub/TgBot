@@ -7,8 +7,6 @@ import errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry from "./helper_fu
 import deleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
 import errorHandlingWhenPastTimeOrTimeIsZero from "./helper_functions/ErrorHandlingWhenPastTimeOrTimeIsZero";
 import calculatingTimeAndDateInWords from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
-import calculationOfTheYear
-    from "./helper_functions/add_date_if_different_type/add_date_when_it_is_specified_in_full/CalculationOfTheYear";
 import Month from "./Month";
 
 export default class FutureTimeAndMessage{
