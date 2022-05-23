@@ -124,28 +124,7 @@ export default class FutureTimeAndMessage{
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1]
 
         if(/^[0-9]*$/.test(wordsElementAfterKeyword1) || /^[А-яЁё]*$/.test(wordsElementAfterKeyword1)) {
-            // //время
-            // let time:number
-            // //элемент массива с датой (завтра/01.07.2023)
-            // let arrayElementWithDate:string
-            // //номер элемента массива с типом времени (сек/мин/час)
-            // let numberArrayElementResponsiveForTimeType:number
-            //
-            // //объект, содержащий время и дату, введенные словами
-            // let obj = calculatingTimeAndDateInWords(this.dateMessage,this.words,numberKeywordInMessage)
-            // //время
-            // time = obj.time
-            // //элемент массива с датой (завтра/01.07.2023)
-            // arrayElementWithDate = obj.arrayElementWithDate
-            // //номер элемента массива с типом времени (сек/мин/час)
-            // numberArrayElementResponsiveForTimeType = obj.numberArrayElementResponsiveForTimeType
-            //
-            // //добавление даты разного типа (полная дата/день недели/словом указателем)
-            // return addDateOfDifferentType(this.dateMessage, arrayElementWithDate,numberArrayElementResponsiveForTimeType,time,timeMessage, this.words, numberKeywordInMessage,this.messageFuture, this.millisecondsTime)
-
-          return calculationsWhenEnteringTo(this.words, this.dateMessage,
-                numberKeywordInMessage,timeMessage,
-                this.messageFuture, this.millisecondsTime)
+          return calculationsWhenEnteringTo(this.words,this.dateMessage,numberKeywordInMessage,timeMessage,this.messageFuture, this.millisecondsTime)
         }
         else{
             console.log('FutureTimeAndMessage')
