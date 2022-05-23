@@ -3,10 +3,8 @@ import calculatingTimeAndDateInWords
 import addDateOfDifferentType from "./AddDateOfDifferentType";
 
 //функция - Расчеты при вводе "В"
-function calculationsWhenEnteringTo(words:Array<string>, dateMessage:Date,
-                                    numberKeywordInMessage:number,timeMessage:number,
-                                    messageFuture: string, millisecondsTime: number) {
-    console.log('массив: ',words)
+function calculationsWhenEnteringTo(words:Array<string>, dateMessage:Date, numberKeywordInMessage:number,timeMessage:number, messageFuture: string, millisecondsTime: number) {
+
     //время
     let time:number
     //номер элемента массива с типом времени (сек/мин/час)
