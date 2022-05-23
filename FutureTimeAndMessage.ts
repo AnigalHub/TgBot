@@ -2,11 +2,9 @@ import MessageToSend from "./MessageToSend";
 import addTimeWhenDayIsKnown from "./helper_functions/AddTimeWhenDayIsKnown";
 import ConvertTime from "./ConvertTime";
 const convertTime = new ConvertTime()
-import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 import errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry";
 import deleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
 import errorHandlingWhenPastTimeOrTimeIsZero from "./helper_functions/ErrorHandlingWhenPastTimeOrTimeIsZero";
-import calculatingTimeAndDateInWords from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
 import Month from "./Month";
 import calculationsWhenEnteringTo from "./helper_functions/CalculationsWhenEnteringTo";
 
