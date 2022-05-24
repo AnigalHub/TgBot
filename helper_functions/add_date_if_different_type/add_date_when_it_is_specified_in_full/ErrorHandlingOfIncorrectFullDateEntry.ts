@@ -5,7 +5,7 @@ function errorHandlingOfIncorrectFullDateEntry(keyword:string, dayMessage:number
     //проверка на то, когда в дате не хватает символов илм это не дата, а содержатся: . или - или /
     if  (keyword[2] != keyword[5] && (keyword.includes('.') == false || keyword.includes('/')== false
         || keyword.includes('-')== false) || (keyword.length > 10) || (keyword.length == 7) || (keyword.length == 9)) {
-        throw new Error( '<b>Ошибка! Некорректно введена дата. </b>\n'+'Дата указывается: дд-мм-гггг (дд-мм-гг) | дд.мм.гггг (дд.мм.гг) | дд/мм/гггг (дд/мм/гг) | день(число) месяц(слово) год(число)');
+        throw new Error( '<b>Ошибка! Некорректно введена дата. </b>\n'+'Дата указывается: дд-мм-гггг (дд-мм-гг) | дд.мм.гггг (дд.мм.гг) | дд/мм/гггг (дд/мм/гг) | день(число:дд) месяц(слово) год(число:гг|ггг)');
     }
     //проверка на то, что день в месяце не может превышать 31 день
     if (dayMessage > 31){
