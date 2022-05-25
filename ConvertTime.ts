@@ -57,94 +57,94 @@ export default class Time {
         return day
     }
 
-    //перевод однословного времени в число
+    //перевод однословного числа в число типа number
     ConvertSmallNumberFromStringToNumber(number:string):number {
         let numberTime:number
-        if(number == "одну" || number == "один"){
+        if(number == "одну" || number == "один" || number == "первый" || number == "первого"){
             numberTime = 1
         }
-        else if(number == "два" || number == "две" ){
+        else if(number == "два" || number == "две" || number == "второй" || number == "второго"){
             numberTime = 2
         }
-        else if(number == "три"){
+        else if(number == "три" || number == "третий" || number == "третьего"){
             numberTime = 3
         }
-        else if(number == "четыре"){
+        else if(number == "четыре" || number == "четвертый" || number == "четвертого"){
             numberTime = 4
         }
-        else if(number == "пять"){
+        else if(number == "пять" || number == "пятый" || number == "пятого"){
             numberTime = 5
         }
-        else if(number == "шесть"){
+        else if(number == "шесть" || number == "шестой" || number == "шестого"){
             numberTime = 6
         }
-        else if(number == "семь"){
+        else if(number == "семь" || number == "седьмой" || number == "седьмого"){
             numberTime = 7
         }
-        else if(number == "восемь"){
+        else if(number == "восемь" || number == "восьмой" || number == "восьмого"){
             numberTime = 8
         }
-        else if(number == "девять"){
+        else if(number == "девять" || number == "девятый" || number == "девятого"){
             numberTime = 9
         }
-        else if(number == "десять"){
+        else if(number == "десять" || number == "десятый" || number == "десятого"){
             numberTime = 10
         }
-        else if(number == "одинадцать"){
+        else if(number == "одинадцать" || number == "одинадцатый" || number == "одинадцатого"){
             numberTime = 11
         }
-        else if(number == "двенадцать"){
+        else if(number == "двенадцать" || number == "двенадцатый" || number == "двенадцатого"){
             numberTime = 12
         }
-        else if(number == "тринадцать"){
+        else if(number == "тринадцать" || number == "тринадцатый" || number == "тринадцатого"){
             numberTime = 13
         }
-        else if(number == "четырнадцать"){
+        else if(number == "четырнадцать" || number == "четырнадцатый" || number == "четырнадцатого"){
             numberTime = 14
         }
-        else if(number == "пятнадцать"){
+        else if(number == "пятнадцать" || number == "пятнадцатый" || number == "пятнадцатого"){
             numberTime = 15
         }
-        else if(number == "шестнадцать"){
+        else if(number == "шестнадцать" || number == "шестнадцатый" || number == "шестнадцатого"){
             numberTime = 16
         }
-        else if(number == "семнадцать"){
+        else if(number == "семнадцать" || number == "семнадцатый" || number == "семнадцатого"){
             numberTime = 17
         }
-        else if(number == "восемнадцать"){
+        else if(number == "восемнадцать" || number == "восемнадцатый" || number == "восенадцатого"){
             numberTime = 18
         }
-        else if(number == "девятнадцать"){
+        else if(number == "девятнадцать" || number == "девятнадцатый" || number == "девятнадцатого"){
             numberTime = 19
         }
-        else if(number == "девятнадцать"){
+        else if(number == "девятнадцать" || number == "девятнадцатый" || number == "девятнадцатого"){
             numberTime = 19
         }
-        else if(number == "двадцать"){
+        else if(number == "двадцать" || number == "двадцатый" || number == "двадцатого"){
             numberTime = 20
         }
-        else if(number == "тридцать"){
+        else if(number == "тридцать" || number == "тридцатый" || number == "тридцатого"){
             numberTime = 30
         }
-        else if(number == "сорок"){
+        else if(number == "сорок" || number == "сороковой"){
             numberTime = 40
         }
-        else if(number == "пятьдесят"){
+        else if(number == "пятьдесят" || number == "пятьдесятый"){
             numberTime = 50
         }
-        else if(number == "шестьдесят"){
+        else if(number == "шестьдесят" || number == "пятьдесятый"){
             numberTime = 60
         }
-        else if(number == "семьдесят"){
+        else if(number == "семьдесят" || number == "семьдесятый"){
             numberTime = 70
         }
-        else if(number == "восемьдесят"){
+        else if(number == "восемьдесят" || number == "восемьдесятый"){
             numberTime = 80
         }
-        else if(number == "девяносто"){
+        else if(number == "девяносто" || number == "девяностый"){
             numberTime = 90
         }
-        else if(number == "сто"){
+        else if(number == "сто" || number == "сотый"){
             numberTime = 100
         }
         else{
@@ -153,7 +153,7 @@ export default class Time {
         return numberTime
     }
 
-    //перевод времени, состоящего из двух слов в число
+    //перевод числа, состоящего из двух слов в число типа number
     ConvertLargeNumberFromStringToNumber(number1:string,number2:string):number {
         let  secondPartOfNumber = this.ConvertSmallNumberFromStringToNumber(number2)
         let numberTime:number
