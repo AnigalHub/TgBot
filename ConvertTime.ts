@@ -117,9 +117,6 @@ export default class Time {
         else if(number == "девятнадцать" || number == "девятнадцатый" || number == "девятнадцатого"){
             numberTime = 19
         }
-        else if(number == "девятнадцать" || number == "девятнадцатый" || number == "девятнадцатого"){
-            numberTime = 19
-        }
         else if(number == "двадцать" || number == "двадцатый" || number == "двадцатого"){
             numberTime = 20
         }
