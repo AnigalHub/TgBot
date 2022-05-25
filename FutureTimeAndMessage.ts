@@ -32,18 +32,18 @@ export default class FutureTimeAndMessage{
     //метод - Вычисление и Обработка ошибок при вводе месяца даты словами
     CalculationsAndErrorHandlingWhenEnteringMonthInWords(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
 
-        // элемент массива с ключевым словом
+        //элемент массива с ключевым словом
         let wordsElementAfterKeyword = this.words[numberKeywordInMessage]
-        // элемент массива перед ключевым словом
+        //элемент массива перед ключевым словом
         let wordsElementAfterKeyword_1 = this.words[numberKeywordInMessage-1]
 
-        // день
+        //день
         let dayMessage = wordsElementAfterKeyword_1
-        // год
+        //год
         let yearMessage = this.words[numberKeywordInMessage+1]
         //объект класса Month
         let monthObj = new Month(wordsElementAfterKeyword)
-        // месяц
+        //месяц
         let month = '0'.concat((monthObj.SearchForTheNumberOfTheMonth()+1).toString())
 
 
@@ -62,55 +62,47 @@ export default class FutureTimeAndMessage{
             }
 
             if(numberDayMessage == -1){
-                throw new Error('<b>Ошибка! Некорректно введена дата.</b> \n' +
-                    'Возможно слитное написание\n');
-
+                throw new Error('<b>Ошибка! Некорректно введена дата.</b> \n' + 'Возможно слитное написание\n');
             }
 
             if(numberDayMessage < 10){
+                //день
                 dayMessage =  '0'.concat(String(numberDayMessage))
             }
             else {
+                //день
                 dayMessage =  String(numberDayMessage)
             }
 
-            console.log(dayMessage)
             //дата в сообщении в виде дд.мм.гггг
             let dateMessage =  dayMessage.concat('.',month,'.',yearMessage)
-            console.log('дата',dateMessage)
-
-            console.log(wordsElementAfterKeyword_1, this.words.indexOf(wordsElementAfterKeyword_1), numberOfWordsToRemove, dateMessage)
 
             //замена даты словами на дату в виде дд.мм.гггг
             this.words.splice(this.words.indexOf(wordsElementAfterKeyword_1), numberOfWordsToRemove, dateMessage);
         }
         else{
             if(parseInt(dayMessage) < 10){
+                //день
                 dayMessage =  '0'.concat(dayMessage)
             }
             //дата в сообщении в виде дд.мм.гггг
             let dateMessage =  dayMessage.concat('.',month,'.',yearMessage)
-            console.log('дата',dateMessage)
-
             //замена даты словами на дату в виде дд.мм.гггг
             this.words.splice(this.words.indexOf(wordsElementAfterKeyword_1), 3, dateMessage);
         }
-
-
 
         //номер ключевого слова
         numberKeywordInMessage = this.words.indexOf('в')
 
         //расчеты при вводе "В"
         return calculationsWhenEnteringTo(this.words, this.dateMessage, numberKeywordInMessage,timeMessage, this.messageFuture, this.millisecondsTime)
-
     }
 
     //метод - Вычисление и Обработка ошибок при вводе "Через"
     CalculationsAndHandlingErrorsOnInputThrough(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
-        // элемент массива после ключевого слова - первый
+        //элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1]
-        // элемент массива после ключевого слова - второй
+        //элемент массива после ключевого слова - второй
         let wordsElementAfterKeyword2 = this.words[numberKeywordInMessage+2]
         //индексы ключевых слов - массив
         let keywordIndexes = Array.from(this.words.entries()).filter(i => i[1] == this.words[numberKeywordInMessage]).map(i => i[0])
