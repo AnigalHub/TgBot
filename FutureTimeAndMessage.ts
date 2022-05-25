@@ -34,22 +34,34 @@ export default class FutureTimeAndMessage{
 
         // элемент массива с ключевым словом
         let wordsElementAfterKeyword = this.words[numberKeywordInMessage]
+        // элемент массива перед ключевым словом
+        let wordsElementAfterKeyword_1 = this.words[numberKeywordInMessage-1]
 
         // день
-        let dayMessage = this.words[numberKeywordInMessage-1]
+        let dayMessage = wordsElementAfterKeyword_1
         // год
         let yearMessage = this.words[numberKeywordInMessage+1]
         //объект класса Month
         let monthObj = new Month(wordsElementAfterKeyword)
         // месяц
         let month = '0'.concat((monthObj.SearchForTheNumberOfTheMonth()+1).toString())
+        if (isNaN(parseInt(dayMessage))){
+            let numberDayMessage = convertTime.ConvertSmallNumberFromStringToNumber(dayMessage)
+            if(numberDayMessage < 10){
+                dayMessage =  '0'.concat(String(numberDayMessage))
+            }
+            console.log(dayMessage)
+        }
+        else {
+
+        }
 
         //дата в сообщении в виде дд.мм.гггг
         let dateMessage =  dayMessage.concat('.',month,'.',yearMessage)
         console.log('дата',dateMessage)
 
         //замена даты словами на дату в виде дд.мм.гггг
-        this.words.splice(this.words.indexOf(dayMessage), 3, dateMessage);
+        this.words.splice(this.words.indexOf(wordsElementAfterKeyword_1), 3, dateMessage);
 
         //номер ключевого слова
         numberKeywordInMessage = this.words.indexOf('в')
