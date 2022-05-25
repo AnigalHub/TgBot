@@ -154,31 +154,31 @@ export default class Time {
     ConvertLargeNumberFromStringToNumber(number1:string,number2:string):number {
         let  secondPartOfNumber = this.ConvertSmallNumberFromStringToNumber(number2)
         let numberTime:number
-        if(number1 == "двадцать"){
+        if(number1 == "двадцать" || number1 == "двадцатый" || number1 == "двадцатого"){
             numberTime = 20 + secondPartOfNumber
         }
-        else if(number1 == "тридцать"){
+        else if(number1 == "тридцать" || number1 == "тридцатый" || number1 == "тридцатого"){
             numberTime = 30 + secondPartOfNumber
         }
-        else if(number1 == "сорок"){
+        else if(number1 == "сорок" || number1 == "сороковой"){
             numberTime = 40 + secondPartOfNumber
         }
-        else if(number1 == "пятьдесят"){
+        else if(number1 == "пятьдесят" || number1 == "пятьдесятый"){
             numberTime = 50 + secondPartOfNumber
         }
-        else if(number1 == "шестьдесят"){
+        else if(number1 == "шестьдесят" || number1 == "пятьдесятый"){
             numberTime = 60 + secondPartOfNumber
         }
-        else if(number1 == "семьдесят"){
+        else if(number1 == "семьдесят" || number1 == "семьдесятый"){
             numberTime = 70 + secondPartOfNumber
         }
-        else if(number1 == "восемьдесят"){
+        else if(number1 == "восемьдесят" || number1 == "восемьдесятый"){
             numberTime = 80 + secondPartOfNumber
         }
-        else if(number1 == "девяносто"){
+        else if(number1 == "девяносто" || number1 == "девяностый"){
             numberTime = 90 + secondPartOfNumber
         }
-        else if(number1 == "сто"){
+        else if(number1 == "сто" || number1 == "сотый"){
             numberTime = 100 + secondPartOfNumber
         }
         else{
