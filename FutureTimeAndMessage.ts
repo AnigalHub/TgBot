@@ -45,23 +45,58 @@ export default class FutureTimeAndMessage{
         let monthObj = new Month(wordsElementAfterKeyword)
         // месяц
         let month = '0'.concat((monthObj.SearchForTheNumberOfTheMonth()+1).toString())
+
+
         if (isNaN(parseInt(dayMessage))){
-            let numberDayMessage = convertTime.ConvertSmallNumberFromStringToNumber(dayMessage)
+            let numberDayMessage = -1
+            let numberOfWordsToRemove = 0
+
+            if(convertTime.ConvertSmallNumberFromStringToNumber(dayMessage) != 0){
+                numberDayMessage = convertTime.ConvertSmallNumberFromStringToNumber(dayMessage)
+                numberOfWordsToRemove = 3
+            }
+            if(convertTime.ConvertLargeNumberFromStringToNumber(this.words[numberKeywordInMessage-2],dayMessage) != 0 && convertTime.ConvertSmallNumberFromStringToNumber(dayMessage) != 0){
+                numberDayMessage = convertTime.ConvertLargeNumberFromStringToNumber(this.words[numberKeywordInMessage-2],dayMessage)
+                numberOfWordsToRemove = 4
+                wordsElementAfterKeyword_1 = this.words[numberKeywordInMessage-2]
+            }
+
+            if(numberDayMessage == -1){
+                throw new Error('<b>Ошибка! Некорректно введена дата.</b> \n' +
+                    'Возможно слитное написание\n');
+
+            }
+
             if(numberDayMessage < 10){
                 dayMessage =  '0'.concat(String(numberDayMessage))
             }
+            else {
+                dayMessage =  String(numberDayMessage)
+            }
+
             console.log(dayMessage)
+            //дата в сообщении в виде дд.мм.гггг
+            let dateMessage =  dayMessage.concat('.',month,'.',yearMessage)
+            console.log('дата',dateMessage)
+
+            console.log(wordsElementAfterKeyword_1, this.words.indexOf(wordsElementAfterKeyword_1), numberOfWordsToRemove, dateMessage)
+
+            //замена даты словами на дату в виде дд.мм.гггг
+            this.words.splice(this.words.indexOf(wordsElementAfterKeyword_1), numberOfWordsToRemove, dateMessage);
         }
-        else {
+        else{
+            if(parseInt(dayMessage) < 10){
+                dayMessage =  '0'.concat(dayMessage)
+            }
+            //дата в сообщении в виде дд.мм.гггг
+            let dateMessage =  dayMessage.concat('.',month,'.',yearMessage)
+            console.log('дата',dateMessage)
 
+            //замена даты словами на дату в виде дд.мм.гггг
+            this.words.splice(this.words.indexOf(wordsElementAfterKeyword_1), 3, dateMessage);
         }
 
-        //дата в сообщении в виде дд.мм.гггг
-        let dateMessage =  dayMessage.concat('.',month,'.',yearMessage)
-        console.log('дата',dateMessage)
 
-        //замена даты словами на дату в виде дд.мм.гггг
-        this.words.splice(this.words.indexOf(wordsElementAfterKeyword_1), 3, dateMessage);
 
         //номер ключевого слова
         numberKeywordInMessage = this.words.indexOf('в')
