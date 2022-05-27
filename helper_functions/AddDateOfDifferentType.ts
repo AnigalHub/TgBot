@@ -11,7 +11,7 @@ const convertTime = new ConvertTime()
 
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-console.log(date,arrayElementWithDate,numberArrayElementResponsiveForTimeType,timeRemind,dateMs, numberKeywordInMessage,messageFuture, millisecondsTime)
+
     validationOfTimeInput(words,numberArrayElementResponsiveForTimeType)
 
     //dateAndTimeValidation(timeRemind,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
