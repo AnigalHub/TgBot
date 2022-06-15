@@ -5,6 +5,7 @@ import countingTheTimeSpecifiedByWords from "./CountingTheTimeSpecifiedByWords";
 import countingNumberArrayElementResponsiveForTimeType from "./CountingNumberArrayElementResponsiveForTimeType";
 import TimeAndArrayElementWithDateOrTime from "../calculations_and_handling_errors_on_input_to/TimeAndArrayElementWithDateOrTime";
 
+//фунция - Подсчет времени и даты, введенной словами
 function calculatingTimeAndDateInWords(date:Date, words:Array<string>, numberKeywordInMessage:number):TimeAndArrayElementWithDateOrTime {
 
     // элемент, в котором может быть указана дата (сегодня/завтра/послезавтра)
