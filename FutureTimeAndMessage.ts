@@ -50,18 +50,27 @@ export default class FutureTimeAndMessage{
         //обработка ошибок неправильного времени и даты, введенной словами
         errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry(this.words,numberKeywordInMessage)
 
-        if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){ // только цифры
+        //проверка - если элемент массива после ключевого слова содержит только цифры
+        if(/^[0-9]*$/.test(wordsElementAfterKeyword1)){
+            //время
             time = parseInt(wordsElementAfterKeyword1)
             //сборка будущего сообщения
             this.messageFuture = this.words.slice((numberKeywordInMessage+3),this.words.length).join(' ')
             //подсчет миллисекунд
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)
+            //обработка ошибки при 0 миллисекундах
             errorHandlingInZeroMilliseconds(this.millisecondsTime)
+
+            //добавление времени, когда известен день
             return addTimeWhenDayIsKnown(this.dateMessage, this.words, this.millisecondsTime, this.messageFuture)
         }
-        if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){ // только буквы
+        //проверка - если элемент массива после ключевого слова содержит только буквы
+        if (/^[А-яЁё]*$/.test(wordsElementAfterKeyword1)){
+            //время
             time = convertTime.ConvertLargeNumberFromStringToNumber(wordsElementAfterKeyword1, wordsElementAfterKeyword2)
+            //проверка - если первый элемент массива после ключевого слова является типом времени (сек/мин/час)
             if(convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1) != 0){
+                //время
                 time = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword1,1)
             }
             //объект, содержащий сообщение и миллисекунды
@@ -70,13 +79,18 @@ export default class FutureTimeAndMessage{
             this.messageFuture = objTime.message
             //подсчет миллисекунд
             this.millisecondsTime = objTime.millisecondsTime
+            //обработка ошибки при 0 миллисекундах
             errorHandlingInZeroMilliseconds(this.millisecondsTime)
+
+            //добавление времени, когда известен день
             return addTimeWhenDayIsKnown(this.dateMessage, this.words,this.millisecondsTime,this.messageFuture)
         }
         else {
             throw new Error('<b>Ошибка! Некорректно введено время. </b>\n'+'Ввод времени указывается словом или числом. Пример: неделю/месяц | 12 минут/пять часов ');
         }
     }
+
+    //метод - Вычисление и Обработка ошибок при вводе "В"
     CalculationsAndHandlingErrorsOnInputTo(numberKeywordInMessage:number, timeMessage:number): MessageToSend{
         //элемент массива после ключевого слова - первый
         let wordsElementAfterKeyword1 = this.words[numberKeywordInMessage+1]
