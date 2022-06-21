@@ -1,7 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 
 //функция - Вывод сообщения по команде
-async function outputMessageOnCommand(message:string, chatId:number, bot:TelegramBot){
+async function outputMessageOnCommand(message:string, chatId:number, bot:TelegramBot):Promise<boolean>{
     if(message == '/start'){
         await bot.sendMessage(chatId,'<b>Telegram-бот-Напоминальщик событий</b>.\n' +
             'Бот помогает не забывать о важных делах и событиях. Он напоминает о событиях или делах ' +
