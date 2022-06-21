@@ -33,18 +33,9 @@ bot.on('message', async (msg) =>{
         return
     }
 
-
     //массив слов - сообщение, которое написали
     let words = prepareMessage(msg.text)
 
-    //проход по массиву слов в сообщении
-    for (let i= 0; i<words.length;i++){
-        //проверка на одинаковый ввод слова подряд
-        if(convertTime.ConvertTimeToMilliseconds(words[i],1) != 0 && convertTime.ConvertTimeToMilliseconds(words[i+1],1) != 0){
-            console.log('index.js')
-            return await bot.sendMessage(chatId,'Ошибка! Подряд несколько раз указана единица времени')
-        }
-    }
     //массив
     console.log(words)
 
