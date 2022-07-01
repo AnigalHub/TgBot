@@ -5,7 +5,7 @@ const convertTime = new ConvertTime()
 import addDateOfDifferentType from "./helper_functions/AddDateOfDifferentType"
 import errorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingOfIncorrectTimeAndWordIndicatorOfDateEntry";
 import deleteFromArray from "./helper_functions/calculations_and_handling_errors_on_input_through/DeleteFromArray";
-import errorHandlingInZeroMilliseconds from "./helper_functions/calculations_and_handling_errors_on_input_through/ErrorHandlingInZeroMilliseconds";
+import errorHandlingWhenPastTimeOrTimeIsZero from "./helper_functions/ErrorHandlingWhenPastTimeOrTimeIsZero";
 import calculatingTimeAndDateInWords from "./helper_functions/calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
 
 export default class FutureTimeAndMessage{
@@ -59,7 +59,7 @@ export default class FutureTimeAndMessage{
             //подсчет миллисекунд
             this.millisecondsTime = convertTime.ConvertTimeToMilliseconds(wordsElementAfterKeyword2,time)
             //обработка ошибки при 0 миллисекундах
-            errorHandlingInZeroMilliseconds(this.millisecondsTime)
+            errorHandlingWhenPastTimeOrTimeIsZero(this.millisecondsTime)
 
             //добавление времени, когда известен день
             return addTimeWhenDayIsKnown(this.dateMessage, this.words, this.millisecondsTime, this.messageFuture)
@@ -80,7 +80,7 @@ export default class FutureTimeAndMessage{
             //подсчет миллисекунд
             this.millisecondsTime = objTime.millisecondsTime
             //обработка ошибки при 0 миллисекундах
-            errorHandlingInZeroMilliseconds(this.millisecondsTime)
+            errorHandlingWhenPastTimeOrTimeIsZero(this.millisecondsTime)
 
             //добавление времени, когда известен день
             return addTimeWhenDayIsKnown(this.dateMessage, this.words,this.millisecondsTime,this.messageFuture)
