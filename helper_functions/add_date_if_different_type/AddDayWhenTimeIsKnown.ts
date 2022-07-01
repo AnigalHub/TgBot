@@ -2,7 +2,7 @@ import MessageToSend from "../../MessageToSend";
 import ConvertTime from '../../ConvertTime'
 const convertTime = new ConvertTime()
 import errorHandlingOfIncorrectDateOrTimeEntry from "../ErrorHandlingOfIncorrectDateOrTimeEntry"
-import checkingForPastTense from "../CheckingForPastTense";
+import errorHandlingWhenPastTimeOrTimeIsZero from "../errorHandlingWhenPastTimeOrTimeIsZero";
 
 //функция - Добавление дня, когда время известно
 function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, dateMs:number, words:Array<string>,
@@ -30,7 +30,7 @@ function addDayWhenTimeIsKnown(date:Date, dayRemind:string, timeRemind:number, d
     //подсчет миллисекунд
     millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs, futureDateMs, timeRemind, words, numberArrayElementResponsiveForTimeType)
     //проверка времени на прошлое
-    checkingForPastTense(millisecondsTime)
+    errorHandlingWhenPastTimeOrTimeIsZero(millisecondsTime)
     //сборка будущего сообщения
     messageFuture = words.slice((startMessageFuture), words.length).join(' ')
 

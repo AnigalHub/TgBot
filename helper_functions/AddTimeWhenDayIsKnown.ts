@@ -3,7 +3,7 @@ const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
 import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime"
 import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
-import checkingForPastTense from "./CheckingForPastTense";
+import errorHandlingWhenPastTimeOrTimeIsZero from "./errorHandlingWhenPastTimeOrTimeIsZero";
 import calculatingTimeAndDateInWords
     from "./calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
 
@@ -63,7 +63,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 //подсчет миллисекунд
                 millisecondsTime = convertTime.CountDifferenceInMillisecondsBetweenFutureAndCurrentDates(dateMs,futureDateMs,timeAfterSecondKeyword,words, secondKeywordInMessage+2)
                 //проверка времени на прошлое
-                checkingForPastTense(millisecondsTime)
+                errorHandlingWhenPastTimeOrTimeIsZero(millisecondsTime)
             }
             else {
                 //объект, содержащий время и дату, введенные словами
@@ -84,7 +84,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 //подсчет миллисекунд
                 millisecondsTime = objTime.millisecondsTime
                 //проверка времени на прошлое
-                checkingForPastTense(millisecondsTime)
+                errorHandlingWhenPastTimeOrTimeIsZero(millisecondsTime)
             }
             return new MessageToSend(millisecondsTime, messageFuture)
         }
