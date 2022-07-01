@@ -203,9 +203,15 @@ export default class Time {
             futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_2],time)
             message = array.slice((arrayElement_3),array.length).join(' ')//сообщение, которое напоминаем
         }
-        else if(time > 20 && time%10 != 0){
-            futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_3],time)
-            message = array.slice((arrayElement_4),array.length).join(' ')//сообщение, которое напоминаем
+        else if(time != 1 && time%10 != 0){
+            if(time > 20){
+                futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_3],time)
+                message = array.slice((arrayElement_4),array.length).join(' ')//сообщение, которое напоминаем
+            }
+            else {
+                futureMs = futureDate + this.ConvertTimeToMilliseconds(array[arrayElement_2],time)
+                message = array.slice((arrayElement_3),array.length).join(' ')//сообщение, которое напоминаем
+            }
         }
         else{
             time = 1
