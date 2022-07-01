@@ -3,10 +3,11 @@ import ConvertTime from "../../ConvertTime";
 const convertTime = new ConvertTime()
 import calculationOfTheYear from "./add_date_when_it_is_specified_in_full/CalculationOfTheYear"
 import errorHandlingOfIncorrectFullDateEntry from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectFullDateEntry"
-import errorHandlingOfIncorrectTime from "./add_date_when_it_is_specified_in_full/ErrorHandlingOfIncorrectTime"
+import errorHandlingOfIncorrectTime from "../ErrorHandlingOfIncorrectTime"
 
 //функция - Добавление даты, когда дата указана полностью
-function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number, keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
+function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArrayElementResponsiveForTimeType:number,
+                                        keyword:string, words:Array<string>,date:Date,timeMessageMs:number, time:number,messageFuture:string, millisecondsTime:number): MessageToSend {
 
     //день
     let dayMessage = parseInt(keyword.substring(0, 2))
@@ -18,7 +19,7 @@ function addDateWhenItIsSpecifiedInFull(numberKeywordInMessage:number,numberArra
     //обработка ошибок неверного ввода полной даты
     errorHandlingOfIncorrectFullDateEntry(keyword,dayMessage,monthMessage,yearMessage,date)
     //обработка ошибок неверного ввода времени
-    errorHandlingOfIncorrectTime(words,numberArrayElementResponsiveForTimeType)
+    errorHandlingOfIncorrectTime(time,words,words[numberArrayElementResponsiveForTimeType],keyword)
 
     //будущая дата - объект Data
     let futureDate = new Date(yearMessage, monthMessage, dayMessage)
