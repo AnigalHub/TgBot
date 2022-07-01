@@ -1,9 +1,13 @@
 import ConvertTime from '../ConvertTime'
 const convertTime = new ConvertTime()
 import MessageToSend from "../MessageToSend";
-import errorHandlingOfIncorrectTimeEntry from "./ErrorHandlingOfIncorrectTimeEntry"
+import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime"
 import errorHandlingOfIncorrectTimeEntryUsingWords from "./ErrorHandlingOfIncorrectTimeEntryUsingWords";
 import checkingForPastTense from "./CheckingForPastTense";
+import countingTheTimeSpecifiedByWords
+    from "./calculations_and_handling_errors_on_input_to/CountingTheTimeSpecifiedByWords";
+import calculatingTimeAndDateInWords
+    from "./calculations_and_handling_errors_on_input_to/CalculatingTimeAndDateInWords";
 
 
 //функция - Добавление времени, когда известен день
@@ -25,6 +29,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
         let arrayElementAfterSecondKeyword3 = words[(secondKeywordInMessage)+3]
         //элемент массива после ключевого слова (secondKeywordInMessage) - четвертый
         let arrayElementAfterSecondKeyword4 = words[(secondKeywordInMessage)+4]
+        console.log(arrayElementAfterSecondKeyword1,arrayElementAfterSecondKeyword2,arrayElementAfterSecondKeyword3,arrayElementAfterSecondKeyword4)
 
         //проверка - 1-ый, 2-ой, 3-ий, 4-ый элементы массива - один из содержит тип времени (сек/мин/час)
         if(convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword1,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword3,1) == 0 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword4,1) == 0){
@@ -33,7 +38,6 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
         }
         //проверка - если указано время в виде - сек/мин/час (т е не день/мес/неделя и тд)
         if(millisecondsTime >= 86400000 && convertTime.ConvertTimeToMilliseconds(arrayElementAfterSecondKeyword2,1) < 86400000){
-
             //будущая дата - объект Data
             const futureDate = new Date (Date.parse(date.toString()) + millisecondsTime)
             //время в будущей дате - зануляем
@@ -56,7 +60,7 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                     timeAfterSecondKeyword = 24
                 }
                 //обработка неправильного ввода времени
-                errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword2)
+                errorHandlingOfIncorrectTime(timeAfterSecondKeyword,words,arrayElementAfterSecondKeyword2,arrayElementAfterSecondKeyword2)
                 //сборка будущего сообщения
                 messageFuture = words.slice((secondKeywordInMessage+3),words.length).join(' ')
                 //подсчет миллисекунд
@@ -65,14 +69,19 @@ function addTimeWhenDayIsKnown(date:Date, words:Array<string>, millisecondsTime:
                 checkingForPastTense(millisecondsTime)
             }
             else {
-                //время - после второго ключевого слова ("В")
-                timeAfterSecondKeyword = convertTime.ConvertLargeNumberFromStringToNumber(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
+                //объект, содержащий время и дату, введенные словами
+                let obj = calculatingTimeAndDateInWords(date,words,secondKeywordInMessage)
+                //время
+                let time = obj.time
+                //номер элемента массива с типом времени (сек/мин/час)
+                let numberArrayElementResponsiveForTimeType = obj.numberArrayElementResponsiveForTimeType
                 //обработка неправильного ввода времени словами
                 errorHandlingOfIncorrectTimeEntryUsingWords(arrayElementAfterSecondKeyword1, arrayElementAfterSecondKeyword2)
                 //обработка неправильного ввода времени
-                errorHandlingOfIncorrectTimeEntry(timeAfterSecondKeyword,arrayElementAfterSecondKeyword3)
+                errorHandlingOfIncorrectTime(time,words,words[numberArrayElementResponsiveForTimeType],words[secondKeywordInMessage-1])
+
                 //объект, содержащий сообщение и миллисекунды
-                let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(timeAfterSecondKeyword,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
+                let objTime = convertTime.CountTimeAsStringInMillisecondsAndAssembleMessage(time,dateMs,futureDateMs,words,secondKeywordInMessage+1,secondKeywordInMessage+2,secondKeywordInMessage+3,secondKeywordInMessage+4)
                 //сборка будущего сообщения
                 messageFuture = objTime.message
                 //подсчет миллисекунд
