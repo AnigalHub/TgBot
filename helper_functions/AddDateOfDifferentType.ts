@@ -5,30 +5,17 @@ import addDayWhenTimeIsKnown from "./add_date_if_different_type/AddDayWhenTimeIs
 import errorHandlingOfIncorrectTime from "./ErrorHandlingOfIncorrectTime"
 import DayOfTheWeek from "../DayOfTheWeek";
 import ConvertTime from "./../ConvertTime";
+import variationOfCheckingTimeAndDate from "./VariationOfCheckingTimeAndDate";
 const convertTime = new ConvertTime()
+
 
 //функция - Добавление даты разного типа (полная дата/день недели/словом указателем)
 function addDateOfDifferentType(date:Date,arrayElementWithDate:string,numberArrayElementResponsiveForTimeType:number,timeRemind:number,dateMs:number,
                                 words:Array<string>, numberKeywordInMessage:number,messageFuture:string, millisecondsTime:number) : MessageToSend {
-console.log('addDateOfDifferentType')
 
+    console.log('addDateOfDifferentType')
 
-    if(new DayOfTheWeek(arrayElementWithDate).SearchForTheDayNumberOfTheWeek() == -1){
-        if (arrayElementWithDate == undefined){
-            arrayElementWithDate = words[numberKeywordInMessage-1]
-        }
-        errorHandlingOfIncorrectTime(timeRemind,words,words[numberArrayElementResponsiveForTimeType],arrayElementWithDate)
-    }
-    else {
-        let arrayElementWithTimeType = words[numberArrayElementResponsiveForTimeType]
-        if(timeRemind >20  && timeRemind%10 != 0 ){
-            arrayElementWithTimeType = words[numberArrayElementResponsiveForTimeType+1]
-        }
-        if (timeRemind == 1) {
-            arrayElementWithTimeType = words[numberArrayElementResponsiveForTimeType-1]
-        }
-        errorHandlingOfIncorrectTime(timeRemind,words,arrayElementWithTimeType,words[numberKeywordInMessage])
-    }
+    variationOfCheckingTimeAndDate(words,numberKeywordInMessage,arrayElementWithDate,timeRemind,numberArrayElementResponsiveForTimeType)
 
     //проверка - если дата указана полная (с .,-,/ и только цифры) и после ключевого слова "В"
     if(!/[А-яЁё]/.test(arrayElementWithDate) && (arrayElementWithDate.includes('.') == true || arrayElementWithDate.includes('-') == true || arrayElementWithDate.includes('/') == true )) {
