@@ -15,7 +15,6 @@ async function getMessageWithTime(chatId:number, bot:TelegramBot,words:Array<str
     let futureTimeAndMessage = new FutureTimeAndMessage(chatId,words,dateMessage)
 
     if(words.includes(searchForTheNameOfTheMonth(words))){
-        console.log('ЭТОООООО')
         //номер ключевого слова в сообщении (в массиве слов)
         numberKeywordInMessage = words.indexOf(searchForTheNameOfTheMonth(words)) // индекс ключевого слова в массиве
         try {
