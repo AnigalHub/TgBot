@@ -8,54 +8,67 @@ import getMessageWithTime from "./helper_functions/GetMessageWithTime";
 const token:string = config.token
 const bot = new TelegramBot(token,{polling:true, baseApiUrl: "https://api.telegram.org"})
 
+// База
+import pool from "./db"
+
+// переместить в consts.js
+const STATUSES = {
+    Created: 'Не отправлен',
+    Sent: 'Отправлен'
+}
+const INSERT_MESSAGE = 'INSERT INTO tg_bot (telegram_user_id, message, message_date,future_message_date,status) values ($1, $2, $3, $4, $5)'
+
+
 bot.on('message', async (msg) =>{
     //id пользователя
     const chatId = msg.chat.id
+
     try{
+        //дата отправки сообщения в сек
+        const timeMessage = msg.date*1000
+        //дата отправки сообщения - объект Date
+        const dateMessage = new Date(timeMessage)
+        //дата и время, когда отправили сообщение, которое напомнить в виде строки
+        console.log('дата сообщения',dateMessage.toString())
 
+        //проверка на пустоту ввода
+        if(!msg.text){
+            console.log('index.js')
+            await bot.sendMessage( chatId,"Ошибка! Ожидается текст. Бот работает только с текстом!")
+            return
+        }
+        //console.log(msg.text)
 
-    //дата отправки сообщения в сек
-    const timeMessage = msg.date*1000
-    //дата отправки сообщения - объект Date
-    const dateMessage = new Date(timeMessage)
-    //дата и время, когда отправили сообщение, которое напомнить в виде строки
-    console.log('дата сообщения',dateMessage.toString())
+        //вывод сообщения по команде
+        if(await outputMessageOnCommand(msg.text, chatId, bot)){
+            return
+        }
+        //массив слов - сообщение, которое написали
+        let words = await prepareMessage(msg.text, bot, chatId)
+        if(words == undefined){
+            return
+        }
+        //массив
+        //console.log(words)
 
-    //проверка на пустоту ввода
-    if(!msg.text){
-        console.log('index.js')
-        await bot.sendMessage( chatId,"Ошибка! Ожидается текст. Бот работает только с текстом!")
-        return
+        //получение сообщения и Времени в миллисекундах
+        let messageWithTime =  await getMessageWithTime(chatId, bot, words, timeMessage, dateMessage)
+        //console.log('messageWithTime', {messageWithTime})
+
+        let futureDate;
+        if (messageWithTime != undefined){
+            //расчет даты и времени в виде строки
+            futureDate = DateAsString(messageWithTime.millisecondsTime,dateMessage)
+
+            console.log('дата сообщения',dateMessage.toString())
+            console.log('будущая дата сообщения', futureDate.toString())
+
+            //Добавить в базу
+           await pool.query(INSERT_MESSAGE, [chatId,messageWithTime.messageFuture,dateMessage,futureDate, STATUSES.Created])
+        }
+    } catch (e:any) {
+        console.log({e})
     }
-    console.log(msg.text)
-
-    //вывод сообщения по команде
-    if(await outputMessageOnCommand(msg.text, chatId, bot)){
-        return
-    }
-    //массив слов - сообщение, которое написали
-    let words = await prepareMessage(msg.text, bot, chatId)
-    if(words == undefined){
-        return
-    }
-    //массив
-    console.log(words)
-
-
-    //получение сообщения и Времени в миллисекундах
-    let messageWithTime =  await getMessageWithTime(chatId, bot, words, timeMessage, dateMessage)
-    console.log(messageWithTime)
-    if (messageWithTime != undefined){
-        //расчет даты и времени в виде строки
-        DateAsString(messageWithTime.millisecondsTime,dateMessage)
-    }
-
-} catch (e:any) {
-    console.log({e})
-}
-finally {
-
-}
 })
 
 
