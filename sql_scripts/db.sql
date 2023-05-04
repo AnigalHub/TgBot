@@ -10,3 +10,8 @@ CREATE TABLE tg_bot(
 	status text
 )
 GRANT ALL ON test TO lang_user
+
+
+SELECT * FROM pg_timezone_names where name like '%Moscow%';
+SET TIME ZONE 'Europe/Moscow';
+ALTER DATABASE tg_bot SET timezone TO 'Europe/Moscow';
