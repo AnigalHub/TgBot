@@ -16,7 +16,8 @@ const STATUSES = {
     Created: 'Не отправлен',
     Sent: 'Отправлен'
 }
-const INSERT_MESSAGE = 'INSERT INTO tg_bot (telegram_user_id, message, message_date,future_message_date,status) values ($1, $2, $3, $4, $5)'
+const INSERT_MESSAGE = 'INSERT INTO tg_bot (telegram_user_id, message, message_date,future_message_date,status) VALUES ($1, $2, $3, $4, $5)'
+const SELECT_MESSAGES = 'SELECT * FROM tg_bot WHERE status = \'Не отправлен\' AND now() >= future_message_date ORDER BY future_message_date'
 
 
 bot.on('message', async (msg) =>{
@@ -60,8 +61,8 @@ bot.on('message', async (msg) =>{
             //расчет даты и времени в виде строки
             futureDate = DateAsString(messageWithTime.millisecondsTime,dateMessage)
 
-            console.log('дата сообщения',dateMessage.toString())
-            console.log('будущая дата сообщения', futureDate.toString())
+            //console.log('дата сообщения',dateMessage.toString())
+            //console.log('будущая дата сообщения', futureDate.toString())
 
             //Добавить в базу
            await pool.query(INSERT_MESSAGE, [chatId,messageWithTime.messageFuture,dateMessage,futureDate, STATUSES.Created])
@@ -71,4 +72,16 @@ bot.on('message', async (msg) =>{
     }
 })
 
+setInterval(async () => {
+    try{
+        const res = await pool.query(SELECT_MESSAGES)
+        for(let row of res.rows){
+            //console.log('row', row);
+            await bot.sendMessage(row.telegram_user_id,row.message);
+            await pool.query('UPDATE tg_bot SET status = $1 where id = $2', [STATUSES.Sent, row.id]);
+        }
+    } catch (e) {
+        console.log("ERROR WHILE SENDING DATA:", e)
+    }
 
+}, 30000);
